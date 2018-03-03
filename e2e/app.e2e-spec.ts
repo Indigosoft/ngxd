@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('ngx-patterns App', () => {
+describe('ngx-presenter App', () => {
   let page: AppPage;
 
   beforeEach(() => {
