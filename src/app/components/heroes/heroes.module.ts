@@ -14,7 +14,9 @@ import { HeroModule } from './hero/hero.module';
         HeroesComponent
     ],
     exports: [
-        HeroesComponent
+        HeroesComponent,
+
+        HeroModule
     ]
 })
 export class HeroesModule {}

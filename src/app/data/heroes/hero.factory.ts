@@ -1,7 +1,7 @@
-import { Type } from '@angular/core';
+import { Inject, Optional, Type } from '@angular/core';
 import { HeroBase, HeroTypes, UnknownHero } from '@app/domain/heroes';
 
-import { HeroProvider } from './hero.module';
+import { HEROES_PROVIDER, HeroProvider } from './hero.module';
 
 import { Map } from 'immutable';
 
@@ -9,7 +9,7 @@ export class HeroFactory {
 
     private heroes: Map<HeroTypes, Type<HeroBase>>;
 
-    constructor(heroes: HeroProvider[]) {
+    constructor(@Optional() @Inject(HEROES_PROVIDER) heroes: HeroProvider[]) {
         this.heroes = Map<HeroTypes, Type<HeroBase>>(heroes);
     }
 
