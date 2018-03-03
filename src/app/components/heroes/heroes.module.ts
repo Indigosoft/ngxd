@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { HeroesComponent } from '@app/components/heroes/heroes.component';
 
 import { HeroModule } from './hero/hero.module';

@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { HeroesModule } from '@app/components/heroes/heroes.module';
 import { HeroDataModule } from '@app/data/heroes';
 
+import { HeroPageModule } from './hero/hero.module';
+
 import { HeroesPageComponent } from './heroes.component';
 import { HeroesPageRouting } from './heroes.routing';
 
@@ -12,6 +14,8 @@ import { HeroesPageRouting } from './heroes.routing';
         CommonModule,
 
         HeroesPageRouting,
+
+        HeroPageModule,
 
         HeroesModule,
         HeroDataModule

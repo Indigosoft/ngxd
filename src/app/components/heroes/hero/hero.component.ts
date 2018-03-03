@@ -7,7 +7,7 @@ import { HeroComponentBase } from './hero.component.interface';
 
 @Component({
     selector: 'app-hero',
-    template: ``
+    templateUrl: 'hero.component.html'
 })
 export class HeroComponent implements HeroComponentBase, OnInit, OnChanges, OnDestroy {
 
@@ -25,7 +25,7 @@ export class HeroComponent implements HeroComponentBase, OnInit, OnChanges, OnDe
         if (changes.hero && this.resolver.hasChanges(changes.hero)) {
             const components: Type<HeroComponentBase>[] = this.resolver.resolve(changes.hero.currentValue);
 
-            this.adapters = this.presenter.init(this, components, this.viewContainerRef);
+            this.adapters = this.presenter.create(this, components, this.viewContainerRef);
         }
 
         this.presenter.changes(this.adapters, changes);

@@ -1,7 +1,7 @@
 import { Inject, Optional, Type } from '@angular/core';
 import { HeroBase, HeroTypes, UnknownHero } from '@app/domain/heroes';
 
-import { HEROES_PROVIDER, HeroProvider } from './hero.module';
+import { HeroProvider, HEROES_PROVIDER} from './hero.provider';
 
 import { Map } from 'immutable';
 

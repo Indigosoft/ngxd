@@ -1,13 +1,9 @@
-import { InjectionToken, ModuleWithProviders, NgModule, Optional, Type } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, Type } from '@angular/core';
 import { Archer, HeroBase, HeroTypes, Warrior, Wizard } from '@app/domain/heroes';
 
 import { HeroFactory } from './hero.factory';
+import { HEROES_PROVIDER } from './hero.provider';
 import { HeroDataService } from './hero.service';
-
-export type HeroProvider = [ HeroTypes, Type<HeroBase> ];
-
-export const HEROES_PROVIDER: InjectionToken<HeroProvider[]> =
-    new InjectionToken<HeroProvider[]>('Heroes Provider');
 
 @NgModule({})
 export class HeroFactoryModule {

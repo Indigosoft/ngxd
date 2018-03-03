@@ -8,7 +8,7 @@ export class ComponentPresenter {
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    init<TComponent>(
+    create<TComponent>(
         parent: TComponent,
         components: Type<TComponent>[],
         viewContainerRef: ViewContainerRef,

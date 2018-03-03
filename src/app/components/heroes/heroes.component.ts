@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HeroBase } from '@app/domain/heroes';
 
 @Component({
     selector: 'app-heroes',
-    template: `<app-hero *ngFor="let hero of heroes" [hero]="hero"></app-hero>`
+    templateUrl: 'heroes.component.html'
 })
 export class HeroesComponent {
 

@@ -11,4 +11,36 @@ export class ArcherHeroComponent implements HeroComponentBase {
 
     @Input() hero: Archer;
 
+    ngOnChanges() {
+        console.log('ngOnChanges');
+    }
+
+    ngOnInit() {
+        console.log('ngOnInit');
+    }
+
+    ngAfterContentInit() {
+        console.log('ngAfterContentInit');
+    }
+
+    ngAfterContentChecked() {
+        console.log('ngAfterContentChecked');
+    }
+
+    ngAfterViewInit() {
+        console.log('ngAfterViewInit');
+    }
+
+    ngAfterViewChecked() {
+        console.log('ngAfterViewChecked');
+    }
+
+    ngOnCheck() {
+        console.log('ngOnCheck');
+    }
+
+    ngOnDestroy() {
+        console.log('ngOnDestroy');
+    }
+
 }
