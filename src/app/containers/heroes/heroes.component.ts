@@ -35,9 +35,9 @@ export class HeroesPageComponent {
     }
 
     changeNameHero() {
-        this.heroes$.take(1).subscribe((heroes: List<HeroBase>) => {
-            const id: number = Math.floor(Math.random() * heroes.count());
-            const hero: HeroBase = heroes.get(id);
+        const id: number = 1;
+
+        this.service.getHero(id).take(1).subscribe((hero: HeroBase) => {
             const type: HeroTypes = this.randomType;
 
             this.service.updateHero(id, { ...hero, name: type.toString() });
@@ -45,9 +45,9 @@ export class HeroesPageComponent {
     }
 
     changeTypeHero() {
-        this.heroes$.take(1).subscribe((heroes: List<HeroBase>) => {
-            const id: number = Math.floor(Math.random() * heroes.count());
-            const hero: HeroBase = heroes.get(id);
+        const id: number = 1;
+
+        this.service.getHero(id).take(1).subscribe((hero: HeroBase) => {
             const type: HeroTypes = this.randomType;
 
             this.service.updateHero(id, { ...hero, type: type });

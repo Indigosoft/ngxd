@@ -23,6 +23,8 @@ export class HeroComponent implements HeroComponentBase, OnInit, OnChanges, OnDe
 
     ngOnChanges (changes: SimpleChanges) {
         if (changes.hero && this.resolver.hasChangesType(changes.hero)) {
+            this.presenter.dispose(this.adapters);
+
             const components: Type<HeroComponentBase>[] = this.resolver.resolve(changes.hero.currentValue);
 
             this.adapters = this.presenter.create(this, components, this.viewContainerRef);
