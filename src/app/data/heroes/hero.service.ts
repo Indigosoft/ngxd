@@ -30,9 +30,22 @@ export class HeroDataService {
     }
 
     createHero(hero: HeroBase) {
-        const heroes: List<HeroBase> = this.heroes$.getValue().push(hero);
+        const heroes: List<HeroBase> =
+            this.heroes$.getValue()
+                .push(this.factory.make(hero.type, hero));
 
         this.heroes$.next(heroes);
+    }
+
+    updateHero(id: number, hero: HeroBase) {
+        const heroes: List<HeroBase> = this.heroes$.getValue();
+        const hasHero: boolean = heroes.has(id);
+
+        if (!hasHero) {
+            return null;
+        }
+
+        this.heroes$.next(heroes.update(id, () => this.factory.make(hero.type, hero)));
     }
 
 }

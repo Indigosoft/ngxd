@@ -1,3 +1,7 @@
 <button (click)="createHero()">New Hero</button>
 
+<button (click)="changeNameHero()">Change Name Hero</button>
+
+<button (click)="changeTypeHero()">Change Type Hero</button>
+
 <app-heroes [heroes]="heroes$ | async"></app-heroes>

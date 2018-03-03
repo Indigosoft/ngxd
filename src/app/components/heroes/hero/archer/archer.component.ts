@@ -11,6 +11,10 @@ export class ArcherHeroComponent implements HeroComponentBase {
 
     @Input() hero: Archer;
 
+    constructor() {
+        console.log('constructor');
+    }
+
     ngOnChanges() {
         console.log('ngOnChanges');
     }

@@ -21,7 +21,7 @@ export class HeroComponentResolver {
         this.unknown = unknown;
     }
 
-    hasChanges(change: SimpleChange): boolean {
+    hasChangesType(change: SimpleChange): boolean {
         if (!change.currentValue) {
             return true;
         }

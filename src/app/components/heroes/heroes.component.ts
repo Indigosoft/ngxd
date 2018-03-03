@@ -10,4 +10,8 @@ export class HeroesComponent {
 
     @Input() heroes: HeroBase[];
 
+    trackByIndex(index: number) {
+        return index;
+    }
+
 }
