@@ -1,0 +1,88 @@
+$battle-axe: "/assets/img/ability/battle-axe.svg";
+$bowman: "/assets/img/ability/bowman.svg";
+$cracked-shield: "/assets/img/ability/cracked-shield.svg";
+$crystal-wand: "/assets/img/ability/crystal-wand.svg";
+$dripping-knife: "/assets/img/ability/dripping-knife.svg";
+$fairy-wand: "/assets/img/ability/fairy-wand.svg";
+$high-shot: "/assets/img/ability/high-shot.svg";
+$quiver: "/assets/img/ability/quiver.svg";
+$reticule: "/assets/img/ability/reticule.svg";
+$stone-spear: "/assets/img/ability/stone-spear.svg";
+$sword-clash: "/assets/img/ability/sword-clash.svg";
+$sword-in-stone: "/assets/img/ability/sword-in-stone.svg";
+$swordman: "/assets/img/ability/swordman.svg";
+$wave-strike: "/assets/img/ability/wave-strike.svg";
+
+.battle-axe-icon {
+    background-image: url($battle-axe);
+    background-size: cover;
+}
+
+.bowman-icon {
+    background-image: url($bowman);
+    background-size: cover;
+}
+
+.cracked-shield-icon {
+    background-image: url($cracked-shield);
+    background-size: cover;
+}
+
+.crystal-wand-icon {
+    background-image: url($crystal-wand);
+    background-size: cover;
+}
+
+.dripping-knife-icon {
+    background-image: url($dripping-knife);
+    background-size: cover;
+}
+
+.fairy-wand-icon {
+    background-image: url($fairy-wand);
+    background-size: cover;
+}
+
+.high-shot-icon {
+    background-image: url($high-shot);
+    background-size: cover;
+}
+
+.quiver-icon {
+    background-image: url($quiver);
+    background-size: cover;
+}
+
+.reticule-icon {
+    background-image: url($reticule);
+    background-size: cover;
+}
+
+.stone-spear-icon {
+    background-image: url($stone-spear);
+    background-size: cover;
+}
+
+.sword-clash-icon {
+    background-image: url($sword-clash);
+    background-size: cover;
+}
+
+.sword-in-stone-icon {
+    background-image: url($sword-in-stone);
+    background-size: cover;
+}
+
+.swordman-icon {
+    background-image: url($swordman);
+    background-size: cover;
+}
+
+.wave-strike-icon {
+    background-image: url($wave-strike);
+    background-size: cover;
+}
+
+.mat-card {
+    padding: 0;
+}

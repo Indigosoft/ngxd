@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('ngx-presenter App', () => {
+describe('ngx-component-outlet App', () => {
   let page: AppPage;
 
   beforeEach(() => {
