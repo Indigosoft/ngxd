@@ -1,6 +1,5 @@
 import {
-    ChangeDetectorRef, Directive, DoCheck, EmbeddedViewRef, Injector, Input, NgModuleFactory, OnChanges, OnDestroy, OnInit, SimpleChanges,
-    Type,
+    ChangeDetectorRef, Directive, EmbeddedViewRef, Injector, Input, NgModuleFactory, OnChanges, OnDestroy, SimpleChanges, Type,
     ViewContainerRef
 } from '@angular/core';
 
@@ -28,19 +27,21 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        const injector: Injector = this.ngxComponentOutletInjector || this.viewContainerRef.injector;
-        const changeDetectorRef: EmbeddedViewRef<any> = injector.get(ChangeDetectorRef) as EmbeddedViewRef<any>;
-        const context: any = changeDetectorRef.context;
+        if (changes.ngxComponentOutlet) {
+            const injector: Injector = this.ngxComponentOutletInjector || this.viewContainerRef.injector;
+            const changeDetectorRef: EmbeddedViewRef<any> = injector.get(ChangeDetectorRef) as EmbeddedViewRef<any>;
+            const context: any = changeDetectorRef.context;
 
-        if (this.adapterRef) {
-            this.adapterRef.dispose();
-            this.adapterRef = null;
+            if (this.adapterRef) {
+                this.adapterRef.dispose();
+                this.adapterRef = null;
+            }
+
+            this.adapterRef = this.builder.create(
+                this.ngxComponentOutlet, this.viewContainerRef, injector,
+                this.ngxComponentOutletContent, context
+            );
         }
-
-        this.adapterRef = this.builder.create(
-            this.ngxComponentOutlet, this.viewContainerRef, injector,
-            this.ngxComponentOutletContent, context
-        );
     }
 
     ngOnDestroy() {

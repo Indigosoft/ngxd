@@ -117,7 +117,7 @@ export class NgxComponentOutletAdapterBuilderDoCheckOnlyStrategy implements NgxC
         const featureComponentRef: ComponentRef<NgxComponentOutletDoCheckOnly> =
             viewContainerRef.createComponent(featureComponentFactory, viewContainerRef.length);
 
-        return new NgxComponentOutletAdapterRef(componentFactory, componentRef, context,null, featureComponentRef as any);
+        return new NgxComponentOutletAdapterRef(componentFactory, componentRef, context, null, featureComponentRef as any);
     }
 
 }

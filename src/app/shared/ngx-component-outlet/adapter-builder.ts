@@ -19,6 +19,10 @@ export class NgxComponentOutletAdapterBuilder {
         projectableNodes: any[][],
         context: TComponent
     ): NgxComponentOutletAdapterRef<TComponent> {
+        if (!component) {
+            return null;
+        }
+
         const componentFactory: ComponentFactory<TComponent> =
             this.componentFactoryResolver.resolveComponentFactory(component);
 

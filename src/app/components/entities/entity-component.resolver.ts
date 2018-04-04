@@ -9,9 +9,13 @@ export class EntityComponentResolver {
     constructor(@Inject(ENTITY_PROVIDER) private providers: EntityProvider[]) {}
 
     resolve(entity: EntityObject): Type<any> {
-        const { componentType } = this.providers.find((provider) => entity instanceof provider.entityType);
+        const entityProvider = this.providers.find((provider) => entity instanceof provider.entityType);
 
-        return componentType;
+        if (!entityProvider) {
+            return null;
+        }
+
+        return entityProvider.componentType;
     }
 
 }

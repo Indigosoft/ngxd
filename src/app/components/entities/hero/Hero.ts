@@ -1,6 +1,4 @@
-import { Ability } from '../ability/Ability';
 import { EntityObject } from '../EntityObject';
-import { Item } from '../item/Item';
 
 export class Hero implements EntityObject {
 
@@ -8,8 +6,8 @@ export class Hero implements EntityObject {
     name: string;
     rank: string;
     icon: string;
-    abilities: Ability[];
-    items: Item[];
+    abilities: EntityObject[];
+    items: EntityObject[];
 
     constructor({ id, name, rank, icon, abilities, items }: Partial<Hero>) {
         this.id = id || Math.random().toString();

@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z0">
+<mat-card class="mat-elevation-z0" *ngIf="ability">
     <mat-card-header>
         <div [ngClass]="ability.icon" mat-card-avatar></div>
         <mat-card-title>{{ ability.amount }}</mat-card-title>
