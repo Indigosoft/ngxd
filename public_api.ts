@@ -1,1 +1,1 @@
-export * from './src/app/shared/ngx-component-outlet';
+export * from './src/app/shared/ngx-component-outlet/index';
