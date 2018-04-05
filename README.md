@@ -15,6 +15,12 @@
 [![GitHub stars](https://img.shields.io/github/stars/thekiba/ngx-component-outlet.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/thekiba/ngx-component-outlet)
 [![npm Downloads](https://img.shields.io/npm/dw/ngx-component-outlet.svg?style=flat-square)](https://www.npmjs.com/package/ngx-component-outlet)
 
+## Installation
+
+```bash
+npm install --save ngx-component-outlet
+```
+
 ## Usage Example
 
 Let's talk us through a _getting started_ that'll use an Dynamic Component.
