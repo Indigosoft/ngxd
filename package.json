@@ -1,6 +1,6 @@
 {
   "name": "ngx-component-outlet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NgComponentOutlet + Data-Binding + Full Lifecycle = NgxComponentOutlet for Angular 5+",
   "keywords": [
     "angular",
