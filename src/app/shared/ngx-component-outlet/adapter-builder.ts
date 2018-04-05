@@ -1,7 +1,6 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
-import { NgxComponentOutletAdapterBuilderStrategy } from '@app/shared/ngx-component-outlet/adapter-builder-strategies';
 
-import { NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-builder-strategies';
+import { NgxComponentOutletAdapterBuilderStrategy, NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-builder-strategies';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
 
 @Injectable()
