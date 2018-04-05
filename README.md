@@ -41,7 +41,8 @@ export class MyEntityModule {}
 You can easily use _app-my-entity_ through a ngxComponentOutlet directive:
 
 ```typescript
-import { Component, Input, Type } from '@angular/core';
+import { Component, Input, NgModule, Type } from '@angular/core';
+import { NgxComponentOutletModule } from 'ngx-component-outlet';
 
 import { MyEntityModule, MyEntityComponent } from './my-entity';
 
@@ -61,6 +62,13 @@ export class AppDynamicComponent {
     @Input() name: string;
     component: Type<MyEntityComponent> = MyEntityComponent;
 }
+
+@NgModule({
+    imports: [ NgxComponentOutletModule ],
+    declarations: [ AppDynamicComponent, AppDynamicHost ],
+    exports: [ AppDynamicComponent ]
+})
+export class AppDynamicModule {}
 ```
 
 Now, use _app-dynamic_ component and have fun:
