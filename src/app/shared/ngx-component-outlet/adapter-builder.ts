@@ -6,24 +6,22 @@ import { NgxComponentOutletAdapterRef } from './adapter-ref';
 @Injectable()
 export class NgxComponentOutletAdapterBuilder {
 
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private adapterBuilderStrategyResolver: NgxComponentOutletAdapterBuilderStrategyResolver
-    ) {}
+    constructor(private adapterBuilderStrategyResolver: NgxComponentOutletAdapterBuilderStrategyResolver) {}
 
     create<TComponent>(
         component: Type<TComponent>,
         viewContainerRef: ViewContainerRef,
         injector: Injector,
         projectableNodes: any[][],
-        context: TComponent
+        context: TComponent,
+        componentFactoryResolver: ComponentFactoryResolver
     ): NgxComponentOutletAdapterRef<TComponent> {
         if (!component) {
             return null;
         }
 
         const componentFactory: ComponentFactory<TComponent> =
-            this.componentFactoryResolver.resolveComponentFactory(component);
+            componentFactoryResolver.resolveComponentFactory(component);
 
         const componentRef: ComponentRef<TComponent> =
             viewContainerRef.createComponent(

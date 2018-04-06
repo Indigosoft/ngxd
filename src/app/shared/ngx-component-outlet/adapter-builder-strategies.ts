@@ -4,42 +4,6 @@ import {
 
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
 
-@Component({
-    selector: 'ngx-component-outlet-on-init-only',
-    template: ''
-})
-export class NgxComponentOutletOnInitOnly implements OnInit {
-
-    ngOnInit() {
-    }
-
-}
-
-@Component({
-    selector: 'ngx-component-outlet-do-check-only',
-    template: ''
-})
-export class NgxComponentOutletDoCheckOnly implements DoCheck {
-
-    ngDoCheck() {
-    }
-
-}
-
-@Component({
-    selector: 'ngx-component-outlet-on-init-do-check',
-    template: ''
-})
-export class NgxComponentOutletOnInitAndDoCheck implements OnInit, DoCheck {
-
-    ngOnInit() {
-    }
-
-    ngDoCheck() {
-    }
-
-}
-
 export enum LifeCycleHookStrategyType {
     Default,
     OnInitOnly,
@@ -57,6 +21,23 @@ export interface NgxComponentOutletAdapterBuilderStrategy {
         context: TComponent
     ): NgxComponentOutletAdapterRef<TComponent>;
 
+}
+
+@Component({ selector: 'ngx-component-outlet-on-init-only', template: '' })
+export class NgxComponentOutletOnInitOnly implements OnInit {
+    ngOnInit() {}
+}
+
+@Component({ selector: 'ngx-component-outlet-do-check-only', template: '' })
+export class NgxComponentOutletDoCheckOnly implements DoCheck {
+    ngDoCheck() {}
+}
+
+@Component({ selector: 'ngx-component-outlet-on-init-do-check', template: '' })
+export class NgxComponentOutletOnInitAndDoCheck implements OnInit, DoCheck {
+    ngOnInit() {}
+
+    ngDoCheck() {}
 }
 
 @Injectable()
@@ -157,8 +138,7 @@ export class NgxComponentOutletAdapterBuilderStrategyResolver {
         private onInitOnlyStrategy: NgxComponentOutletAdapterBuilderOnInitOnlyStrategy,
         private doCheckOnlyStrategy: NgxComponentOutletAdapterBuilderDoCheckOnlyStrategy,
         private onInitAndDoCheckStrategy: NgxComponentOutletAdapterBuilderOnInitAndDoCheckStrategy
-    ) {
-    }
+    ) {}
 
     resolve(component: Type<any>): NgxComponentOutletAdapterBuilderStrategy {
         const type: LifeCycleHookStrategyType = this.getStrategyType(component);

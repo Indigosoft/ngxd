@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { NgxComponentOutletAdapterBuilder } from './adapter-builder';
 import {
     NgxComponentOutletAdapterBuilderDefaultStrategy, NgxComponentOutletAdapterBuilderDoCheckOnlyStrategy,
     NgxComponentOutletAdapterBuilderOnInitAndDoCheckStrategy, NgxComponentOutletAdapterBuilderOnInitOnlyStrategy,
@@ -10,6 +11,7 @@ import { NgxComponentOutlet } from './component.outlet';
 
 @NgModule({
     providers: [
+        NgxComponentOutletAdapterBuilder,
         NgxComponentOutletAdapterBuilderDefaultStrategy,
         NgxComponentOutletAdapterBuilderOnInitOnlyStrategy,
         NgxComponentOutletAdapterBuilderDoCheckOnlyStrategy,
