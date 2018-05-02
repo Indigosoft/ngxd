@@ -21,66 +21,120 @@
 npm install --save ngx-component-outlet
 ```
 
-## Usage Example
+## Simple Usage Example
 
-Let's talk us through a _getting started_ that'll use an Dynamic Component.
-– Here we go:
+We have ```CompAComponent``` and ```CompBComponent``` that we want to use dynamically.
 
 ```typescript
-import { Component, Input, Module } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-my-entity',
-    template: `{{ name }}`
+    selector: 'app-comp-a',
+    template: `I'm Dynamic Component A. Hello, {{ name }}!`
 })
-export class MyEntityComponent {
-    @Input() name: string;
-}
+export class CompAComponent {
 
-@Module({
-    declarations: [ MyEntityComponent ],
-    entryComponents: [ MyEntityComponent ]
-})
-export class MyEntityModule {}
+    @Input() name: string;
+
+}
 ```
 
-You can easily use _app-my-entity_ through a ngxComponentOutlet directive:
+```typescript
+import { Component, Input } from '@angular/core';
+
+@Component({
+    selector: 'app-comp-b',
+    template: `I'm Dynamic Component B. Hello, {{ name }}!`
+})
+export class CompBComponent {
+
+    @Input() name: string;
+
+}
+```
+
+To dynamically display the component, we need to create a host component.
 
 ```typescript
-import { Component, Input, NgModule, Type } from '@angular/core';
-import { NgxComponentOutletModule } from 'ngx-component-outlet';
-
-import { MyEntityModule, MyEntityComponent } from './my-entity';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-dynamic-host',
     template: ''
 })
 export class AppDynamicHost {
+
     @Input() name: string;
+
 }
+```
+
+Also we need to create component that will randomly select a dynamic component and give it to the host of component.
+
+```typescript
+import { Component, Input, Type } from '@angular/core';
+
+import { CompAComponent } from './comp-a.component';
+import { CompBComponent } from './comp-b.component';
 
 @Component({
     selector: 'app-dynamic',
     template: `<app-dynamic-host [name]="name" [ngxComponentOutlet]="component"></app-dynamic-host>`
 })
 export class AppDynamicComponent {
-    @Input() name: string;
-    component: Type<MyEntityComponent> = MyEntityComponent;
-}
 
-@NgModule({
-    imports: [ NgxComponentOutletModule ],
-    declarations: [ AppDynamicComponent, AppDynamicHost ],
-    exports: [ AppDynamicComponent ]
-})
-export class AppDynamicModule {}
+    @Input() name: string;
+
+    component: Type<CompAComponent | CompBComponent> = this.getRandomComponent();
+    
+    getRandomComponent(): Type<CompAComponent | CompBComponent> {
+        return Math.random() > 0.5 ? CompAComponent : CompBComponent;
+    }
+
+}
 ```
 
-Now, use _app-dynamic_ component and have fun:
+Add all components to the module, and also imports ```NgxComponentOutletModule```.
 
-```angular2html
-<app-dynamic [name]="'Hello, Angular!'"></app-dynamic>
+You must also specify the components in the ```entryComponents``` To use dynamic components
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { NgxComponentOutletModule } from 'ngx-component-outlet';
+
+import { CompAComponent } from './comp-a.component';
+import { CompBComponent } from './comp-b.component';
+import { AppDynamicComponent, AppDynamicHost } from './app-dynamic.component';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+    declarations: [ AppDynamicComponent, AppDynamicHost, CompAComponent, CompBComponent ],
+    imports: [ BrowserModule, NgxComponentOutletModule ],
+    entryComponents: [ CompAComponent, CompBComponent ],
+    bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+```
+
+Now in AppComponent we will meet Angular.
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-root',
+    template: `
+        <app-dynamic [name]="'Angular 2'"></app-dynamic>
+        <app-dynamic [name]="'Angular 3'"></app-dynamic>
+        <app-dynamic [name]="'Angular 4'"></app-dynamic>
+        <app-dynamic [name]="'Angular 5'"></app-dynamic>
+        <app-dynamic [name]="'Angular 6?'"></app-dynamic>
+    `
+})
+export class AppComponent {}
 ```
 
 ## Advanced Use Cases

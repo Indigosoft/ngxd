@@ -1,15 +1,14 @@
 import { ChangeDetectorRef, ComponentFactory, ComponentRef, DoCheck, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 const PRIVATE_PREFIX = '__ngxOnChanges_';
 
 type OnChangesExpando = OnChanges & {
     __ngOnChanges_: SimpleChanges | null | undefined;
-    [key: string]: any;
+    [ key: string ]: any;
 };
 
-export type LifeCycleComponent = DoCheck & OnInit & OnChanges;
+export type LifeCycleComponent = OnInit & DoCheck;
 
 interface ComponentProperty {
     propName: string;
@@ -45,18 +44,31 @@ function markForCheckWrapper(delegateHook: (() => void) | null, cd) {
     };
 }
 
+export interface NgxComponentOutletAdapterRefConfig<TComponent> {
+    componentFactory: ComponentFactory<TComponent>;
+    componentRef: ComponentRef<TComponent>;
+    context: TComponent;
+    onInitComponentRef?: ComponentRef<LifeCycleComponent>;
+    doCheckComponentRef?: ComponentRef<LifeCycleComponent>;
+}
+
 export class NgxComponentOutletAdapterRef<TComponent> {
 
+    public componentFactory: ComponentFactory<TComponent>;
+    public componentRef: ComponentRef<TComponent>;
+    public context: TComponent;
+    private onInitComponentRef: ComponentRef<LifeCycleComponent>;
+    private doCheckComponentRef: ComponentRef<LifeCycleComponent>;
     private attachedOutputs: Subscription[] = [];
-    private defaultDescriptors: { [key: string]: PropertyDescriptor } = {};
+    private defaultDescriptors: { [ key: string ]: PropertyDescriptor } = {};
 
-    constructor(
-        public componentFactory: ComponentFactory<TComponent>,
-        public componentRef: ComponentRef<TComponent>,
-        public context: TComponent,
-        private onInitComponentRef?: ComponentRef<LifeCycleComponent>,
-        private doCheckComponentRef?: ComponentRef<LifeCycleComponent>
-    ) {
+    constructor(config: NgxComponentOutletAdapterRefConfig) {
+        this.componentFactory = config.componentFactory;
+        this.componentRef = config.componentRef;
+        this.context = config.context;
+        this.onInitComponentRef = config.onInitComponentRef;
+        this.doCheckComponentRef = config.doCheckComponentRef;
+
         this.attachInputs();
         this.attachOutputs();
     }
@@ -64,7 +76,10 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     dispose(): void {
         this.disposeOutputs();
         this.disposeInputs();
-        this.componentRef.destroy();
+
+        if (this.componentRef) {
+            this.componentRef.destroy();
+        }
 
         if (this.onInitComponentRef) {
             this.onInitComponentRef.destroy();
@@ -121,12 +136,11 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     private attachOutputs(): void {
-        const outputs: ComponentProperty[] =
-            this.componentFactory.outputs.filter(({ templateName }) => this.context.hasOwnProperty(templateName));
+        const outputs: ComponentProperty[] = this.componentFactory.outputs.filter(
+            (property: ComponentProperty) => this.context.hasOwnProperty(property.templateName));
 
-        this.attachedOutputs =
-            outputs.map(({ propName, templateName }: ComponentProperty) =>
-                this.componentRef.instance[ propName ].subscribe(this.context[ templateName ]));
+        this.attachedOutputs = outputs.map((property: ComponentProperty) =>
+                this.componentRef.instance[ property.propName ].subscribe(this.context[ property.templateName ]));
     }
 
     private disposeOutputs(): void {

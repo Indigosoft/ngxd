@@ -1,1 +1,1 @@
-export * from './adapter.module';
+export * from './outlet.module';

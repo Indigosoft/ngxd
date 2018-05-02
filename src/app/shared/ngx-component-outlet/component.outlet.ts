@@ -1,11 +1,10 @@
 import {
     ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, Injector, Input, NgModuleFactory, NgModuleRef, OnChanges,
-    OnDestroy, SimpleChanges, Type,
-    ViewContainerRef
+    OnDestroy, SimpleChanges, Type, ViewContainerRef
 } from '@angular/core';
 
-import { NgxComponentOutletAdapterBuilder } from './adapter-builder';
-import { NgxComponentOutletAdapterRef } from './adapter-ref';
+import { NgxComponentOutletAdapterBuilder } from './adapter/adapter-builder';
+import { NgxComponentOutletAdapterRef } from './adapter/adapter-ref';
 
 @Directive({ selector: '[ngxComponentOutlet]' })
 export class NgxComponentOutlet implements OnChanges, OnDestroy {
@@ -15,54 +14,72 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     @Input() ngxComponentOutletContent: any[][];
     @Input() ngxComponentOutletNgModuleFactory: NgModuleFactory<any>;
 
-    private adapterRef: NgxComponentOutletAdapterRef<any>;
-    private ngModuleRef: NgModuleRef<any>;
+    private _adapterRef: NgxComponentOutletAdapterRef<any>;
+    private _ngModuleRef: NgModuleRef<any>;
+
+    private get componentFactoryResolver(): ComponentFactoryResolver {
+        return this._ngModuleRef ? this._ngModuleRef.componentFactoryResolver : this._componentFactoryResolver;
+    }
+
+    private get context(): any {
+        const { context } = this.injector.get(ChangeDetectorRef) as EmbeddedViewRef<any>;
+
+        return context;
+    }
+
+    private get injector(): Injector {
+        return this.ngxComponentOutletInjector || this.viewContainerRef.injector;
+    }
 
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private _componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private builder: NgxComponentOutletAdapterBuilder
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.ngxComponentOutlet) {
-            const injector: Injector = this.ngxComponentOutletInjector || this.viewContainerRef.injector;
-            const changeDetectorRef: EmbeddedViewRef<any> = injector.get(ChangeDetectorRef) as EmbeddedViewRef<any>;
-            const context: any = changeDetectorRef.context;
-
             if (changes.ngxComponentOutletNgModuleFactory) {
-                if (this.ngModuleRef) {
-                    this.ngModuleRef.destroy();
-                    this.ngModuleRef = null;
-                }
-
-                if (this.ngxComponentOutletNgModuleFactory) {
-                    this.ngModuleRef = this.ngxComponentOutletNgModuleFactory.create(injector);
-                }
+                this.destroyNgModuleRef();
+                this.createNgModuleRef();
             }
 
-            const componentFactoryResolver: ComponentFactoryResolver =
-                this.ngModuleRef ? this.ngModuleRef.componentFactoryResolver : this.componentFactoryResolver;
-
-            if (this.adapterRef) {
-                this.adapterRef.dispose();
-                this.adapterRef = null;
-            }
-
-            this.adapterRef = this.builder.create(
-                this.ngxComponentOutlet, this.viewContainerRef, injector,
-                this.ngxComponentOutletContent, context, componentFactoryResolver
-            );
+            this.destroyAdapterRef();
+            this.createAdapterRef();
         }
     }
 
     ngOnDestroy() {
-        if (this.adapterRef) {
-            this.adapterRef.dispose();
-        }
+        this.destroyAdapterRef();
+        this.destroyNgModuleRef();
+    }
 
-        if (this.ngModuleRef) {
-            this.ngModuleRef.destroy();
+    private createAdapterRef() {
+        if (this.ngxComponentOutlet) {
+            this._adapterRef = this.builder.create(
+                this.ngxComponentOutlet, this.viewContainerRef, this.injector,
+                this.ngxComponentOutletContent, this.context, this.componentFactoryResolver
+            );
+        }
+    }
+
+    private destroyAdapterRef() {
+        if (this._adapterRef) {
+            this._adapterRef.dispose();
+            this._adapterRef = null;
+        }
+    }
+
+    private createNgModuleRef() {
+        if (this.ngxComponentOutletNgModuleFactory) {
+            this._ngModuleRef = this.ngxComponentOutletNgModuleFactory.create(this.injector);
+        }
+    }
+
+    private destroyNgModuleRef() {
+        if (this._ngModuleRef) {
+            this._ngModuleRef.destroy();
+            this._ngModuleRef = null;
         }
     }
 

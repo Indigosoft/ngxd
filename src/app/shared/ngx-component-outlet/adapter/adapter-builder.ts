@@ -1,6 +1,6 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
 
-import { NgxComponentOutletAdapterBuilderStrategy, NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-builder-strategies';
+import { NgxComponentOutletAdapterBuilderStrategy, NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-strategy';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
 
 @Injectable()
@@ -9,19 +9,15 @@ export class NgxComponentOutletAdapterBuilder {
     constructor(private adapterBuilderStrategyResolver: NgxComponentOutletAdapterBuilderStrategyResolver) {}
 
     create<TComponent>(
-        component: Type<TComponent>,
+        componentType: Type<TComponent>,
         viewContainerRef: ViewContainerRef,
         injector: Injector,
         projectableNodes: any[][],
         context: TComponent,
         componentFactoryResolver: ComponentFactoryResolver
     ): NgxComponentOutletAdapterRef<TComponent> {
-        if (!component) {
-            return null;
-        }
-
         const componentFactory: ComponentFactory<TComponent> =
-            componentFactoryResolver.resolveComponentFactory(component);
+            componentFactoryResolver.resolveComponentFactory(componentType);
 
         const componentRef: ComponentRef<TComponent> =
             viewContainerRef.createComponent(
@@ -30,9 +26,9 @@ export class NgxComponentOutletAdapterBuilder {
             );
 
         const strategy: NgxComponentOutletAdapterBuilderStrategy =
-            this.adapterBuilderStrategyResolver.resolve(component);
+            this.adapterBuilderStrategyResolver.resolve(componentType);
 
-        return strategy.create(component, componentFactory, componentRef, viewContainerRef, context);
+        return strategy.create(componentFactory, componentRef, viewContainerRef, context);
     }
 
 }
