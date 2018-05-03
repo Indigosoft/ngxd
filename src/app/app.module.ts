@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 import { LayoutModule } from '@app/layout/layout.module';
+import { NgxComponentOutletModule } from '../../lib/ngx-component-outlet';
 
 import { ROUTES } from './app.routes';
 
@@ -17,6 +18,8 @@ import { AppComponent } from './app.component';
         BrowserAnimationsModule,
 
         LayoutModule,
+
+        NgxComponentOutletModule.forRoot(),
 
         RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
     ],

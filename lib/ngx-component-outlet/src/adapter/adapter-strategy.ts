@@ -1,10 +1,8 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
-import {
-    NgxComponentOutletDoCheckOnly, NgxComponentOutletOnInitAndDoCheck, NgxComponentOutletOnInitOnly
-} from 'adapter-components';
-import { LifeCycleComponent, NgxComponentOutletAdapterRef, NgxComponentOutletAdapterRefConfig } from './adapter-ref';
+import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter-components';
+import { LifecycleComponent, NgxComponentOutletAdapterRef, NgxComponentOutletAdapterRefConfig } from './adapter-ref';
 
-enum LifeCycleHookStrategyType {
+enum LifecycleStrategyType {
     Default,
     OnInitOnly,
     DoCheckOnly,
@@ -12,23 +10,28 @@ enum LifeCycleHookStrategyType {
 }
 
 export interface StrategyConfig {
-    componentType?: Type<LifeCycleComponent>;
+    componentType?: Type<LifecycleComponent>;
     useOnInitComponent?: boolean;
     useDoCheckComponent?: boolean;
 }
 
+interface FeatureComponents {
+    onInitComponentRef: ComponentRef<LifecycleComponent>;
+    doCheckComponentRef: ComponentRef<LifecycleComponent>;
+}
+
 const STRATEGY_CONFIG: { [ key: number ]: StrategyConfig } = {
-    [ LifeCycleHookStrategyType.Default ]: {},
-    [ LifeCycleHookStrategyType.OnInitOnly ]: {
-        componentType: NgxComponentOutletOnInitOnly,
+    [ LifecycleStrategyType.Default ]: {},
+    [ LifecycleStrategyType.OnInitOnly ]: {
+        componentType: OnInitOnlyComponent,
         useOnInitComponent: true
     },
-    [ LifeCycleHookStrategyType.DoCheckOnly ]: {
-        componentType: NgxComponentOutletDoCheckOnly,
+    [ LifecycleStrategyType.DoCheckOnly ]: {
+        componentType: DoCheckOnlyComponent,
         useDoCheckComponent: true
     },
-    [ LifeCycleHookStrategyType.OnInitAndDoCheck ]: {
-        componentType: NgxComponentOutletOnInitAndDoCheck,
+    [ LifecycleStrategyType.OnInitAndDoCheck ]: {
+        componentType: OnInitAndDoCheckComponent,
         useOnInitComponent: true,
         useDoCheckComponent: true
     }
@@ -38,8 +41,7 @@ export class NgxComponentOutletAdapterBuilderStrategy {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private config: StrategyConfig
-    ) {
-    }
+    ) {}
 
     create<TComponent>(
         componentFactory: ComponentFactory<TComponent>,
@@ -47,7 +49,7 @@ export class NgxComponentOutletAdapterBuilderStrategy {
         viewContainerRef: ViewContainerRef,
         context: TComponent
     ): NgxComponentOutletAdapterRef<TComponent> {
-        const { onInitComponentRef, doCheckComponentRef } = this.createFeatureComponent(viewContainerRef);
+        const { onInitComponentRef, doCheckComponentRef } = this.createFeatureComponents(viewContainerRef);
 
         return this.createAdapterRef({
             componentFactory, componentRef, context,
@@ -55,17 +57,15 @@ export class NgxComponentOutletAdapterBuilderStrategy {
         });
     }
 
-    private createFeatureComponent(
-        viewContainerRef: ViewContainerRef
-    ): { onInitComponentRef: ComponentRef<LifeCycleComponent>, doCheckComponentRef: ComponentRef<LifeCycleComponent> } {
+    private createFeatureComponents(viewContainerRef: ViewContainerRef): FeatureComponents {
         if (!this.config.componentType) {
             return { onInitComponentRef: null, doCheckComponentRef: null };
         }
 
-        const featureComponentFactory: ComponentFactory<LifeCycleComponent> =
+        const featureComponentFactory: ComponentFactory<LifecycleComponent> =
             this.componentFactoryResolver.resolveComponentFactory(this.config.componentType);
 
-        const featureComponentRef: ComponentRef<LifeCycleComponent> =
+        const featureComponentRef: ComponentRef<LifecycleComponent> =
             viewContainerRef.createComponent(featureComponentFactory, viewContainerRef.length);
 
         return {
@@ -74,9 +74,7 @@ export class NgxComponentOutletAdapterBuilderStrategy {
         };
     }
 
-    private createAdapterRef<TComponent>(
-        config: NgxComponentOutletAdapterRefConfig<TComponent>
-    ): NgxComponentOutletAdapterRef<TComponent> {
+    private createAdapterRef<TComponent>(config: NgxComponentOutletAdapterRefConfig<TComponent>): NgxComponentOutletAdapterRef<TComponent> {
         return new NgxComponentOutletAdapterRef(config);
     }
 }
@@ -84,11 +82,10 @@ export class NgxComponentOutletAdapterBuilderStrategy {
 @Injectable()
 export class NgxComponentOutletAdapterBuilderStrategyResolver {
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) {
-    }
+    constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
     resolve(component: Type<any>): NgxComponentOutletAdapterBuilderStrategy {
-        const type: LifeCycleHookStrategyType = this.getStrategyType(component);
+        const type: LifecycleStrategyType = this.getStrategyType(component);
 
         return new NgxComponentOutletAdapterBuilderStrategy(this.componentFactoryResolver, STRATEGY_CONFIG[ type ]);
     }
@@ -99,18 +96,18 @@ export class NgxComponentOutletAdapterBuilderStrategyResolver {
         const hasNgOnChanges: boolean = component.prototype.hasOwnProperty('ngOnChanges');
 
         if (hasNgOnChanges && !hasNgOnInit && !hasNgDoCheck) {
-            return LifeCycleHookStrategyType.OnInitAndDoCheck;
+            return LifecycleStrategyType.OnInitAndDoCheck;
         }
 
         if (hasNgOnChanges && !hasNgOnInit) {
-            return LifeCycleHookStrategyType.OnInitOnly;
+            return LifecycleStrategyType.OnInitOnly;
         }
 
         if (!hasNgDoCheck) {
-            return LifeCycleHookStrategyType.DoCheckOnly;
+            return LifecycleStrategyType.DoCheckOnly;
         }
 
-        return LifeCycleHookStrategyType.Default;
+        return LifecycleStrategyType.Default;
     }
 
 }

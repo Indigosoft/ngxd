@@ -1,10 +1,10 @@
 import {
-    ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, Injector, Input, NgModuleFactory, NgModuleRef, OnChanges,
-    OnDestroy, SimpleChanges, Type, ViewContainerRef
+    ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, EventEmitter, Injector, Input, NgModuleFactory, NgModuleRef,
+    OnChanges, OnDestroy, Output, SimpleChanges, Type, ViewContainerRef
 } from '@angular/core';
 
-import { NgxComponentOutletAdapterBuilder } from './adapter/adapter-builder';
-import { NgxComponentOutletAdapterRef } from './adapter/adapter-ref';
+import { NgxComponentOutletAdapterBuilder } from '../adapter/adapter-builder';
+import { NgxComponentOutletAdapterRef } from '../adapter/adapter-ref';
 
 @Directive({ selector: '[ngxComponentOutlet]' })
 export class NgxComponentOutlet implements OnChanges, OnDestroy {
@@ -13,6 +13,9 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     @Input() ngxComponentOutletInjector: Injector;
     @Input() ngxComponentOutletContent: any[][];
     @Input() ngxComponentOutletNgModuleFactory: NgModuleFactory<any>;
+
+    @Output() ngxComponentOutletActivate = new EventEmitter<any>();
+    @Output() ngxComponentOutletDeactivate = new EventEmitter<any>();
 
     private _adapterRef: NgxComponentOutletAdapterRef<any>;
     private _ngModuleRef: NgModuleRef<any>;
@@ -60,11 +63,13 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
                 this.ngxComponentOutlet, this.viewContainerRef, this.injector,
                 this.ngxComponentOutletContent, this.context, this.componentFactoryResolver
             );
+            this.ngxComponentOutletActivate.emit(this._adapterRef.componentRef.instance);
         }
     }
 
     private destroyAdapterRef() {
         if (this._adapterRef) {
+            this.ngxComponentOutletDeactivate.emit(this._adapterRef.componentRef.instance);
             this._adapterRef.dispose();
             this._adapterRef = null;
         }

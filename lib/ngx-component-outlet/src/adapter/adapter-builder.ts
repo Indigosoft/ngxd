@@ -1,5 +1,4 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
-
 import { NgxComponentOutletAdapterBuilderStrategy, NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-strategy';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
 
