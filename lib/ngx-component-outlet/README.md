@@ -112,7 +112,7 @@ import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [ AppDynamicComponent, AppDynamicHost, CompAComponent, CompBComponent ],
-    imports: [ BrowserModule, NgxComponentOutletModule ],
+    imports: [ BrowserModule, NgxComponentOutletModule.forRoot() ],
     entryComponents: [ CompAComponent, CompBComponent ],
     bootstrap: [ AppComponent ]
 })
