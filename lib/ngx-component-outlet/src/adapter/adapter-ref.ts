@@ -104,7 +104,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private attachInputs(): void {
         const inputs: ComponentProperty[] = this.componentFactory.inputs;
 
-        this.defaultDescriptors = inputs.map((property: ComponentProperty) => {
+        this.defaultDescriptors = inputs.map((property: ComponentProperty): DefaultComponentProperty => {
             const defaultDescriptor: PropertyDescriptor = Object.getOwnPropertyDescriptor(this.context, property.templateName);
 
             this.attachInput(this.context, this.componentRef.instance, property, defaultDescriptor);
@@ -154,7 +154,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private attachLifecycle(): void {
         const instance: TComponent & LifecycleComponent = this.componentRef.instance as any;
 
-        if (instance.hasOwnProperty('ngOnChanges')) {
+        if (this.componentRef.componentType.prototype.hasOwnProperty('ngOnChanges')) {
             const markForCheckWrapped = markForCheckWrapper(instance.ngDoCheck, this.changeDetectorRef);
 
             this.onInitComponentRef.instance.ngOnInit = onChangesWrapper(instance.ngOnInit).bind(instance);
