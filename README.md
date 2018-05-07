@@ -32,7 +32,7 @@ And use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings
 
 #### [Demo Repository](https://github.com/thekiba/ngx-component-outlet/tree/master/src)
 
-#### [Demo Stackblitz](https://stackblitz.com/github/thekiba/ngx-component-outlet)
+#### [Demo Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
 
 ## Simple Usage Example
 
