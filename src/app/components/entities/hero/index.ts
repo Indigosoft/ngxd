@@ -1,4 +1,4 @@
-import { ENTITY_PROVIDER, EntityProvider } from '@app/components/entities/entity.provider';
+import { ENTITY_PROVIDER, EntityProvider } from '../entity.provider';
 
 import { Hero } from './Hero';
 import { HeroEntityComponent } from './hero.component';

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { EntityObject } from '@app/components/entities';
+import { EntityObject } from '../entities';
 
 @Component({
     selector: 'app-dynamics',

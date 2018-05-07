@@ -1,4 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
+import { hasProperty } from '../utils';
 import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter-components';
 import { LifecycleComponent, NgxComponentOutletAdapterRef, NgxComponentOutletAdapterRefConfig } from './adapter-ref';
 
@@ -91,9 +92,9 @@ export class NgxComponentOutletAdapterBuilderStrategyResolver {
     }
 
     private getStrategyType(component: Type<any>) {
-        const hasNgOnInit: boolean = component.prototype.hasOwnProperty('ngOnInit');
-        const hasNgDoCheck: boolean = component.prototype.hasOwnProperty('ngDoCheck');
-        const hasNgOnChanges: boolean = component.prototype.hasOwnProperty('ngOnChanges');
+        const hasNgOnInit: boolean = hasProperty(component.prototype, 'ngOnInit');
+        const hasNgDoCheck: boolean = hasProperty(component.prototype, 'ngDoCheck');
+        const hasNgOnChanges: boolean = hasProperty(component.prototype, 'ngOnChanges');
 
         if (hasNgOnChanges && !hasNgOnInit && !hasNgDoCheck) {
             return LifecycleStrategyType.OnInitAndDoCheck;

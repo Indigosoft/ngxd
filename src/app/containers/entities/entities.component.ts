@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { EntitiesService } from '@app/components/entities/entities.service';
-import { EntityObject } from '@app/components/entities/EntityObject';
 import { Observable } from 'rxjs';
+import { EntitiesService, EntityObject } from '../../components/entities';
 
 @Component({
     selector: 'app-entities-page',

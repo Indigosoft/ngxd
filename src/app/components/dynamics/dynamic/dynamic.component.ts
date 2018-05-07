@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, Type } from '@angular/core';
 
-import { EntityComponentResolver, EntityObject } from '@app/components/entities';
+import { EntityComponentResolver, EntityObject } from '../../entities';
 
 @Component({
     selector: 'app-dynamic-host',

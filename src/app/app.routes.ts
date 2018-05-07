@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { LayoutComponent } from '@app/layout/layout.component';
+import { LayoutComponent } from './layout/layout.component';
 
 export const ROUTES: Route[] = [
 

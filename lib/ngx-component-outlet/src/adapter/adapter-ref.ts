@@ -1,12 +1,6 @@
-import { ChangeDetectorRef, ComponentFactory, ComponentRef, DoCheck, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, ComponentFactory, ComponentRef, DoCheck, OnInit, SimpleChange } from '@angular/core';
 import { Subscription } from 'rxjs';
-
-const PRIVATE_PREFIX = '__ngxOnChanges_';
-
-type OnChangesExpando = OnChanges & {
-    __ngOnChanges_: SimpleChanges | null | undefined;
-    [ key: string ]: any;
-};
+import { getPropertyDescriptor, hasProperty, markForCheckWrapper, onChangesWrapper, PRIVATE_PREFIX } from '../utils';
 
 export type LifecycleComponent = OnInit & DoCheck | OnInit | DoCheck | any;
 
@@ -17,35 +11,6 @@ interface ComponentProperty {
 
 interface DefaultComponentProperty extends ComponentProperty {
     defaultDescriptor: PropertyDescriptor;
-}
-
-function onChangesWrapper(delegateHook: (() => void) | null) {
-    return function(this: OnChangesExpando) {
-        const simpleChanges = this[ PRIVATE_PREFIX ];
-
-        if (simpleChanges != null) {
-            if (this.ngOnChanges) {
-                this.ngOnChanges(simpleChanges);
-            }
-            this[ PRIVATE_PREFIX ] = null;
-        }
-
-        if (delegateHook) {
-            delegateHook.apply(this);
-        }
-    };
-}
-
-function markForCheckWrapper(delegateHook: (() => void) | null, cd) {
-    return function(this) {
-        if (delegateHook) {
-            delegateHook.apply(this);
-        }
-
-        if (cd) {
-            cd.markForCheck();
-        }
-    };
 }
 
 export interface NgxComponentOutletAdapterRefConfig<TComponent> {
@@ -105,11 +70,11 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         const inputs: ComponentProperty[] = this.componentFactory.inputs;
 
         this.defaultDescriptors = inputs.map((property: ComponentProperty): DefaultComponentProperty => {
-            const defaultDescriptor: PropertyDescriptor = Object.getOwnPropertyDescriptor(this.context, property.templateName);
+            const defaultDescriptor: PropertyDescriptor = getPropertyDescriptor(this.context, property.templateName);
 
             this.attachInput(this.context, this.componentRef.instance, property, defaultDescriptor);
 
-            return { ...property, defaultDescriptor };
+            return <DefaultComponentProperty>{ ...property, defaultDescriptor };
         });
     }
 
@@ -123,26 +88,28 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         Object.defineProperty(context, templateName, {
             get: () => {
                 if (defaultDescriptor && defaultDescriptor.get) {
-                    defaultDescriptor.get.call(context);
+                    return defaultDescriptor.get.call(context);
                 } else {
                     return instance[ propName ];
                 }
             },
             set: (value: any) => {
                 let simpleChanges = instance[ PRIVATE_PREFIX ];
-                const isFirstChange = simpleChanges === undefined;
 
                 if (simpleChanges == null) {
                     simpleChanges = instance[ PRIVATE_PREFIX ] = {};
                 }
 
+                const isFirstChange = !(instance[ `${PRIVATE_PREFIX}_${templateName}` ]);
+                instance[ `${PRIVATE_PREFIX}_${templateName}` ] = true;
+
                 simpleChanges[ templateName ] = new SimpleChange(instance[ propName ], value, isFirstChange);
 
                 if (defaultDescriptor && defaultDescriptor.set) {
                     defaultDescriptor.set.call(context, value);
-                } else {
-                    instance[ propName ] = value;
                 }
+
+                instance[ propName ] = value;
             }
         });
 
@@ -154,13 +121,13 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private attachLifecycle(): void {
         const instance: TComponent & LifecycleComponent = this.componentRef.instance as any;
 
-        if (this.componentRef.componentType.prototype.hasOwnProperty('ngOnChanges')) {
-            const markForCheckWrapped = markForCheckWrapper(instance.ngDoCheck, this.changeDetectorRef);
+        if (hasProperty(this.componentRef.componentType.prototype, 'ngOnChanges')) {
+            const markForCheckWrapped = markForCheckWrapper(instance.ngDoCheck, this.changeDetectorRef).bind(instance);
 
             this.onInitComponentRef.instance.ngOnInit = onChangesWrapper(instance.ngOnInit).bind(instance);
             this.doCheckComponentRef.instance.ngDoCheck = onChangesWrapper(markForCheckWrapped).bind(instance);
         } else {
-            this.doCheckComponentRef.instance.ngDoCheck = markForCheckWrapper(instance.ngDoCheck, this.changeDetectorRef);
+            this.doCheckComponentRef.instance.ngDoCheck = markForCheckWrapper(instance.ngDoCheck, this.changeDetectorRef).bind(instance);
         }
     }
 
@@ -170,6 +137,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         this.defaultDescriptors.forEach(({ propName, templateName, defaultDescriptor }) => {
             if (defaultDescriptor) {
                 Object.defineProperty(this.context, templateName, defaultDescriptor);
+                if (defaultDescriptor.set) {
+                    this.context[ templateName ] = instance[ propName ];
+                }
             } else {
                 delete this.context[ templateName ];
                 this.context[ templateName ] = instance[ propName ];
