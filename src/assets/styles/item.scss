@@ -1,0 +1,18 @@
+$bow_image: "/assets/img/item/bow.png";
+$spear_image: "/assets/img/item/spear.png";
+$staff_image: "/assets/img/item/staff.png";
+
+.bow-icon {
+    background-image: url($bow_image);
+    background-size: cover;
+}
+
+.spear-icon {
+    background-image: url($spear_image);
+    background-size: cover;
+}
+
+.staff-icon {
+    background-image: url($staff_image);
+    background-size: cover;
+}

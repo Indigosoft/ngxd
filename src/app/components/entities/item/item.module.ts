@@ -7,24 +7,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { DynamicsModule } from '../../dynamics/dynamics.module';
 
-import { ITEM_COMPONENTS, ITEM_PROVIDERS } from './index';
+import { COMPONENTS, PROVIDERS } from './item.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-
-        DynamicsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatListModule,
-        MatTabsModule
-    ],
-    declarations: [
-        ITEM_COMPONENTS
-    ],
-    entryComponents: [
-        ITEM_COMPONENTS
-    ],
-    providers: [ ITEM_PROVIDERS ]
+    imports: [ CommonModule, DynamicsModule, MatButtonModule, MatCardModule, MatListModule, MatTabsModule ],
+    declarations: [ COMPONENTS ],
+    entryComponents: [ COMPONENTS ],
+    providers: [ PROVIDERS ]
 })
 export class ItemEntityModule {}

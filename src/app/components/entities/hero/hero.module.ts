@@ -7,24 +7,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { DynamicsModule } from '../../dynamics/dynamics.module';
 
-import { HERO_COMPONENTS, HERO_PROVIDERS } from './index';
+import { COMPONENTS, PROVIDERS } from './hero.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-
-        DynamicsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatListModule,
-        MatTabsModule
-    ],
-    declarations: [
-        HERO_COMPONENTS
-    ],
-    entryComponents: [
-        HERO_COMPONENTS
-    ],
-    providers: [ HERO_PROVIDERS ]
+    imports: [ CommonModule, DynamicsModule, MatButtonModule, MatCardModule, MatListModule, MatTabsModule ],
+    declarations: [ COMPONENTS ],
+    entryComponents: [ COMPONENTS ],
+    providers: [ PROVIDERS ]
 })
 export class HeroEntityModule {}

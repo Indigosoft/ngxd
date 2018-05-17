@@ -9,11 +9,15 @@ export class Item implements EntityObject {
     abilities: EntityObject[];
 
     constructor({ id, name, rank, icon, abilities }: Partial<Item>) {
-        this.id = id || Math.random().toString();
+        this.id = id || Math.random().toString().slice(2, 8);
         this.name = name;
         this.rank = rank;
         this.icon = icon;
         this.abilities = abilities || [];
+    }
+
+    flatten(): EntityObject[] {
+        return this.abilities;
     }
 
 }

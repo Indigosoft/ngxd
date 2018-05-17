@@ -1,0 +1,18 @@
+$archer_image: "/assets/img/hero/archer.png";
+$knight_image: "/assets/img/hero/knight.png";
+$wizard_image: "/assets/img/hero/wizard.png";
+
+.archer-icon {
+    background-image: url($archer_image);
+    background-size: cover;
+}
+
+.knight-icon {
+    background-image: url($knight_image);
+    background-size: cover;
+}
+
+.wizard-icon {
+    background-image: url($wizard_image);
+    background-size: cover;
+}

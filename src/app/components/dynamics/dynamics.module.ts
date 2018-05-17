@@ -6,18 +6,8 @@ import { DynamicsComponent } from './dynamics.component';
 import { DynamicModule } from './dynamic/dynamic.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DynamicModule,
-        MatGridListModule
-    ],
-    declarations: [
-        DynamicsComponent
-    ],
-    exports: [
-        DynamicsComponent,
-        DynamicModule
-    ]
+    imports: [ CommonModule, DynamicModule, MatGridListModule ],
+    declarations: [ DynamicsComponent ],
+    exports: [ DynamicsComponent, DynamicModule ]
 })
 export class DynamicsModule {}
-

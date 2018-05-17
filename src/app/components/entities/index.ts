@@ -1,4 +1,4 @@
-import { EntityComponentResolver } from './entity-component.resolver';
+import { EntityComponentResolver } from './entity.resolver';
 import { EntitiesService } from './entities.service';
 
 export * from './EntityObject';

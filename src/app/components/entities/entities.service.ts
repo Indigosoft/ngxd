@@ -1,4 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ENTITIES } from './entities';
 import { EntityObject } from './EntityObject';
 
@@ -11,6 +12,13 @@ export class EntitiesService {
 
     getEntities(): Observable<EntityObject[]> {
         return this.entities$.asObservable();
+    }
+
+    getFlattenEntities(): Observable<EntityObject[]> {
+        return this.getEntities().pipe(map((entities) =>
+            entities.reduce((acc, entity) => [
+                ...acc, entity, ...entity.flatten()
+            ], [])));
     }
 
 }

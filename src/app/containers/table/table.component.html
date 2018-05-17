@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <h1>Dynamic Table Example</h1>
+</mat-toolbar>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Basic Table</mat-card-title>
+        <mat-card-subtitle>with dynamic components</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <app-table [columns]="columns" [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-table>
+    </mat-card-content>
+</mat-card>

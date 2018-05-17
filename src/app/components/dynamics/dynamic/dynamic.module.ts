@@ -5,16 +5,9 @@ import { NgxComponentOutletModule } from '../../../../../lib/ngx-component-outle
 import { DynamicComponent, DynamicHostComponent } from './dynamic.component';
 
 @NgModule({
-    imports: [
-        NgxComponentOutletModule.forChild()
-    ],
-    declarations: [
-        DynamicComponent,
-        DynamicHostComponent
-    ],
-    exports: [
-        DynamicComponent
-    ]
+    imports: [ NgxComponentOutletModule.forChild() ],
+    declarations: [ DynamicComponent, DynamicHostComponent ],
+    exports: [ DynamicComponent ]
 })
 export class DynamicModule {}
 

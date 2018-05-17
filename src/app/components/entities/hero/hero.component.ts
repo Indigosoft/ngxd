@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { provideEntity } from '../entity.provider';
 
 import { Hero } from './Hero';
 
@@ -17,3 +18,6 @@ export class HeroEntityComponent {
     }
 
 }
+
+export const PROVIDERS = provideEntity(Hero, HeroEntityComponent);
+export const COMPONENTS = [ HeroEntityComponent ];

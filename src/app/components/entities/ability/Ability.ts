@@ -8,10 +8,14 @@ export class Ability implements EntityObject {
     amount: number;
 
     constructor({ id, name, icon, amount }: Partial<Ability>) {
-        this.id = Math.random().toString();
+        this.id = Math.random().toString().slice(2, 8);
         this.name = name;
         this.icon = icon;
         this.amount = amount || 0;
+    }
+
+    flatten(): EntityObject[] {
+        return [];
     }
 
 }

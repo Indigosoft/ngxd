@@ -9,7 +9,8 @@ export const ROUTES: Route[] = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', loadChildren: 'app/containers/entities/entities.module#EntitiesPageModule' }
+            { path: '', loadChildren: 'app/containers/entities/entities.module#EntitiesPageModule' },
+            { path: 'table', loadChildren: 'app/containers/table/table.module#TablePageModule' }
         ]
     }
 
