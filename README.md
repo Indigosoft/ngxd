@@ -28,8 +28,8 @@
 | projectionNodes        |  ✅                | ✅                       | ✅                |
 | Component Access       |  ✅                | ✅                       | ❌                |
 | Lifecycle OnChanges    |  ✅                | ⭕️ manually              | ❌                |
-| Binding @Input         |  ✅                | ⭕️ manually              | ❌                |
-| Binding @Outputs       |  ✅                | ⭕️ manually              | ❌                |
+| Binding ```@Input()``` |  ✅                | ⭕️ manually              | ❌                |
+| Binding ```@Output()```|  ✅                | ⭕️ manually              | ❌                |
 | Activate Event         |  ✅                | ⭕️ manually              | ❌                |
 | Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
 
@@ -174,18 +174,18 @@ export class AppModule {}
 
 ## API
 
-| Input                                     | Type                 | Default | Required | Description |
-| ----------------------------------------- | -------------------- | ------- | -------- | ----------- |
-| ```[ngxComponentOutlet]```                | Type<any>            | n/a     | yes      |             |
-| ```[ngxComponentOutletInjector]```        | Injector             | n/a     | no       |             |
-| ```[ngxComponentOutletContent]```         | any[][]              | n/a     | no       |             |
-| ```[ngxComponentOutletNgModuleFactory]``` | NgModuleFactory<any> | n/a     | no       |             |
+| Input                                     | Type                       | Default | Required | Description |
+| ----------------------------------------- | -------------------------- | ------- | -------- | ----------- |
+| ```[ngxComponentOutlet]```                | ```Type<any>```            | n/a     | yes      |             |
+| ```[ngxComponentOutletInjector]```        | ```Injector```             | n/a     | no       |             |
+| ```[ngxComponentOutletContent]```         | ```any[][]```              | n/a     | no       |             |
+| ```[ngxComponentOutletNgModuleFactory]``` | ```NgModuleFactory<any>``` | n/a     | no       |             |
 
 
-| Output                                    | Type                 | Description |
-| ----------------------------------------- | -------------------- | ----------- |
-| ```(ngxComponentOutletActivate)```        | any                  |             |
-| ```(ngxComponentOutletDeactivate)```      | any                  |             |
+| Output                                    | Type                       | Description |
+| ----------------------------------------- | -------------------------- | ----------- |
+| ```(ngxComponentOutletActivate)```        | ```any```                  |             |
+| ```(ngxComponentOutletDeactivate)```      | ```any```                  |             |
 
 ## Advanced Use Cases
 
