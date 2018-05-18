@@ -15,6 +15,24 @@
 [![GitHub stars](https://img.shields.io/github/stars/thekiba/ngx-component-outlet.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/thekiba/ngx-component-outlet)
 [![npm Downloads](https://img.shields.io/npm/dw/ngx-component-outlet.svg?style=flat-square)](https://www.npmjs.com/package/ngx-component-outlet)
 
+## Comparison
+
+| Feature                | NgxComponentOutlet | ComponentFactoryResolver | NgComponentOutlet |
+| ---------------------- | ------------------ | ------------------------ | ----------------- |
+| Friendliness           |  ⭐⭐⭐            | ⭐                       | ⭐⭐              |
+| Dynamic Components     |  ✅                | ✅                       | ✅                |
+| AOT support            |  ✅                | ✅                       | ✅                |
+| Reactivity             |  ✅                | ✅                       | ✅                |
+| Injector               |  ✅                | ✅                       | ✅                |
+| NgModule               |  ✅                | ✅                       | ✅                |
+| projectionNodes        |  ✅                | ✅                       | ✅                |
+| Component Access       |  ✅                | ✅                       | ❌                |
+| Lifecycle OnChanges    |  ✅                | ⭕️ manually              | ❌                |
+| Binding @Input         |  ✅                | ⭕️ manually              | ❌                |
+| Binding @Outputs       |  ✅                | ⭕️ manually              | ❌                |
+| Activate Event         |  ✅                | ⭕️ manually              | ❌                |
+| Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
+
 ## Installation
 
 ```bash
@@ -34,13 +52,38 @@ And use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings
 
 #### [Demo Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
 
-## Simple Usage Example
+## Getting started
 
-We have ```CompAComponent``` and ```CompBComponent``` that we want to use dynamically.
+### Step 1: Install ```ngx-component-outlet```:
+
+#### NPM
+
+```bash
+npm install --save ngx-component-outlet
+```
+
+#### Yarn
+
+```bash
+yarn add  ngx-component-outlet
+```
+
+### Step 2: Import the NgxComponentOutletModule:
 
 ```typescript
-import { Component, Input } from '@angular/core';
+import { NgxComponentOutletModule } from 'ngx-component-outlet';
 
+@NgModule({
+  declarations: [ AppComponent ],
+  imports: [ NgxComponentOutletModule.forRoot() ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+```
+
+### Step 3: Create components that your want to use dynamically:
+
+```typescript
 @Component({
     selector: 'app-dynamic-comp-a',
     template: `I'm Dynamic Component A. Hello, {{ name }}!`
@@ -51,8 +94,6 @@ export class CompAComponent {
 ```
 
 ```typescript
-import { Component, Input } from '@angular/core';
-
 @Component({
     selector: 'app-dynamic-comp-b',
     template: `I'm Dynamic Component B. Hello, {{ name }}!`
@@ -62,11 +103,20 @@ export class CompBComponent {
 }
 ```
 
-To dynamically display the component, we need to create a host component with the same inputs/outputs.
+### Step 4: Add components to ```declarations``` and ```entryComponents```:
 
 ```typescript
-import { Component, Input } from '@angular/core';
+@NgModule({
+    ...
+    declarations: [ ..., CompAComponent, CompBComponent ],
+    entryComponents: [ CompAComponent, CompBComponent ]
+})
+export class AppModule {}
+```
 
+### Step 5: Create a host component with the same inputs/outputs:
+
+```typescript
 @Component({
     selector: 'app-host-for-dynamic',
     template: ''
@@ -76,29 +126,18 @@ export class HostComponent {
 }
 ```
 
-Add all components to the module, and also imports ```NgxComponentOutletModule```.
-
-You must also specify the dynamic components in the ```entryComponents```.
+### Step 6: Add the component to ```declarations```:
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxComponentOutletModule } from 'ngx-component-outlet';
-
-import { AppComponent } from './app.component';
-import { CompAComponent, CompBComponent } from './dynamic.component';
-import { HostComponent } from './host.component';
-
 @NgModule({
-  imports:      [ BrowserModule, NgxComponentOutletModule.forRoot() ],
-  declarations: [ AppComponent, CompAComponent, CompBComponent, HostComponent ],
-  entryComponents: [ CompAComponent, CompBComponent ],
-  bootstrap:    [ AppComponent ]
+    ...
+    declarations: [ ..., HostComponent ],
+    ...
 })
 export class AppModule {}
 ```
 
-Now in AppComponent we will meet Angular.
+### Step 7: Now show dynamic component in AppComponent:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -114,12 +153,39 @@ import { Component } from '@angular/core';
     `
 })
 export class AppComponent {
-    
     componentA = CompAComponent;
     componentB = CompBComponent;
-    
 }
 ```
+
+#### And you will have in AppModule:
+
+```typescript
+import { NgxComponentOutletModule } from 'ngx-component-outlet';
+
+@NgModule({
+  imports:      [ NgxComponentOutletModule.forRoot() ],
+  declarations: [ AppComponent, CompAComponent, CompBComponent, HostComponent ],
+  entryComponents: [ CompAComponent, CompBComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule {}
+```
+
+## API
+
+| Input                                     | Type                 | Default | Required | Description |
+| ----------------------------------------- | -------------------- | ------- | -------- | ----------- |
+| ```[ngxComponentOutlet]```                | Type<any>            | n/a     | yes      |             |
+| ```[ngxComponentOutletInjector]```        | Injector             | n/a     | no       |             |
+| ```[ngxComponentOutletContent]```         | any[][]              | n/a     | no       |             |
+| ```[ngxComponentOutletNgModuleFactory]``` | NgModuleFactory<any> | n/a     | no       |             |
+
+
+| Output                                    | Type                 | Description |
+| ----------------------------------------- | -------------------- | ----------- |
+| ```(ngxComponentOutletActivate)```        | any                  |             |
+| ```(ngxComponentOutletDeactivate)```      | any                  |             |
 
 ## Advanced Use Cases
 
