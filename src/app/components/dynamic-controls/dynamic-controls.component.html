@@ -1,0 +1,2 @@
+<app-dynamic-control *ngFor="let control of controls; trackBy: trackById"
+                     [control]="control" (controlChange)="onControlChanged(control.key, $event)"></app-dynamic-control>

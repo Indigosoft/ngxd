@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { DynamicsModule } from '../../components/dynamics/dynamics.module';
+import { DynamicsModule } from '../../components/dynamic-entities/dynamics.module';
 import { EntitiesModule } from '../../components/entities/entities.module';
 
 import { EntitiesPageComponent } from './entities.component';

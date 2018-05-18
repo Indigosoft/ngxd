@@ -1,0 +1,6 @@
+<mat-grid-list [cols]="schema.length">
+    <mat-grid-tile *ngFor="let column of schema; trackBy: trackById">
+        <app-table-column-schema [column]="column" (columnChange)="onTableColumnChange(column.def, $event)">
+        </app-table-column-schema>
+    </mat-grid-tile>
+</mat-grid-list>

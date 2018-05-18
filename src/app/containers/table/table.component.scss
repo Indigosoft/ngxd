@@ -13,7 +13,12 @@ h1 {
 }
 
 .mat-card {
-    max-width: $width;
-    min-height: $height;
+    width: 100%;
+    height: calc(100% - 70px);
     margin: 20px;
+}
+
+.mat-card-content {
+    overflow-y: auto;
+    height: calc(100% - 70px);
 }

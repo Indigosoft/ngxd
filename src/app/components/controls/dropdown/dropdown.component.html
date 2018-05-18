@@ -1,0 +1,7 @@
+<mat-form-field [formGroup]="form">
+    <mat-select [formControlName]="control.key" [placeholder]="control.label">
+        <mat-option *ngFor="let option of control.options" [value]="option.value">
+            {{ option.key }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

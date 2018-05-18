@@ -8,7 +8,7 @@
         "start": "ng serve",
         "start:prod": "ng serve --prod",
         "build": "ng build --prod",
-        "test": "ng test -sm=false",
+        "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
         "packagr": "ng-packagr -p lib/ngx-component-outlet/package.json"
