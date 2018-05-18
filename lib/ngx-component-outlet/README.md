@@ -15,6 +15,22 @@
 [![GitHub stars](https://img.shields.io/github/stars/thekiba/ngx-component-outlet.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/thekiba/ngx-component-outlet)
 [![npm Downloads](https://img.shields.io/npm/dw/ngx-component-outlet.svg?style=flat-square)](https://www.npmjs.com/package/ngx-component-outlet)
 
+## Example Usage
+
+Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
+
+```angular2html
+<!-- host component -->
+<app-dynamic
+    <!-- dynamic component -->
+    [ngxComponentOutlet]="component"
+    <!-- regular input -->
+    [entity]="entity"
+    <!-- regular output -->
+    (action)="onAction($event)">
+</app-dynamic>
+```
+
 ## Comparison
 
 | Feature                | NgxComponentOutlet | ComponentFactoryResolver | NgComponentOutlet |
@@ -33,24 +49,21 @@
 | Activate Event         |  ✅                | ⭕️ manually              | ❌                |
 | Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
 
-## Installation
-
-```bash
-npm install --save ngx-component-outlet
-```
-
-And use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
-
-```angular2html
-<app-dynamic [ngxComponentOutlet]="component"
-    [entity]="entity" (action)="onAction($event)"></app-dynamic>
-```
-
 ## Demo
 
-#### [Demo Repository](https://github.com/thekiba/ngx-component-outlet/tree/master/src)
+#### [Heroes](https://ngx-component-outlet-demo.stackblitz.io/)
 
-#### [Demo Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
+List of heroes
+
+#### [Table And Form](https://ngx-component-outlet-demo.stackblitz.io/table)
+
+Table of heroes with table schema form
+
+#### Editable Demo
+
+[Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
+
+[Github](https://github.com/thekiba/ngx-component-outlet/tree/master/src)
 
 ## Getting started
 
@@ -65,7 +78,7 @@ npm install --save ngx-component-outlet
 #### Yarn
 
 ```bash
-yarn add  ngx-component-outlet
+yarn add ngx-component-outlet
 ```
 
 ### Step 2: Import the NgxComponentOutletModule:
