@@ -11,7 +11,10 @@ import { TableColumn } from '../table-columns';
 export class DynamicTableComponent {
     @Input() schema: TableColumn[];
     @Input() dataSource: DataSource<any>;
-    @Input() displayedColumns: string[];
+
+    get displayedColumns(): string[] {
+        return this.schema.map(({ def }) => def);
+    }
 
     trackById(index, column: TableColumn): string {
         return column.def;

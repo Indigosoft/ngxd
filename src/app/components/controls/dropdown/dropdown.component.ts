@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { provideControl } from '../control.provider';
 import { DropdownControl } from './DropdownControl';
 
@@ -9,8 +9,8 @@ import { DropdownControl } from './DropdownControl';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownControlComponent {
-    @Input() control: DropdownControl;
-    @Input() form: AbstractControl;
+    @Input() control: FormControl;
+    @Input() schema: DropdownControl;
 }
 
 export const COMPONENTS = [ DropdownControlComponent ];

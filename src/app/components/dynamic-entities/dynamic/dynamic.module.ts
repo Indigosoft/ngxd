@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { NgxComponentOutletModule } from '../../../../../lib/ngx-component-outlet';
+import { NgxdModule } from '@ngxd/core';
 
 import { DynamicComponent, DynamicHostComponent } from './dynamic.component';
 
 @NgModule({
-    imports: [ NgxComponentOutletModule.forChild() ],
+    imports: [ NgxdModule.forChild() ],
     declarations: [ DynamicComponent, DynamicHostComponent ],
     exports: [ DynamicComponent ]
 })

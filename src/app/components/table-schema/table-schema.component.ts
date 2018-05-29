@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AbstractControl, FormArray } from '@angular/forms';
+import { AbstractControlSchema } from '@ngxd/forms';
+import { ReplaySubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TableColumn } from '../table-columns';
+import { TableSchemaService } from './table-schema.service';
 import { TableSchema } from './TableSchema';
 
 @Component({
@@ -7,14 +12,48 @@ import { TableSchema } from './TableSchema';
     templateUrl: 'table-schema.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableSchemaComponent {
+export class TableSchemaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() schema: TableSchema;
     @Output() schemaChange: EventEmitter<TableSchema> = new EventEmitter<TableSchema>();
 
-    onTableColumnChange(name: string, column: TableColumn) {
-        const schema: TableSchema = this.schema.map((item) => item.def === column.def ? column : item);
+    form: AbstractControl;
+    formSchema: AbstractControlSchema;
 
-        this.schemaChange.emit(schema);
+    private ngOnDestroy$: ReplaySubject<null> = new ReplaySubject<null>();
+
+    private subscription: Subscription;
+
+    constructor(private service: TableSchemaService) {}
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.schema && this.schema) {
+            this.formSchema = this.service.createFormSchema(this.schema);
+            this.form = this.service.createForm(this.formSchema);
+            this.form.patchValue(this.schema);
+
+            if (this.subscription) {
+                this.subscription.unsubscribe();
+                this.subscription = null;
+            }
+
+            this.subscription = this.form.valueChanges.pipe(
+                map(() => (this.form as FormArray).getRawValue())
+            ).subscribe(this.schemaChange);
+            // this.service.updateForm(this.form, this.formSchema, this.schema);
+        }
+    }
+
+    ngOnInit() {
+    }
+
+    ngOnDestroy() {
+        this.ngOnDestroy$.next(null);
+        this.ngOnDestroy$.complete();
+
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+            this.subscription = null;
+        }
     }
 
     trackById(index, column: TableColumn) {

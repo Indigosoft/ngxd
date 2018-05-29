@@ -1,0 +1,35 @@
+{
+    "name": "@ngxd/core",
+    "version": "0.1.0",
+    "description": "NGXD is a dynamic pattern + library for Angular",
+    "keywords": [
+        "angular",
+        "angular5",
+        "angular6",
+        "angular-library",
+        "angular-components",
+        "dynamic-components",
+        "typescript"
+    ],
+    "author": "thekiba <hr@thekiba.io>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IndigoSoft/ngx-component-outlet.git"
+    },
+    "maintainers": [
+        {
+            "name": "thekiba",
+            "email": "hr@thekiba.io"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/IndigoSoft/ngx-component-outlet/issues"
+    },
+    "homepage": "https://github.com/IndigoSoft/ngx-component-outlet",
+    "peerDependencies": {
+        "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+        "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+        "rxjs": ">=6.0.0 || ^5.6.0-forward-compat.4"
+    }
+}

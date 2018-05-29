@@ -10,7 +10,7 @@
                 <mat-card-subtitle>with dynamic components</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <app-dynamic-table [schema]="schema$ | async" [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-dynamic-table>
+                <app-dynamic-table [schema]="schema" [dataSource]="dataSource"></app-dynamic-table>
             </mat-card-content>
         </mat-card>
     </mat-grid-tile>
@@ -21,9 +21,8 @@
                 <mat-card-subtitle>with dynamic forms</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <app-table-schema [schema]="schema$ | async" (schemaChange)="onSchemaChanged($event)"></app-table-schema>
+                <app-table-schema [(schema)]="schema"></app-table-schema>
             </mat-card-content>
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>
-

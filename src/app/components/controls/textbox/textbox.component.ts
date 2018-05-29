@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { provideControl } from '../control.provider';
 import { TextboxControl } from './TextboxControl';
 
@@ -9,8 +9,8 @@ import { TextboxControl } from './TextboxControl';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextboxControlComponent {
-    @Input() control: TextboxControl;
-    @Input() form: FormGroup;
+    @Input() control: FormControl;
+    @Input() schema: TextboxControl;
 }
 
 export const COMPONENTS = [ TextboxControlComponent ];

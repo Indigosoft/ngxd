@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { NgxComponentOutletModule } from '../../../../../lib/ngx-component-outlet';
+import { NgxdModule } from '@ngxd/core';
 import { DynamicTableColumnHostComponent, DynamicTableColumnComponent } from './dynamic-table-column.component';
 
 @NgModule({
-    imports: [ NgxComponentOutletModule.forChild() ],
+    imports: [ NgxdModule.forChild() ],
     declarations: [ DynamicTableColumnHostComponent, DynamicTableColumnComponent ],
     exports: [ DynamicTableColumnComponent ]
 })

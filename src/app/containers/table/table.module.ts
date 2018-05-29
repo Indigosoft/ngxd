@@ -10,6 +10,7 @@ import { TableColumnModule } from '../../components/table-columns';
 import { TableSchemaModule } from '../../components/table-schema';
 
 import { TablePageComponent } from './table.component';
+import { TableDataSourceBuilder } from './table.datasource';
 import { TableRouting } from './table.routing';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { TableRouting } from './table.routing';
         TableSchemaModule, TableRouting, MatCardModule, MatToolbarModule,
         MatGridListModule
     ],
-    declarations: [ TablePageComponent ]
+    declarations: [ TablePageComponent ],
+    providers: [ TableDataSourceBuilder ]
 })
 export class TablePageModule {}
