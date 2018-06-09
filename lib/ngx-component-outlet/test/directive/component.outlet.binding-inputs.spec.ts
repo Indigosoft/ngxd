@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, NgModule, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NgxComponentOutletModule } from '../../src';
@@ -345,6 +346,42 @@ describe('check binding inputs', () => {
         expect(component.activatedComponent.inputsOnChanges[1].name).toBe('React');
         expect(component.activatedComponent.inputsOnChanges[1].label).toBe('Library');
     }));
+
+    it('should update saved value for binding', () => {
+        const template: string = 'name: {{ name | json }}';
+        TestBed.overrideComponent(DynamicComponent, { set: { template } });
+        TestBed.overrideComponent(AnotherDynamicComponent, { set: { template } });
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+
+        component.name = [] as any;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([]);
+        expect(content).toContain('name: []');
+
+        component.name = [ ...(component.name as any), 1 ] as any;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1 ]);
+        expect(content).toContain('name: [\n  1\n]');
+
+        component.component = AnotherDynamicComponent;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1 ]);
+        expect(content).toContain('name: [\n  1\n]');
+
+        component.name = [ ...(component.name as any), 2 ] as any;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1, 2 ]);
+        expect(content).toContain('name: [\n  1,\n  2\n]');
+    });
 });
 
 class BaseHostComponent {}
@@ -512,7 +549,7 @@ class TestComponent {
 }
 
 @NgModule({
-    imports: [ NgxComponentOutletModule.forRoot() ],
+    imports: [ CommonModule, NgxComponentOutletModule.forRoot() ],
     declarations: [
         DynamicComponent, AnotherDynamicComponent, DifferentPropertiesDynamicComponent, EmptyDynamicComponent,
         WithGetterDynamicComponent, WithSetterDynamicComponent, WithGetterAndSetterDynamicComponent,
