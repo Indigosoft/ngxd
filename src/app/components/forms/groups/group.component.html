@@ -1,0 +1,4 @@
+<app-dynamic-form
+    *ngFor="let control of toArray(schema.controls); trackBy: trackByKey"
+    [form]="group.get(control.key)" [schema]="control"
+></app-dynamic-form>

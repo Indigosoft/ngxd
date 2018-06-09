@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { ControlComponentResolver } from './control.resolver';
+import { FormControlComponentResolver } from './control.resolver';
 import { DropdownControlModule } from './dropdown/dropdown.module';
 import { TextboxControlModule } from './textbox/textbox.module';
 
 @NgModule({
     imports: [ DropdownControlModule, TextboxControlModule ],
-    providers: [ ControlComponentResolver ]
+    providers: [ FormControlComponentResolver ]
 })
-export class ControlsModule {}
+export class FormControlsModule {}

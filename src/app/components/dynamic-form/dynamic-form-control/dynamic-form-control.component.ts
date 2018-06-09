@@ -2,28 +2,28 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormControlSchema } from '@ngxd/forms';
 
-import { ControlComponentResolver } from '../../controls';
+import { FormControlComponentResolver } from '../../forms/controls';
 
 @Component({
-    selector: 'app-dynamic-control-host',
+    selector: 'app-dynamic-form-control-host',
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicControlHostComponent {
+export class DynamicFormControlHostComponent {
     @Input() control: FormControl;
     @Input() schema: FormControlSchema;
 }
 
 @Component({
-    selector: 'app-dynamic-control',
-    templateUrl: 'dynamic-control.component.html',
+    selector: 'app-dynamic-form-control',
+    templateUrl: 'dynamic-form-control.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicControlComponent {
+export class DynamicFormControlComponent {
 
     @Input() control: FormControl;
     @Input() schema: FormControlSchema;
 
-    constructor(public resolver: ControlComponentResolver) {}
+    constructor(public resolver: FormControlComponentResolver) {}
 
 }

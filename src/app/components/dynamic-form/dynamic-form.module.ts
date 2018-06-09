@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
+import { DynamicFormArrayModule } from './dynamic-form-array';
+import { DynamicFormControlModule } from './dynamic-form-control';
+import { DynamicFormGroupModule } from './dynamic-form-group';
 
 import { DynamicFormComponent } from './dynamic-form.component';
-import { DynamicControlModule } from './dynamic-control';
 
 @NgModule({
-    imports: [ CommonModule, DynamicControlModule, MatGridListModule ],
+    imports: [ CommonModule, DynamicFormControlModule, DynamicFormGroupModule, DynamicFormArrayModule ],
     declarations: [ DynamicFormComponent ],
-    exports: [ DynamicFormComponent, DynamicControlModule ]
+    exports: [ DynamicFormComponent, DynamicFormControlModule, DynamicFormGroupModule, DynamicFormArrayModule ]
 })
 export class DynamicFormModule {}

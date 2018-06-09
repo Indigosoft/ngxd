@@ -1,4 +1,4 @@
-import { ControlBase } from '../ControlBase';
+import { FormControlSchema } from '@ngxd/forms';
 
 export class DropdownControlOptions {
     key: string;
@@ -10,11 +10,11 @@ export class DropdownControlOptions {
     }
 }
 
-export class DropdownControl extends ControlBase {
+export class DropdownControl extends FormControlSchema {
     options: DropdownControlOptions[] = [];
 
-    constructor({ options, ...args }: Partial<DropdownControl>) {
-        super(args);
+    constructor({ options, ...args }: Partial<DropdownControl>, ...config) {
+        super(args, ...config);
         this.options = options;
     }
 }

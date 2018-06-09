@@ -66,7 +66,6 @@ export class FormSchemaBuilder {
         return form;
     }
 
-    /** @internal */
     private _reduceControls(controlsConfig: { [ k: string ]: any }): { [ key: string ]: AbstractControlSchema } {
         const controls: { [ key: string ]: AbstractControlSchema } = {};
         Object.keys(controlsConfig).forEach(controlName => {
@@ -75,7 +74,6 @@ export class FormSchemaBuilder {
         return controls;
     }
 
-    /** @internal */
     private _createControl(controlConfig: any): AbstractControlSchema {
         if (controlConfig instanceof FormControlSchema || controlConfig instanceof FormGroupSchema ||
             controlConfig instanceof FormArraySchema) {
@@ -92,12 +90,10 @@ export class FormSchemaBuilder {
         }
     }
 
-    /** @internal */
     private _mapForm(schema: FormArraySchema): AbstractControl[] {
         return schema.controls.map((control) => this.form(control));
     }
 
-    /** @internal */
     private _reduceForm(schema: FormGroupSchema): { [ key: string ]: AbstractControl } {
         const controls: { [ key: string ]: AbstractControl } = {};
         Object.keys(schema.controls).forEach((key) =>

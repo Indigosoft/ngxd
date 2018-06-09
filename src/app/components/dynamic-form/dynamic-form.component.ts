@@ -9,12 +9,8 @@ import { AbstractControlSchema, FormArraySchema, FormControlSchema, FormGroupSch
 })
 export class DynamicFormComponent {
 
-    @Input() form: AbstractControl; // FormControl | FormGroup | FormArray
-    @Input() schema: AbstractControlSchema; // FormControlSchema | FormGroupSchema | FormArraySchema
-
-    toArray(object: {}) {
-        return Object.keys(object).map((key) => object[key]);
-    }
+    @Input() form: AbstractControl;
+    @Input() schema: AbstractControlSchema;
 
     isControl(schema: AbstractControlSchema): boolean {
         return schema instanceof FormControlSchema;
@@ -26,14 +22,6 @@ export class DynamicFormComponent {
 
     isArray(schema: AbstractControlSchema): boolean {
         return schema instanceof FormArraySchema;
-    }
-
-    trackByKey(index, schema: AbstractControlSchema): string {
-        return schema.key;
-    }
-
-    trackByIndex(index): string {
-        return String(index);
     }
 
 }

@@ -1,18 +1,3 @@
-<ng-container *ngIf="isControl(schema)">
-    <app-dynamic-control [control]="form" [schema]="schema"></app-dynamic-control>
-</ng-container>
-
-<ng-container *ngIf="isGroup(schema)">
-    <!--<app-group-control [group]="form" [schema]="schema"></app-group-control>-->
-    <app-dynamic-form *ngFor="let control of toArray(schema.controls); trackBy: trackByKey"
-                      [form]="form.get(control.key)" [schema]="control"></app-dynamic-form>
-</ng-container>
-
-<ng-container *ngIf="isArray(schema)">
-    <!--<app-array-control [array]="form" [schema]="schema"></app-array-control>-->
-    <mat-grid-list [cols]="schema.controls.length">
-        <mat-grid-tile *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">
-            <app-dynamic-form [form]="form.at(index)" [schema]="control"></app-dynamic-form>
-        </mat-grid-tile>
-    </mat-grid-list>
-</ng-container>
+<app-dynamic-form-control *ngIf="isControl(schema)" [control]="form" [schema]="schema"></app-dynamic-form-control>
+<app-dynamic-form-group *ngIf="isGroup(schema)" [group]="form" [schema]="schema"></app-dynamic-form-group>
+<app-dynamic-form-array *ngIf="isArray(schema)" [array]="form" [schema]="schema"></app-dynamic-form-array>

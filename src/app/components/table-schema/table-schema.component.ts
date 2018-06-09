@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray } from '@angular/forms';
 import { AbstractControlSchema } from '@ngxd/forms';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TableColumn } from '../table-columns';
 import { TableSchemaService } from './table-schema.service';
 import { TableSchema } from './TableSchema';
 
@@ -12,7 +11,7 @@ import { TableSchema } from './TableSchema';
     templateUrl: 'table-schema.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableSchemaComponent implements OnChanges, OnInit, OnDestroy {
+export class TableSchemaComponent implements OnChanges, OnDestroy {
     @Input() schema: TableSchema;
     @Output() schemaChange: EventEmitter<TableSchema> = new EventEmitter<TableSchema>();
 
@@ -43,9 +42,6 @@ export class TableSchemaComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
-    }
-
     ngOnDestroy() {
         this.ngOnDestroy$.next(null);
         this.ngOnDestroy$.complete();
@@ -56,7 +52,4 @@ export class TableSchemaComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    trackById(index, column: TableColumn) {
-        return column.def;
-    }
 }
