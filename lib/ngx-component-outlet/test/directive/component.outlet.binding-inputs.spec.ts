@@ -381,6 +381,28 @@ describe('check binding inputs', () => {
 
         expect(component.activatedComponent.name).toEqual([ 1, 2 ]);
         expect(content).toContain('name: [\n  1,\n  2\n]');
+
+        component.component = DynamicComponent;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1, 2 ]);
+        expect(content).toContain('name: [\n  1,\n  2\n]');
+
+        component.name = [ ...(component.name as any), 3 ] as any;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1, 2, 3 ]);
+        expect(content).toContain('name: [\n  1,\n  2,\n  3\n]');
+
+        component.component = AnotherDynamicComponent;
+        component.name = [ ...(component.name as any), 4 ] as any;
+        fixture.detectChanges();
+        content = fixture.debugElement.nativeElement.innerHTML;
+
+        expect(component.activatedComponent.name).toEqual([ 1, 2, 3, 4 ]);
+        expect(content).toContain('name: [\n  1,\n  2,\n  3,\n  4\n]');
     });
 });
 

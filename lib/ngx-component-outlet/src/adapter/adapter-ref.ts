@@ -136,6 +136,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
 
         this.defaultDescriptors.forEach(({ propName, templateName, defaultDescriptor }) => {
             if (defaultDescriptor) {
+                if (defaultDescriptor.writable) {
+                    defaultDescriptor.value = instance[ propName ];
+                }
                 Object.defineProperty(this.context, templateName, defaultDescriptor);
                 if (defaultDescriptor.set) {
                     this.context[ templateName ] = instance[ propName ];
