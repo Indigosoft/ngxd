@@ -5,3 +5,4 @@
         </mat-option>
     </mat-select>
 </mat-form-field>
+<mat-error *ngIf="control.invalid">{{ control.errors | json }}</mat-error>

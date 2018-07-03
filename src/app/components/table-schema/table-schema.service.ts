@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, Validators } from '@angular/forms';
 import { AbstractControlSchema, FormGroupSchema, FormSchemaBuilder } from '@ngxd/forms';
 import { DropdownControl, DropdownControlOptions, TextboxControl } from '../forms/controls';
 import { TableColumnTypes } from '../table-columns';
@@ -18,68 +18,24 @@ export class TableSchemaService {
         const columns: FormGroupSchema[] = schema.map((column) =>
             this.fsb.group({ key: column.def, label: column.header }, {
                 def: new TextboxControl({
-                    key: 'def', label: 'Column Def', type: 'text', disabled: true
+                    key: 'def', label: 'Column Def', type: 'text', disabled: true,
+                    validator: [ Validators.required ]
                 }),
                 header: new TextboxControl({
-                    key: 'header', label: 'Header', type: 'text'
+                    key: 'header', label: 'Header', type: 'text',
+                    validator: [ Validators.required, Validators.minLength(2) ]
                 }),
                 type: new DropdownControl({
                     key: 'type', label: 'Type', options: [
                         new DropdownControlOptions({ key: 'Id', value: TableColumnTypes.Id }),
                         new DropdownControlOptions({ key: 'Icon', value: TableColumnTypes.Icon }),
                         new DropdownControlOptions({ key: 'Text', value: TableColumnTypes.Text })
-                    ]
+                    ], validator: [ Validators.required ]
                 })
             })
         );
 
         return this.fsb.array({ label: 'Table Schema' }, columns);
     }
-
-    // updateForm(form: FormGroup, formSchema: TableFormSchema, tableSchema: TableSchema) {
-    //     for (const index in formSchema) {
-    //         if (!form.contains(index)) {
-    //             form.setControl(index, this.fb.group({
-    //                 def: this.fb.control(''),
-    //                 header: this.fb.control(''),
-    //                 type: this.fb.control('')
-    //             }));
-    //         }
-    //     }
-    //
-    //     for (const index in form.controls) {
-    //         if (!formSchema.hasOwnProperty(index)) {
-    //             form.removeControl(index);
-    //         }
-    //     }
-    //
-    //     for (const columnSchema of tableSchema) {
-    //         if (form.contains(columnSchema.def)) {
-    //             form.get(columnSchema.def).patchValue(columnSchema, { emitEvent: false });
-    //         }
-    //     }
-    //
-    //     for (const index in formSchema) {
-    //         if (form.contains(index)) {
-    //             this.updateAccessForm(form.get(index) as FormGroup, formSchema[ index ]);
-    //         }
-    //     }
-    // }
-    //
-    // private updateAccessForm(form: FormGroup, formSchema: ControlBase[]) {
-    //     for (const controlSchema of formSchema) {
-    //         if (form.contains(controlSchema.key)) {
-    //             const index = controlSchema.key;
-    //
-    //             if (form.get(index).enabled && controlSchema.disabled) {
-    //                 form.get(index).disable({ emitEvent: false });
-    //             }
-    //
-    //             if (form.get(index).disabled && !controlSchema.disabled) {
-    //                 form.get(index).enable({ emitEvent: false });
-    //             }
-    //         }
-    //     }
-    // }
 
 }

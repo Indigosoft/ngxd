@@ -1,3 +1,4 @@
 <mat-form-field>
     <input matInput [formControl]="control" [placeholder]="schema.label">
 </mat-form-field>
+<mat-error *ngIf="control.invalid">{{ control.errors | json }}</mat-error>

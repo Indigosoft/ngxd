@@ -19,20 +19,20 @@ export abstract class AbstractControlSchema {
 export class FormControlSchema extends AbstractControlSchema {
 
     formState: any;
-    validator: ValidatorFn | ValidatorFn[] | null;
-    asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] | null;
+    validator?: ValidatorFn | ValidatorFn[] | null;
+    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null;
 
     constructor(
-        schema: Partial<AbstractControlSchema>,
+        schema: Partial<FormControlSchema>,
         formState?: any,
         validator?: ValidatorFn | ValidatorFn[] | null,
         asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
     ) {
         super(schema);
 
-        this.formState = formState;
-        this.validator = validator;
-        this.asyncValidator = asyncValidator;
+        this.formState = schema && schema.formState || formState;
+        this.validator = schema && schema.validator || validator;
+        this.asyncValidator = schema && schema.asyncValidator || asyncValidator;
     }
 
 }
@@ -44,16 +44,16 @@ export class FormGroupSchema extends AbstractControlSchema {
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null;
 
     constructor(
-        schema: Partial<AbstractControlSchema>,
+        schema: Partial<FormGroupSchema>,
         controls: { [ key: string ]: AbstractControlSchema; },
         validator?: ValidatorFn | ValidatorFn[] | null,
         asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
     ) {
         super(schema);
 
-        this.controls = controls;
-        this.validator = validator;
-        this.asyncValidator = asyncValidator;
+        this.controls = schema && schema.controls || controls;
+        this.validator = schema && schema.validator || validator;
+        this.asyncValidator = schema && schema.asyncValidator || asyncValidator;
     }
 
 }
@@ -65,16 +65,16 @@ export class FormArraySchema extends AbstractControlSchema {
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null;
 
     constructor(
-        schema: Partial<AbstractControlSchema>,
+        schema: Partial<FormArraySchema>,
         controls: AbstractControlSchema[],
         validator?: ValidatorFn | ValidatorFn[] | null,
         asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
     ) {
         super(schema);
 
-        this.controls = controls;
-        this.validator = validator;
-        this.asyncValidator = asyncValidator;
+        this.controls = schema && schema.controls || controls;
+        this.validator = schema && schema.validator || validator;
+        this.asyncValidator = schema && schema.asyncValidator || asyncValidator;
     }
 
 }

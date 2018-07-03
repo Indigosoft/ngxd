@@ -15,7 +15,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/IndigoSoft/ngx-component-outlet.git"
+        "url": "git+https://github.com/IndigoSoft/ngxd.git"
     },
     "maintainers": [
         {
@@ -24,9 +24,9 @@
         }
     ],
     "bugs": {
-        "url": "https://github.com/IndigoSoft/ngx-component-outlet/issues"
+        "url": "https://github.com/IndigoSoft/ngxd/issues"
     },
-    "homepage": "https://github.com/IndigoSoft/ngx-component-outlet",
+    "homepage": "https://github.com/IndigoSoft/ngxd",
     "peerDependencies": {
         "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
         "@angular/core": "^6.0.0-rc.0 || ^6.0.0",

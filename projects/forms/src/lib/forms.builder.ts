@@ -15,6 +15,7 @@ export class FormSchemaBuilder {
         const controls = this._reduceControls(controlsConfig);
         const validator: ValidatorFn = extra != null ? extra[ 'validator' ] : null;
         const asyncValidator: AsyncValidatorFn = extra != null ? extra[ 'asyncValidator' ] : null;
+
         return new FormGroupSchema(schema, controls, validator, asyncValidator);
     }
 
@@ -38,23 +39,14 @@ export class FormSchemaBuilder {
     }
 
     form(schema: AbstractControlSchema): AbstractControl {
-        const form: AbstractControl = (() => {
-            if (schema instanceof FormControlSchema) {
-                return this.fb.control(schema.formState, schema.validator, schema.asyncValidator);
-            }
+        const form: AbstractControl = this._createForm(schema);
 
-            if (schema instanceof FormGroupSchema) {
-                return this.fb.group(this._reduceForm(schema), {
-                    validator: schema.validator, asyncValidator: schema.asyncValidator
-                });
-            }
+        this._applyDisabled(form, schema);
 
-            if (schema instanceof FormArraySchema) {
-                return this.fb.array(this._mapForm(schema), schema.validator, schema.asyncValidator);
-            }
-        })();
+        return form;
+    }
 
-
+    private _applyDisabled(form: AbstractControl, schema: AbstractControlSchema) {
         if (form.enabled && schema.disabled) {
             form.disable({ emitEvent: false, onlySelf: true });
         }
@@ -62,8 +54,22 @@ export class FormSchemaBuilder {
         if (form.disabled && !schema.disabled) {
             form.enable({ emitEvent: false, onlySelf: true });
         }
+    }
 
-        return form;
+    private _createForm(schema: AbstractControlSchema) {
+        if (schema instanceof FormControlSchema) {
+            return this.fb.control(schema.formState, schema.validator, schema.asyncValidator);
+        }
+
+        if (schema instanceof FormGroupSchema) {
+            return this.fb.group(this._reduceForm(schema), {
+                validator: schema.validator, asyncValidator: schema.asyncValidator
+            });
+        }
+
+        if (schema instanceof FormArraySchema) {
+            return this.fb.array(this._mapForm(schema), schema.validator, schema.asyncValidator);
+        }
     }
 
     private _reduceControls(controlsConfig: { [ k: string ]: any }): { [ key: string ]: AbstractControlSchema } {
@@ -75,19 +81,23 @@ export class FormSchemaBuilder {
     }
 
     private _createControl(controlConfig: any): AbstractControlSchema {
-        if (controlConfig instanceof FormControlSchema || controlConfig instanceof FormGroupSchema ||
-            controlConfig instanceof FormArraySchema) {
+        if (this._isFormSchema(controlConfig)) {
             return controlConfig;
-
-        } else if (Array.isArray(controlConfig)) {
-            const schema = controlConfig[ 0 ];
-            const value = controlConfig[ 1 ];
-            const validator: ValidatorFn = controlConfig.length > 2 ? controlConfig[ 2 ] : null;
-            const asyncValidator: AsyncValidatorFn = controlConfig.length > 3 ? controlConfig[ 3 ] : null;
-            return this.control(schema, value, validator, asyncValidator);
-        } else {
-            return this.control(controlConfig, null);
         }
+
+        if (Array.isArray(controlConfig)) {
+            const [ schema, value, validator, asyncValidator ] = controlConfig;
+
+            return this.control(schema, value, validator, asyncValidator);
+        }
+
+        return this.control(controlConfig, null);
+    }
+
+    private _isFormSchema(controlConfig: any) {
+        return controlConfig instanceof FormControlSchema
+            || controlConfig instanceof FormGroupSchema
+            || controlConfig instanceof FormArraySchema;
     }
 
     private _mapForm(schema: FormArraySchema): AbstractControl[] {
