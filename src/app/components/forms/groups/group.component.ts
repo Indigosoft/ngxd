@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AbstractControlSchema, FormGroupSchema } from '@ngxd/forms';
-import { provideFormGroup } from './group.provider';
+import { provideFormGroup } from '../../dynamic-form';
 
 @Component({
     selector: 'app-form-group',

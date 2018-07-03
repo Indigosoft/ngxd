@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { FormArraySchema } from '@ngxd/forms';
-import { provideFormArray } from './array.provider';
+import { provideFormArray } from '../../dynamic-form';
 
 @Component({
     selector: 'app-form-array',

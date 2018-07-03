@@ -1,1 +1,1 @@
-export * from './array.resolver';
+export * from './array.module';

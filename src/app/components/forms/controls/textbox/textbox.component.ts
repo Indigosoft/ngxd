@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { provideControl } from '../control.provider';
+import { provideControl } from '../../../dynamic-form';
 import { TextboxControl } from './TextboxControl';
 
 @Component({

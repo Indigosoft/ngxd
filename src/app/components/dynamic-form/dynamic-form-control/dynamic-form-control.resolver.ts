@@ -1,7 +1,7 @@
 import { Inject, Injectable, Type } from '@angular/core';
 import { FormControlSchema } from '@ngxd/forms';
 
-import { FORM_CONTROL_PROVIDER, FormControlProvider } from './control.provider';
+import { FORM_CONTROL_PROVIDER, FormControlProvider } from './dynamic-form-control.provider';
 
 @Injectable()
 export class FormControlComponentResolver {

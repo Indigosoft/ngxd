@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { FormArraySchema } from '@ngxd/forms';
-import { FormArrayComponentResolver } from '../../forms/arrays';
+import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
 
 @Component({
     selector: 'app-dynamic-form-array-host',

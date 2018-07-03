@@ -1,7 +1,7 @@
 import { Inject, Injectable, Type } from '@angular/core';
 import { FormGroupSchema } from '@ngxd/forms';
 
-import { FORM_GROUP_PROVIDER, FormGroupProvider } from './group.provider';
+import { FORM_GROUP_PROVIDER, FormGroupProvider } from './dynamic-form-group.provider';
 
 @Injectable()
 export class FormGroupComponentResolver {

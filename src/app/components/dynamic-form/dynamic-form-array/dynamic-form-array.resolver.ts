@@ -1,7 +1,7 @@
 import { Inject, Injectable, Type } from '@angular/core';
 import { FormArraySchema } from '@ngxd/forms';
 
-import { FORM_ARRAY_PROVIDER, FormArrayProvider } from './array.provider';
+import { FORM_ARRAY_PROVIDER, FormArrayProvider } from './dynamic-form-array.provider';
 
 @Injectable()
 export class FormArrayComponentResolver {
@@ -14,7 +14,6 @@ export class FormArrayComponentResolver {
     }
 
     resolve(column: FormArraySchema): Type<any> {
-        console.log(this.config, column, column instanceof FormArraySchema, this.config.get(column.constructor as Type<FormArraySchema>));
         return this.config.get(column.constructor as Type<FormArraySchema>);
     }
 

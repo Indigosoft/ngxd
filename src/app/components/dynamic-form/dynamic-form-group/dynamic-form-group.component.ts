@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormGroupSchema } from '@ngxd/forms';
 
-import { FormGroupComponentResolver } from '../../forms/groups';
+import { FormGroupComponentResolver } from './dynamic-form-group.resolver';
 
 @Component({
     selector: 'app-dynamic-form-group-host',

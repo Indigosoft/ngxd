@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormControlSchema } from '@ngxd/forms';
 
-import { FormControlComponentResolver } from '../../forms/controls';
+import { FormControlComponentResolver } from './dynamic-form-control.resolver';
 
 @Component({
     selector: 'app-dynamic-form-control-host',

@@ -1,1 +1,1 @@
-export * from './group.resolver';
+export * from './group.module';
