@@ -2,7 +2,7 @@
     <h1>Dynamic Table Example</h1>
 </mat-toolbar>
 
-<mat-grid-list [cols]="7" rowHeight="500px">
+<mat-grid-list [cols]="7" rowHeight="700px">
     <mat-grid-tile [colspan]="3">
         <mat-card>
             <mat-card-header>
@@ -12,6 +12,10 @@
             <mat-card-content>
                 <app-dynamic-table [schema]="schema" [dataSource]="dataSource"></app-dynamic-table>
             </mat-card-content>
+            <mat-card-actions>
+                <button mat-button (click)="createEntity()">New Entity</button>
+                <button mat-button (click)="deleteEntity()">Delete Entity</button>
+            </mat-card-actions>
         </mat-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="4">
@@ -23,6 +27,10 @@
             <mat-card-content>
                 <app-table-schema [(schema)]="schema"></app-table-schema>
             </mat-card-content>
+            <mat-card-actions>
+                <button mat-button (click)="createColumn()">New Column</button>
+                <button mat-button (click)="deleteColumn()">Delete Column</button>
+            </mat-card-actions>
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>

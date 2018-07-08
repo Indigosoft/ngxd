@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/table';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableColumn } from '../table-columns';
 
 @Component({
@@ -11,6 +11,8 @@ import { TableColumn } from '../table-columns';
 export class DynamicTableComponent {
     @Input() schema: TableColumn[];
     @Input() dataSource: DataSource<any>;
+
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
     get displayedColumns(): string[] {
         return this.schema.map(({ def }) => def);

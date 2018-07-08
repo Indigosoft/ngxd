@@ -14,11 +14,11 @@ h1 {
 
 .mat-card {
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 70px - 52px);
     margin: 20px;
 }
 
 .mat-card-content {
     overflow-y: auto;
-    height: calc(100% - 70px);
+    height: calc(100% - 70px - 52px);
 }

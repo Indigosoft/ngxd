@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { AbstractControlSchema, FormArraySchema, FormControlSchema, FormGroupSchema } from '@ngxd/forms';
 
 @Component({
     selector: 'app-dynamic-form',
     templateUrl: 'dynamic-form.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: [ 'dynamic-form.component.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class DynamicFormComponent {
 

@@ -13,5 +13,5 @@ export class IdTableColumnEntityComponent {
     @Input() column: TableColumn;
 }
 
-export const COMPONENTS = [ IdTableColumnEntityComponent ];
+export const COMPONENT = IdTableColumnEntityComponent;
 export const PROVIDERS = provideTableColumn(TableColumnTypes.Id, IdTableColumnEntityComponent);

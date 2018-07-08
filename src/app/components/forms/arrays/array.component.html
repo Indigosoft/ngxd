@@ -1,5 +1,10 @@
-<mat-grid-list [cols]="schema.controls.length">
-    <mat-grid-tile *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">
+<!--<mat-grid-list [cols]="schema.controls.length">-->
+    <!--<mat-grid-tile *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">-->
+        <!--<app-dynamic-form [form]="array.at(index)" [schema]="control"></app-dynamic-form>-->
+    <!--</mat-grid-tile>-->
+<!--</mat-grid-list>-->
+<!--<mat-grid-list [cols]="schema.controls.length">-->
+    <ng-container *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">
         <app-dynamic-form [form]="array.at(index)" [schema]="control"></app-dynamic-form>
-    </mat-grid-tile>
-</mat-grid-list>
+    </ng-container>
+<!--</mat-grid-list>-->

@@ -23,7 +23,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "lazyModules": [
+              "src/app/components/lazy/lazy.module.ts"
+            ]
           },
           "configurations": {
             "production": {

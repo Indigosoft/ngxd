@@ -1,4 +1,4 @@
 <app-dynamic-form-array-host
-    [ngxComponentOutlet]="schema | resolve: resolver"
+    [ngxComponentOutlet]="resolver | resolve: schema"
     [array]="array" [schema]="schema"
 ></app-dynamic-form-array-host>

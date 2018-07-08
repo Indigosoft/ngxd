@@ -13,5 +13,5 @@ export class DropdownControlComponent {
     @Input() schema: DropdownControl;
 }
 
-export const COMPONENTS = [ DropdownControlComponent ];
+export const COMPONENT = DropdownControlComponent;
 export const PROVIDERS = provideControl(DropdownControl, DropdownControlComponent);

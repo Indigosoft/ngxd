@@ -13,5 +13,5 @@ export class TextboxControlComponent {
     @Input() schema: TextboxControl;
 }
 
-export const COMPONENTS = [ TextboxControlComponent ];
+export const COMPONENT = TextboxControlComponent;
 export const PROVIDERS = provideControl(TextboxControl, TextboxControlComponent);

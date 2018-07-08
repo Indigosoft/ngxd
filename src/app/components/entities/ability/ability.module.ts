@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatDividerModule } from '@angular/material';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule, MatDividerModule } from '@angular/material';
 
-import { COMPONENTS, PROVIDERS } from './ability.component';
+import { COMPONENT, PROVIDERS } from './ability.component';
 
 @NgModule({
     imports: [ CommonModule, MatCardModule, MatDividerModule ],
-    declarations: [ COMPONENTS ],
-    entryComponents: [ COMPONENTS ],
+    declarations: [ COMPONENT ],
     providers: [ PROVIDERS ]
 })
 export class AbilityEntityModule {}

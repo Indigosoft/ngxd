@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { COMPONENTS, PROVIDERS } from './text.component';
+import { COMPONENT, PROVIDERS } from './text.component';
 
 @NgModule({
-    declarations: [ COMPONENTS ],
-    entryComponents: [ COMPONENTS ],
+    declarations: [ COMPONENT ],
     providers: [ PROVIDERS ]
 })
 export class TextTableColumnModule {}

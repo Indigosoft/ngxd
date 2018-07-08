@@ -9,6 +9,7 @@ import { TableSchema } from './TableSchema';
 @Component({
     selector: 'app-table-schema',
     templateUrl: 'table-schema.component.html',
+    styleUrls: [ 'table-schema.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableSchemaComponent implements OnChanges, OnDestroy {

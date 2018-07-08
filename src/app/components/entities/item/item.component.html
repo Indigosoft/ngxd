@@ -12,7 +12,7 @@
             <mat-tab label="Abilities">
                 <mat-list>
                     <mat-list-item class="ability" *ngFor="let ability of item.abilities; trackBy: trackById">
-                        <app-dynamic [entity]="ability"></app-dynamic>
+                        <app-dynamic-entity [entity]="ability"></app-dynamic-entity>
                     </mat-list-item>
                 </mat-list>
             </mat-tab>

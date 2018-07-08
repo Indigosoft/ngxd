@@ -14,5 +14,5 @@ export class IconTableColumnEntityComponent {
     @Input() column: TableColumn;
 }
 
-export const COMPONENTS = [ IconTableColumnEntityComponent ];
+export const COMPONENT = IconTableColumnEntityComponent;
 export const PROVIDERS = provideTableColumn(TableColumnTypes.Icon, IconTableColumnEntityComponent);

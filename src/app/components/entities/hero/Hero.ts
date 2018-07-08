@@ -1,13 +1,13 @@
-import { EntityObject } from '../EntityObject';
+import { DynamicEntityObject } from '../../dynamic-entities';
 
-export class Hero implements EntityObject {
+export class Hero implements DynamicEntityObject {
 
     id: string;
     name: string;
     rank: string;
     icon: string;
-    abilities: EntityObject[];
-    items: EntityObject[];
+    abilities: DynamicEntityObject[];
+    items: DynamicEntityObject[];
 
     constructor({ id, name, rank, icon, abilities, items }: Partial<Hero>) {
         this.id = id || Math.random().toString().slice(2, 8);
@@ -18,7 +18,7 @@ export class Hero implements EntityObject {
         this.items = items || [];
     }
 
-    flatten(): EntityObject[] {
+    flatten(): DynamicEntityObject[] {
         return [ ...this.abilities, ...this.items ];
     }
 

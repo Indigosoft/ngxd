@@ -1,11 +1,12 @@
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
-import { EntityObject } from '../../components/entities';
 
-export class EntitiesDataSource extends DataSource<EntityObject> {
-    constructor(private source: Observable<EntityObject[]>) { super(); }
+import { DynamicEntityObject } from '../../components/dynamic-entities';
 
-    connect(): Observable<EntityObject[]> {
+export class EntitiesDataSource extends DataSource<DynamicEntityObject> {
+    constructor(private source: Observable<DynamicEntityObject[]>) { super(); }
+
+    connect(): Observable<DynamicEntityObject[]> {
         return this.source;
     }
 
@@ -13,7 +14,7 @@ export class EntitiesDataSource extends DataSource<EntityObject> {
 }
 
 export class TableDataSourceBuilder {
-    build(source: Observable<EntityObject[]>): EntitiesDataSource {
+    build(source: Observable<DynamicEntityObject[]>): EntitiesDataSource {
         return new EntitiesDataSource(source);
     }
 }

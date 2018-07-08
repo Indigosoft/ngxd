@@ -1,0 +1,7 @@
+<button mat-button (click)="create()">Create {{ count }} items</button>
+<button mat-button (click)="clear()">Clear</button>
+<button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
+
+<div *ngFor="let item of (items$ | async); trackBy: trackById">
+    <app-dynamic-00500 [id]="item.id" (event)="onEvent($event)"></app-dynamic-00500>
+</div>

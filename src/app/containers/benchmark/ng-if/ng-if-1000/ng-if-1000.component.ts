@@ -1,0 +1,16 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ItemsService } from '../../benchmark.service';
+import { NgIfBenchmarkComponent } from '../ng-if.component';
+
+// var template = (id) => `<app-dynamic-${String(id).padStart(5, 0)} *ngIf="item.type === ${id}" [id]="item.id" (event)="onEvent($event)"></app-dynamic-${String(id).padStart(5, 0)}>`;
+//
+// var a = Array.from({ length: 1000 }, (_, i) => template(i + 1)).join('\r\n');
+// copy(a);
+
+@Component({
+    selector: 'app-ng-if-benchmark',
+    templateUrl: 'ng-if-1000.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [ ItemsService ]
+})
+export class NgIf1000BenchmarkComponent extends NgIfBenchmarkComponent {}

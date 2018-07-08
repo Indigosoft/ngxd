@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { provideEntity } from '../entity.provider';
+import { DynamicEntityModule } from '../../dynamic-entities';
 
 import { Hero } from './Hero';
 
@@ -19,5 +19,5 @@ export class HeroEntityComponent {
 
 }
 
-export const PROVIDERS = provideEntity(Hero, HeroEntityComponent);
-export const COMPONENTS = [ HeroEntityComponent ];
+export const COMPONENT = HeroEntityComponent;
+export const PROVIDERS = DynamicEntityModule.provide(Hero, HeroEntityComponent);

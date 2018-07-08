@@ -67,15 +67,14 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     private attachInputs(): void {
-        const inputs: ComponentProperty[] = this.componentFactory.inputs;
-
-        this.defaultDescriptors = inputs.map((property: ComponentProperty): DefaultComponentProperty => {
+        this.defaultDescriptors = [];
+        for (const property of this.componentFactory.inputs) {
             const defaultDescriptor: PropertyDescriptor = getPropertyDescriptor(this.context, property.templateName);
 
             this.attachInput(this.context, this.componentRef.instance, property, defaultDescriptor);
 
-            return <DefaultComponentProperty>{ ...property, defaultDescriptor };
-        });
+            this.defaultDescriptors.push(<DefaultComponentProperty>{ ...property, defaultDescriptor });
+        }
     }
 
     private attachInput(
@@ -134,32 +133,36 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private disposeInputs(): void {
         const instance: TComponent & LifecycleComponent = this.componentRef.instance as any;
 
-        this.defaultDescriptors.forEach(({ propName, templateName, defaultDescriptor }) => {
-            if (defaultDescriptor) {
-                if (defaultDescriptor.writable) {
-                    defaultDescriptor.value = instance[ propName ];
+        for (const descriptor of this.defaultDescriptors) {
+            if (descriptor.defaultDescriptor) {
+                if (descriptor.defaultDescriptor.writable) {
+                    descriptor.defaultDescriptor.value = instance[ descriptor.propName ];
                 }
-                Object.defineProperty(this.context, templateName, defaultDescriptor);
-                if (defaultDescriptor.set) {
-                    this.context[ templateName ] = instance[ propName ];
+                Object.defineProperty(this.context, descriptor.templateName, descriptor.defaultDescriptor);
+                if (descriptor.defaultDescriptor.set) {
+                    this.context[ descriptor.templateName ] = instance[ descriptor.propName ];
                 }
             } else {
-                delete this.context[ templateName ];
-                this.context[ templateName ] = instance[ propName ];
+                delete this.context[ descriptor.templateName ];
+                this.context[ descriptor.templateName ] = instance[ descriptor.propName ];
             }
-        });
+        }
     }
 
     private attachOutputs(): void {
-        const availableOutputs: ComponentProperty[] = this.componentFactory.outputs.filter(
-            (property: ComponentProperty) => this.context.hasOwnProperty(property.templateName));
-
-        this.attachedOutputs = availableOutputs.map((property: ComponentProperty) =>
-            this.componentRef.instance[ property.propName ].subscribe(this.context[ property.templateName ]));
+        for (const property of this.componentFactory.outputs) {
+            if (this.context.hasOwnProperty(property.templateName)) {
+                this.componentRef.instance[ property.propName ]
+                    .subscribe(this.context[ property.templateName ]);
+            }
+        }
     }
 
     private disposeOutputs(): void {
-        this.attachedOutputs.splice(0).forEach((subscription) => subscription.unsubscribe());
+        for (const subscription of this.attachedOutputs) {
+            subscription.unsubscribe();
+        }
+        this.attachedOutputs.splice(0);
     }
 
 }

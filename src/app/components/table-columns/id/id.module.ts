@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { COMPONENTS, PROVIDERS } from './id.component';
+import { COMPONENT, PROVIDERS } from './id.component';
 
 @NgModule({
-    declarations: [ COMPONENTS ],
-    entryComponents: [ COMPONENTS ],
+    declarations: [ COMPONENT ],
     providers: [ PROVIDERS ]
 })
 export class IdTableColumnModule {}

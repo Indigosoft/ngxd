@@ -13,5 +13,5 @@ export class TextTableColumnEntityComponent {
     @Input() column: TableColumn;
 }
 
-export const COMPONENTS = [ TextTableColumnEntityComponent ];
+export const COMPONENT = TextTableColumnEntityComponent;
 export const PROVIDERS = provideTableColumn(TableColumnTypes.Text, TextTableColumnEntityComponent);

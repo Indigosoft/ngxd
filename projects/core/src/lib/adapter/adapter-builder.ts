@@ -1,11 +1,12 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
-import { NgxComponentOutletAdapterBuilderStrategy, NgxComponentOutletAdapterBuilderStrategyResolver } from './adapter-strategy';
-import { NgxComponentOutletAdapterRef } from './adapter-ref';
+import { hasProperty } from '../utils';
+import { LifecycleComponent, NgxComponentOutletAdapterRef } from './adapter-ref';
+import { FeatureComponents, LifecycleStrategyType, STRATEGY_CONFIG, StrategyConfig } from './adapter-strategy';
+
+const FEATURE_COMPONENTS_DISABLE = { onInitComponentRef: null, doCheckComponentRef: null };
 
 @Injectable()
 export class NgxComponentOutletAdapterBuilder {
-
-    constructor(private adapterBuilderStrategyResolver: NgxComponentOutletAdapterBuilderStrategyResolver) {}
 
     create<TComponent>(
         componentType: Type<TComponent>,
@@ -24,10 +25,70 @@ export class NgxComponentOutletAdapterBuilder {
                 projectableNodes
             );
 
-        const strategy: NgxComponentOutletAdapterBuilderStrategy =
-            this.adapterBuilderStrategyResolver.resolve(componentType);
+        const config = STRATEGY_CONFIG[ this.getStrategyType(componentType) ];
 
-        return strategy.create(componentFactory, componentRef, viewContainerRef, context);
+        return this.createAdapterRef(componentFactory, componentRef, viewContainerRef, context, config, componentFactoryResolver);
+    }
+
+    private createAdapterRef<TComponent>(
+        componentFactory: ComponentFactory<TComponent>,
+        componentRef: ComponentRef<TComponent>,
+        viewContainerRef: ViewContainerRef,
+        context: TComponent,
+        config: StrategyConfig,
+        componentFactoryResolver: ComponentFactoryResolver
+    ): NgxComponentOutletAdapterRef<TComponent> {
+        const { onInitComponentRef, doCheckComponentRef } = this.createFeatureComponents(
+            viewContainerRef,
+            config,
+            componentFactoryResolver
+        );
+
+        return new NgxComponentOutletAdapterRef({
+            componentFactory, componentRef, context,
+            onInitComponentRef, doCheckComponentRef
+        });
+    }
+
+    private createFeatureComponents(
+        viewContainerRef: ViewContainerRef,
+        config: StrategyConfig,
+        componentFactoryResolver: ComponentFactoryResolver
+    ): FeatureComponents {
+        if (!config.componentType) {
+            return FEATURE_COMPONENTS_DISABLE;
+        }
+
+        const featureComponentFactory: ComponentFactory<LifecycleComponent> =
+            componentFactoryResolver.resolveComponentFactory(config.componentType);
+
+        const featureComponentRef: ComponentRef<LifecycleComponent> =
+            viewContainerRef.createComponent(featureComponentFactory, viewContainerRef.length);
+
+        return {
+            onInitComponentRef: config.useOnInitComponent ? featureComponentRef : null,
+            doCheckComponentRef: config.useDoCheckComponent ? featureComponentRef : null
+        };
+    }
+
+    private getStrategyType(component: Type<any>) {
+        const hasNgOnInit: boolean = hasProperty(component.prototype, 'ngOnInit');
+        const hasNgDoCheck: boolean = hasProperty(component.prototype, 'ngDoCheck');
+        const hasNgOnChanges: boolean = hasProperty(component.prototype, 'ngOnChanges');
+
+        if (hasNgOnChanges && !hasNgOnInit && !hasNgDoCheck) {
+            return LifecycleStrategyType.OnInitAndDoCheck;
+        }
+
+        if (hasNgOnChanges && !hasNgOnInit) {
+            return LifecycleStrategyType.OnInitOnly;
+        }
+
+        if (!hasNgDoCheck) {
+            return LifecycleStrategyType.DoCheckOnly;
+        }
+
+        return LifecycleStrategyType.Default;
     }
 
 }

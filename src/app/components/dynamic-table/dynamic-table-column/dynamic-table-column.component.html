@@ -1,4 +1,4 @@
 <app-dynamic-table-column-host
-    [ngxComponentOutlet]="column | resolve: resolver"
+    [ngxComponentOutlet]="resolver | resolve: column"
     [column]="column" [row]="row"
 ></app-dynamic-table-column-host>

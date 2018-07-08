@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material';
 
-import { COMPONENTS, PROVIDERS } from './icon.component';
+import { COMPONENT, PROVIDERS } from './icon.component';
 
 @NgModule({
     imports: [ CommonModule, MatCardModule ],
-    declarations: [ COMPONENTS ],
-    entryComponents: [ COMPONENTS ],
+    declarations: [ COMPONENT ],
     providers: [ PROVIDERS ]
 })
 export class IconTableColumnModule {}
