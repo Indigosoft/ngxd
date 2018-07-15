@@ -1,10 +1,10 @@
-import { DynamicEntitiesModule, DynamicEntityObject } from '../dynamic-entities';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
 
 import { Ability } from './ability';
 import { Hero } from './hero';
 import { Item } from './item';
 
-const ENTITIES_DATA: DynamicEntityObject[] = [
+export const ENTITIES_DATA: DynamicEntityObject[] = [
     new Hero({
         name: 'Ser Barristan', rank: 'Knight', icon: 'knight-icon',
         abilities: [
@@ -65,5 +65,3 @@ const ENTITIES_DATA: DynamicEntityObject[] = [
         ]
     })
 ];
-
-export const EntitiesDataProvider = DynamicEntitiesModule.useData(ENTITIES_DATA);

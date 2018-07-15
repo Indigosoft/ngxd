@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { DynamicEntityModule } from '../../dynamic-entities';
+import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
 
 import { Hero } from './Hero';
 

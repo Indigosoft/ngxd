@@ -1,0 +1,8 @@
+app-dynamic-form {
+    display: flex;
+    flex-direction: column;
+}
+
+app-dynamic-form > * {
+    width: 100%;
+}

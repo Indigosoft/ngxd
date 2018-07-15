@@ -1,6 +1,6 @@
 {
     "name": "@ngxd/forms",
-    "version": "0.1.0",
+    "version": "0.1.0-beta.0",
     "description": "NGXD is a dynamic pattern + library for Angular",
     "keywords": [
         "angular",

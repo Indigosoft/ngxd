@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule, MatGridListModule, MatToolbarModule } from '@angular/material';
-import { DynamicLazyModule } from '../../components/dynamic-lazy';
+import { DynamicLazyModule } from '@app/dynamics/dynamic-lazy';
 
 import { LazyPageComponent } from './lazy.component';
 import { LazyRouting } from './lazy.routing';

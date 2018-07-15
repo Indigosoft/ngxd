@@ -22,3 +22,9 @@ h1 {
     overflow-y: auto;
     height: calc(100% - 70px - 52px);
 }
+
+.new-column {
+    border: 1px red dotted;
+    padding: 20px;
+    margin-top: 10px;
+}

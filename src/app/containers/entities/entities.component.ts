@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DynamicEntitiesService, DynamicEntityObject } from '../../components/dynamic-entities';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { EntitiesService } from '@app/components/entities';
 
 @Component({
     selector: 'app-entities-page',
@@ -12,6 +13,6 @@ export class EntitiesPageComponent {
 
     entities$: Observable<DynamicEntityObject[]> = this.entityDataService.getEntities();
 
-    constructor(private entityDataService: DynamicEntitiesService) {}
+    constructor(private entityDataService: EntitiesService) {}
 
 }

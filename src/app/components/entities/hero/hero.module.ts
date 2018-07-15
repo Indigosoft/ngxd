@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatListModule, MatTabsModule } from '@angular/material';
 
-import { DynamicEntitiesModule } from '../../dynamic-entities';
+import { DynamicEntitiesModule } from '@app/dynamics/dynamic-entities';
 
 import { COMPONENT, PROVIDERS } from './hero.component';
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { provideLazy } from '../../dynamic-lazy';
+import { provideLazy } from '@app/dynamics/dynamic-lazy';
 
 @Component({
     selector: 'app-hello-lazy',

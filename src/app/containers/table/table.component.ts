@@ -1,21 +1,12 @@
-import { DataSource } from '@angular/cdk/table';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DynamicEntitiesService } from '../../components/dynamic-entities';
-import { TableColumn, TableColumnTypes } from '../../components/table-columns';
-import { TableSchema } from '../../components/table-schema';
-import { TableDataSourceBuilder } from './table.datasource';
-
-const TABLE_SCHEMA: TableSchema = [
-    new TableColumn({
-        def: 'id', header: 'Id', type: TableColumnTypes.Id
-    }),
-    new TableColumn({
-        def: 'name', header: 'Name', type: TableColumnTypes.Text
-    }),
-    new TableColumn({
-        def: 'icon', header: 'Image', type: TableColumnTypes.Icon
-    })
-];
+import { MatDialog } from '@angular/material';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { EntitiesService } from '@app/components/entities';
+import { EntitySchemaModalComponent } from '@app/schemas/entity-schema';
+import { TableSchema, TableService } from '@app/components/table';
+import { TableColumnSchemaModalComponent } from '@app/schemas/table-schema';
+import { Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-table-page',
@@ -25,35 +16,51 @@ const TABLE_SCHEMA: TableSchema = [
 })
 export class TablePageComponent {
 
-    defaultSchema = [ ...TABLE_SCHEMA ];
-    schema: TableSchema = [];
-    dataSource: DataSource<any> = this.builder.build(this.service.getFlattenEntities());
+    entities$: Observable<DynamicEntityObject[]> = this.entities.getFlattenEntities();
+    schema$: Observable<TableSchema> = this.table.getTableSchema();
 
-    constructor(private builder: TableDataSourceBuilder, private service: DynamicEntitiesService) {}
+    constructor(
+        private entities: EntitiesService,
+        private table: TableService,
+        private dialog: MatDialog
+    ) {}
 
-    createColumn() {
-        this.schema = [
-            ...this.schema, ...this.defaultSchema.splice(0, 1)
-        ];
-    }
-
-    deleteColumn() {
-        const [ head, ...tail ] = this.schema;
-
-        if (!head) {
-            return;
+    onTableAction($event) {
+        switch ($event.type) {
+            case 'edit':
+                return this.onEditEntity($event.data);
+            case 'delete':
+                return this.onDeleteEntity($event.data);
         }
-
-        this.schema = tail;
-        this.defaultSchema = [ head, ...this.defaultSchema ];
     }
 
-    createEntity() {
-        this.service.createEntity();
+    onChangeTableSchema(schema: TableSchema): void {
+        this.table.setTableSchema(schema);
     }
 
-    deleteEntity() {
-        this.service.deleteEntity();
+    onCreateColumn() {
+        const dialogRef = this.dialog.open(TableColumnSchemaModalComponent, { width: '550px' });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((createdColumn) => this.table.createColumn(createdColumn));
+    }
+
+    onCreateEntity() {
+        const dialogRef = this.dialog.open(EntitySchemaModalComponent, { width: '550px' });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((createdEntity) => this.entities.createEntity(createdEntity));
+    }
+
+    onEditEntity(entity: DynamicEntityObject) {
+        const dialogRef = this.dialog.open(EntitySchemaModalComponent, { width: '550px', data: entity });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((updatedEntity) => this.entities.updateEntity(updatedEntity));
+    }
+
+    onDeleteEntity(entity: DynamicEntityObject) {
+        this.entities.deleteEntity(entity);
     }
 
 }

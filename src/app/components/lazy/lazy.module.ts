@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LazyComponentResolver } from '../dynamic-lazy';
+import { LazyComponentResolver } from '@app/dynamics/dynamic-lazy';
 
 import { HelloLazyModule } from './hello';
 
@@ -8,5 +8,3 @@ import { HelloLazyModule } from './hello';
     exports: [ HelloLazyModule ]
 })
 export class LazyModule {}
-
-// export default LazyModule;

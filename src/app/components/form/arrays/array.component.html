@@ -1,0 +1,5 @@
+<mat-grid-list *ngIf="schema.controls.length > 0" [cols]="schema.controls.length" rowHeight="290px" gutterSize="20px">
+    <mat-grid-tile *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">
+        <app-dynamic-form [form]="array.at(index)" [schema]="control"></app-dynamic-form>
+    </mat-grid-tile>
+</mat-grid-list>

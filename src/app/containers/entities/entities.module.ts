@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material';
 
-import { DynamicEntitiesModule } from '../../components/dynamic-entities';
-import { EntitiesModule } from '../../components/entities/entities.module';
+import { DynamicEntitiesModule } from '@app/dynamics/dynamic-entities';
+import { EntitiesModule } from '@app/components/entities';
 
 import { EntitiesPageComponent } from './entities.component';
 import { EntitiesRouting } from './entities.routing';

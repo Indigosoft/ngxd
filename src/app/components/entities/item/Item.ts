@@ -1,4 +1,4 @@
-import { DynamicEntityObject } from '../../dynamic-entities';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
 
 export class Item implements DynamicEntityObject {
 
@@ -14,10 +14,6 @@ export class Item implements DynamicEntityObject {
         this.rank = rank;
         this.icon = icon;
         this.abilities = abilities || [];
-    }
-
-    flatten(): DynamicEntityObject[] {
-        return this.abilities;
     }
 
 }
