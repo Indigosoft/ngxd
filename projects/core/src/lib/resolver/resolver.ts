@@ -1,7 +1,7 @@
-import { Injectable, Type } from '@angular/core';
-import { Dynamic, NgxdProvider } from '../provider/provider';
+import { Type } from '@angular/core';
+import { NgxdProvider } from '../provider/provider';
 
-@Injectable()
+// @Injectable()
 export abstract class NgxdResolver<TType, TComponent> {
     private config: Map<TType | Type<TType>, Type<TComponent>>;
 
@@ -20,8 +20,8 @@ export abstract class NgxdResolver<TType, TComponent> {
 }
 
 // @Dynamic()
-export class DynamicResolver extends NgxdResolver<any, any> {
-
-    provide() {}
-
-}
+// export class DynamicResolver extends NgxdResolver<any, any> {
+//
+//     provide() {}
+//
+// }

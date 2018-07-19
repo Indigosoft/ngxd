@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-
 import { NgxComponentOutletAdapterBuilder } from './adapter/adapter-builder';
+
 import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter/adapter-components';
 import { NgxComponentOutlet } from './directive/component.outlet';
 import { NgxComponentOutletResolvePipe } from './pipe/resolve.pipe';
@@ -21,19 +21,23 @@ import { NgxComponentOutletResolvePipe } from './pipe/resolve.pipe';
     exports: [
         NgxComponentOutlet,
         NgxComponentOutletResolvePipe
+    ],
+    providers: [
+        NgxComponentOutletAdapterBuilder
     ]
 })
 export class NgxdModule {
+    /**
+     * @deprecated
+     */
     static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: NgxdModule,
-            providers: [ NgxComponentOutletAdapterBuilder ]
-        };
+        throw new Error('Deprecation import through NgxdModule.forRoot(), use import as NgxdModule.');
     }
 
+    /**
+     * @deprecated
+     */
     static forChild(): ModuleWithProviders {
-        return {
-            ngModule: NgxdModule
-        };
+        throw new Error('Deprecation import through NgxdModule.forChild(), use import as NgxdModule.');
     }
 }

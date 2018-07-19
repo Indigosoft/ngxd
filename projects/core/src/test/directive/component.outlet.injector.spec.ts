@@ -44,7 +44,7 @@ class TestComponent {
 }
 
 @NgModule({
-    imports: [ NgxdModule.forRoot() ],
+    imports: [ NgxdModule ],
     declarations: [ DynamicComponent, TestComponent ],
     exports: [ TestComponent ],
     entryComponents: [ DynamicComponent ]

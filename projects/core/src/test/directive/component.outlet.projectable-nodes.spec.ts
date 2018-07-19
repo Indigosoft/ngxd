@@ -70,7 +70,7 @@ class TestComponent {
 class AppComponent {}
 
 @NgModule({
-    imports: [ NgxdModule.forRoot() ],
+    imports: [ NgxdModule ],
     declarations: [ AppComponent, DynamicComponent, TestComponent, TestHostComponent ],
     exports: [ AppComponent, TestComponent, TestHostComponent ],
     entryComponents: [ DynamicComponent ]

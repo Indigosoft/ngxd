@@ -47,7 +47,7 @@ class TestComponent {
 }
 
 @NgModule({
-    imports: [ NgxdModule.forRoot() ],
+    imports: [ NgxdModule ],
     declarations: [ TestComponent ],
     exports: [ TestComponent ]
 })

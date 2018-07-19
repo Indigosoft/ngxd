@@ -5,11 +5,14 @@ import { TableColumn, TableColumnTypes } from './table-columns';
 
 const TABLE_SCHEMA: TableSchema = [
     new TableColumn({
-        def: 'id', header: 'Id', type: TableColumnTypes.Id, visible: true
+        def: 'id', header: 'Id', type: TableColumnTypes.Id, visible: true, editable: true
     }),
+    // new TableColumn({
+    //     def: 'icon', header: 'Icon', type: TableColumnTypes.Icon, visible: true
+    // }),
     new TableColumn({
-        def: 'name', header: 'Name', type: TableColumnTypes.Text, visible: true
-    })
+        def: 'name', header: 'Name', type: TableColumnTypes.Text, visible: true, editable: true
+    }),
     // new TableColumn({
     //     def: 'actions', header: 'Actions', type: TableColumnTypes.Actions, visible: true
     // })
@@ -30,10 +33,6 @@ export class TableService implements OnDestroy {
 
     createColumn(column: TableColumn): void {
         this.schema$.next([ ...this.schema$.getValue(), column ]);
-    }
-
-    updateColumn(column: TableColumn): void {
-
     }
 
     ngOnDestroy() {

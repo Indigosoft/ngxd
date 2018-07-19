@@ -22,7 +22,7 @@ import { LayoutModule } from './layout/layout.module';
         LayoutModule,
 
         ReactiveFormsModule,
-        NgxdModule.forRoot(),
+        NgxdModule,
         NgxdFormsModule.forRoot(),
 
         RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })

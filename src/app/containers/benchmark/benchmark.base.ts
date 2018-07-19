@@ -1,8 +1,7 @@
-import { AfterViewChecked, EventEmitter, Injectable, Input, NgZone, Output } from '@angular/core';
+import { AfterViewChecked, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Item, Items, ItemsService, MeasureService, MeasureType } from './benchmark.service';
 
-@Injectable()
 export abstract class BenchmarkComponentBase implements AfterViewChecked {
     @Input() count: number;
     @Input() repeat: number;
@@ -12,7 +11,7 @@ export abstract class BenchmarkComponentBase implements AfterViewChecked {
 
     left: number = 0;
 
-    constructor(
+    protected constructor(
         private items: ItemsService,
         private measures: MeasureService,
         private type: MeasureType

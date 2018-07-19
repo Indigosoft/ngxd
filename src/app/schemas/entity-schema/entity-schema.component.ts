@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { DynamicEntityObject } from '@app/dynamics';
 import { AbstractControlSchema } from '@ngxd/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Hero } from '@app/components/entities';
 import { EntitySchemaService } from './entity-schema.service';
 
 @Component({
@@ -14,21 +14,21 @@ import { EntitySchemaService } from './entity-schema.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntitySchemaComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() schema: Hero;
+    @Input() schema: DynamicEntityObject;
     @Output() invalid: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() schemaChange: EventEmitter<Hero> = new EventEmitter<Hero>();
+    @Output() schemaChange: EventEmitter<DynamicEntityObject> = new EventEmitter<DynamicEntityObject>();
 
     form$: Observable<AbstractControl> = this.service.getForm();
     formSchema$: Observable<AbstractControlSchema> = this.service.getFormSchema();
 
-    private formRawValue$: Observable<Hero> = this.service.getFormRawValue();
+    private formValue$: Observable<DynamicEntityObject> = this.service.getFormValue();
     private formIsInvalid$: Observable<boolean> = this.service.getFormIsInvalid();
     private ngOnDestroy$: Subject<null> = new Subject<null>();
 
     constructor(private service: EntitySchemaService) {}
 
     ngOnInit() {
-        this.formRawValue$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(this.schemaChange);
+        this.formValue$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(this.schemaChange);
         this.formIsInvalid$.pipe(takeUntil(this.ngOnDestroy$)).subscribe(this.invalid);
     }
 

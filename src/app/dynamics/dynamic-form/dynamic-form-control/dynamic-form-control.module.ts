@@ -6,7 +6,7 @@ import { DynamicFormControlComponent, DynamicFormControlHostComponent } from './
 import { FormControlComponentResolver } from './dynamic-form-control.resolver';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule.forChild() ],
+    imports: [ CommonModule, NgxdModule ],
     declarations: [ DynamicFormControlComponent, DynamicFormControlHostComponent ],
     exports: [ DynamicFormControlComponent ],
     providers: [ FormControlComponentResolver ]

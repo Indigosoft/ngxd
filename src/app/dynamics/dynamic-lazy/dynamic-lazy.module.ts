@@ -5,7 +5,7 @@ import { NgxdModule } from '@ngxd/core';
 import { DynamicLazyComponent, DynamicLazyHostComponent, LAZY_MODULE_PATH } from './dynamic-lazy.component';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule.forChild() ],
+    imports: [ CommonModule, NgxdModule ],
     declarations: [ DynamicLazyComponent, DynamicLazyHostComponent ],
     exports: [ DynamicLazyComponent ]
 })

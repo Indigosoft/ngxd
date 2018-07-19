@@ -209,7 +209,7 @@ const CHILDREN_DYNAMIC_COMPONENTS = [
 const TEST_COMPONENTS = [ TestComponent, TestHostComponent ];
 
 @NgModule({
-    imports: [ NgxdModule.forRoot() ],
+    imports: [ NgxdModule ],
     declarations: [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS, TEST_COMPONENTS ],
     exports: [ TEST_COMPONENTS ],
     entryComponents: [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS ],

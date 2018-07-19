@@ -1,19 +1,19 @@
-# ngx-component-outlet
+# @ngxd/core
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
-[![npm](https://img.shields.io/npm/v/ngx-component-outlet.svg?style=flat-square)](https://www.npmjs.com/package/ngx-component-outlet)
-[![npm License](https://img.shields.io/npm/l/ngx-component-outlet.svg?style=flat-square)](https://github.com/thekiba/ngx-component-outlet/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
+[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/thekiba/@ngxd/core/blob/master/LICENSE)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org)
-[![CircleCI](https://img.shields.io/circleci/project/github/thekiba/ngx-component-outlet/master.svg?label=Circle%20CI&style=flat-square)](https://circleci.com/gh/thekiba/ngx-component-outlet)
-[![Travis](https://img.shields.io/travis/thekiba/ngx-component-outlet/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/thekiba/ngx-component-outlet)
+[![CircleCI](https://img.shields.io/circleci/project/github/IndigoSoft/ngxd/master.svg?label=Circle%20CI&style=flat-square)](https://circleci.com/gh/IndigoSoft/ngxd)
+[![Travis](https://img.shields.io/travis/IndigoSoft/ngxd/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/IndigoSoft/ngxd)
 
-[![GitHub contributors](https://img.shields.io/github/contributors/thekiba/ngx-component-outlet.svg?style=flat-square)](https://github.com/thekiba/ngx-component-outlet)
-[![GitHub PR Stats](http://issuestats.com/github/thekiba/ngx-component-outlet/badge/pr?style=flat-square)](http://issuestats.com/github/thekiba/ngx-component-outlet)
-[![GitHub Issue Stats](http://issuestats.com/github/thekiba/ngx-component-outlet/badge/issue?style=flat-square)](http://issuestats.com/github/thekiba/ngx-component-outlet)
+[![GitHub contributors](https://img.shields.io/github/contributors/IndigoSoft/ngxd.svg?style=flat-square)](https://github.com/IndigoSoft/ngxd)
+[![GitHub PR Stats](http://issuestats.com/github/IndigoSoft/ngxd/badge/pr?style=flat-square)](http://issuestats.com/github/IndigoSoft/ngxd)
+[![GitHub Issue Stats](http://issuestats.com/github/IndigoSoft/ngxd/badge/issue?style=flat-square)](http://issuestats.com/github/IndigoSoft/ngxd)
 
-[![GitHub stars](https://img.shields.io/github/stars/thekiba/ngx-component-outlet.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/thekiba/ngx-component-outlet)
-[![npm Downloads](https://img.shields.io/npm/dw/ngx-component-outlet.svg?style=flat-square)](https://www.npmjs.com/package/ngx-component-outlet)
+[![GitHub stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/IndigoSoft/ngxd)
+[![npm Downloads](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
 
 ## Example Usage
 
@@ -67,28 +67,28 @@ Table of heroes with table schema form
 
 ## Getting started
 
-### Step 1: Install ```ngx-component-outlet```:
+### Step 1: Install ```@ngxd/core```:
 
 #### NPM
 
 ```bash
-npm install --save ngx-component-outlet
+npm install --save @ngxd/core
 ```
 
 #### Yarn
 
 ```bash
-yarn add ngx-component-outlet
+yarn add @ngxd/core
 ```
 
-### Step 2: Import the NgxComponentOutletModule:
+### Step 2: Import the NgxdModule:
 
 ```typescript
-import { NgxComponentOutletModule } from 'ngx-component-outlet';
+import { NgxdModule } from '@ngxd/core';
 
 @NgModule({
   declarations: [ AppComponent ],
-  imports: [ NgxComponentOutletModule.forRoot() ],
+  imports: [ NgxdModule ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
@@ -174,10 +174,10 @@ export class AppComponent {
 #### And you will have in AppModule:
 
 ```typescript
-import { NgxComponentOutletModule } from 'ngx-component-outlet';
+import { NgxdModule } from '@ngxd/core';
 
 @NgModule({
-  imports:      [ NgxComponentOutletModule.forRoot() ],
+  imports:      [ NgxdModule ],
   declarations: [ AppComponent, CompAComponent, CompBComponent, HostComponent ],
   entryComponents: [ CompAComponent, CompBComponent ],
   bootstrap:    [ AppComponent ]

@@ -6,7 +6,7 @@ import { DynamicFormArrayComponent, DynamicFormArrayHostComponent } from './dyna
 import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule.forChild() ],
+    imports: [ CommonModule, NgxdModule ],
     declarations: [ DynamicFormArrayComponent, DynamicFormArrayHostComponent ],
     exports: [ DynamicFormArrayComponent ],
     providers: [ FormArrayComponentResolver ]

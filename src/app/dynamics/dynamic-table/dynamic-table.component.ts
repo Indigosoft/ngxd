@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/table';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { TableColumn } from '@app/components/table';
 
 @Component({

@@ -8,7 +8,7 @@ import { DynamicEntityComponent, DynamicHostComponent } from './dynamic-entity.c
 import { DynamicEntityObject } from './DynamicEntityObject';
 
 @NgModule({
-    imports: [ NgxdModule.forChild() ],
+    imports: [ NgxdModule ],
     declarations: [ DynamicEntityComponent, DynamicHostComponent ],
     exports: [ DynamicEntityComponent ],
     providers: [ EntityComponentResolver ]

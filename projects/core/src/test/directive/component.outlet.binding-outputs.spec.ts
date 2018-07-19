@@ -229,7 +229,7 @@ class AppComponent {
 }
 
 @NgModule({
-    imports: [ NgxdModule.forRoot() ],
+    imports: [ NgxdModule ],
     declarations: [
         AppComponent,
         DynamicComponent, AnotherDynamicComponent, DifferentPropertiesDynamicComponent, EmptyDynamicComponent,

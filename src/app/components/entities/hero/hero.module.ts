@@ -5,6 +5,7 @@ import { MatButtonModule, MatCardModule, MatListModule, MatTabsModule } from '@a
 import { DynamicEntitiesModule } from '@app/dynamics/dynamic-entities';
 
 import { COMPONENT, PROVIDERS } from './hero.component';
+import { SCHEMA_PROVIDERS } from './hero-schema.builder';
 
 @NgModule({
     imports: [
@@ -12,6 +13,6 @@ import { COMPONENT, PROVIDERS } from './hero.component';
         MatButtonModule, MatCardModule, MatListModule, MatTabsModule
     ],
     declarations: [ COMPONENT ],
-    providers: [ PROVIDERS ]
+    providers: [ PROVIDERS, SCHEMA_PROVIDERS ]
 })
 export class HeroEntityModule {}

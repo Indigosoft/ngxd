@@ -3,7 +3,7 @@ import { NgxdModule } from '@ngxd/core';
 import { DynamicTableColumnHostComponent, DynamicTableColumnComponent } from './dynamic-table-column.component';
 
 @NgModule({
-    imports: [ NgxdModule.forChild() ],
+    imports: [ NgxdModule ],
     declarations: [ DynamicTableColumnHostComponent, DynamicTableColumnComponent ],
     exports: [ DynamicTableColumnComponent ]
 })

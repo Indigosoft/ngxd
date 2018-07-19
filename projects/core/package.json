@@ -1,6 +1,6 @@
 {
     "name": "@ngxd/core",
-    "version": "0.1.0-beta.0",
+    "version": "0.1.0-beta.2",
     "description": "NGXD is a dynamic pattern + library for Angular",
     "keywords": [
         "angular",

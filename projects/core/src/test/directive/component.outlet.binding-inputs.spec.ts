@@ -571,7 +571,7 @@ class TestComponent {
 }
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule.forRoot() ],
+    imports: [ CommonModule, NgxdModule ],
     declarations: [
         DynamicComponent, AnotherDynamicComponent, DifferentPropertiesDynamicComponent, EmptyDynamicComponent,
         WithGetterDynamicComponent, WithSetterDynamicComponent, WithGetterAndSetterDynamicComponent,

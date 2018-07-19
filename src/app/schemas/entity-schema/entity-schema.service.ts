@@ -1,10 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { AbstractControlSchema, FormGroupSchema } from '@ngxd/forms';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
 import { Hero } from '@app/components/entities';
-import { EntitySchemaBuilder } from './entity-schema.builder';
+import { DynamicEntityObject } from '@app/dynamics';
+import { AbstractControlSchema, FormSchemaBuilder } from '@ngxd/forms';
+import { BehaviorSubject, combineLatest, merge, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { CompositeSchemaBuilder } from '../composite-schema';
 
 @Injectable()
 export class EntitySchemaService implements OnDestroy {
@@ -12,7 +13,7 @@ export class EntitySchemaService implements OnDestroy {
     private form$: BehaviorSubject<AbstractControl> = new BehaviorSubject<AbstractControl>(null);
     private formSchema$: BehaviorSubject<AbstractControlSchema> = new BehaviorSubject<AbstractControlSchema>(null);
 
-    constructor(private builder: EntitySchemaBuilder) {}
+    constructor(private fsb: FormSchemaBuilder, private builder: CompositeSchemaBuilder) {}
 
     getForm(): Observable<AbstractControl> {
         return this.form$.asObservable();
@@ -22,9 +23,9 @@ export class EntitySchemaService implements OnDestroy {
         return this.formSchema$.asObservable();
     }
 
-    getFormRawValue(): Observable<Hero> {
-        return this.getForm().pipe(
-            switchMap(this.extractValue)
+    getFormValue(): Observable<Hero> {
+        return combineLatest(this.getFormSchema(), this.getForm()).pipe(
+            switchMap(([ schema, form ]) => this.extractValue(schema, form))
         );
     }
 
@@ -34,9 +35,9 @@ export class EntitySchemaService implements OnDestroy {
         );
     }
 
-    createForm(schema: Hero): void {
-        const formSchema: FormGroupSchema = this.builder.formSchema(schema);
-        const form: AbstractControl = this.builder.form(formSchema);
+    createForm(schema: DynamicEntityObject): void {
+        const formSchema: AbstractControlSchema = this.builder.schema(schema);
+        const form: AbstractControl = this.fsb.form(formSchema);
         form.patchValue(schema);
         form.markAsDirty();
 
@@ -49,9 +50,13 @@ export class EntitySchemaService implements OnDestroy {
         this.formSchema$.complete();
     }
 
-    private extractValue(form: AbstractControl): Observable<Hero> {
+    private extractValue(schema: AbstractControlSchema, form: AbstractControl): Observable<Hero> {
         return form.valueChanges.pipe(
-            map(() => new Hero((<FormGroup>form).getRawValue()))
+            map(() => {
+                const rawValue = (<FormGroup>form).getRawValue();
+
+                return this.builder.extract(schema, rawValue);
+            })
         );
     }
 

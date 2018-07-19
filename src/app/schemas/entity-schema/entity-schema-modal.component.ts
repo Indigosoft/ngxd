@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Hero } from '@app/components/entities';
+import { DynamicEntityObject } from '@app/dynamics';
 
 @Component({
     selector: 'app-entity-schema-modal',
@@ -8,21 +8,7 @@ import { Hero } from '@app/components/entities';
 })
 export class EntitySchemaModalComponent {
     invalid: boolean;
+    schema: DynamicEntityObject;
 
-    schema: Hero = this.getDefault();
-
-    constructor(@Inject(MAT_DIALOG_DATA) public hero: Hero) {
-        this.schema = hero || this.schema;
-    }
-
-    private getDefault(): Hero {
-        const hero = new Hero({
-            id: null, name: null, rank: null, icon: null,
-            abilities: [], items: []
-        });
-
-        hero.id = null;
-
-        return hero;
-    }
+    constructor(@Inject(MAT_DIALOG_DATA) public defaultSchema: DynamicEntityObject) {}
 }

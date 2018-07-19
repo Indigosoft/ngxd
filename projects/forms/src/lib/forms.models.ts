@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 
 function _find(control: AbstractControlSchema, path: Array<string | number> | string, delimiter: string) {
@@ -28,14 +29,18 @@ export abstract class AbstractControlSchema {
 
     key: string;
     label: string;
+    subtitle: string;
     disabled: boolean;
     schema: AbstractControlSchema;
+    $type: Type<any>;
 
     protected constructor(schema: Partial<AbstractControlSchema>) {
         this.key = schema.key;
         this.label = schema.label;
+        this.subtitle = schema.subtitle;
         this.disabled = schema.disabled;
         this.schema = schema as AbstractControlSchema;
+        this.$type = schema.$type;
     }
 
     enable() {
