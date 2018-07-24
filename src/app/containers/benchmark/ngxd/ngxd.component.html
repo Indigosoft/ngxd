@@ -2,9 +2,10 @@
 <button mat-button (click)="clear()">Clear</button>
 <button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
 
-<div *ngFor="let item of (items$ | async); trackBy: trackById">
-    <app-ngxd-host-benchmark
-        [ngxComponentOutlet]="resolver | resolve: item.type"
-        [id]="item.id" (event)="onEvent($event)"
-    ></app-ngxd-host-benchmark>
-</div>
+<!--<div *ngFor="let item of (items$ | async); trackBy: trackById">-->
+    <!--<ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>-->
+<!--</div>-->
+
+<ng-container *ngFor="let item of (items$ | async); trackBy: trackById">
+    <ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>
+</ng-container>

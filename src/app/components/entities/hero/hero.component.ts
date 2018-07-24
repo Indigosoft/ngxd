@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
 
 import { Hero } from './Hero';
@@ -11,11 +11,18 @@ import { Hero } from './Hero';
 })
 export class HeroEntityComponent {
 
+    @Input() name: string;
+    @Input() forInput: string;
     @Input('entity') hero: Hero;
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
     trackById(index, { id }): string {
         return id;
     }
+
+    // ngOnChanges(changes) {
+    //     console.log(changes);
+    // }
 
 }
 

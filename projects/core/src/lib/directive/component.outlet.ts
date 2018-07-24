@@ -1,7 +1,4 @@
-import {
-    ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, EventEmitter, Injector, Input, NgModuleFactory, NgModuleRef,
-    OnChanges, OnDestroy, Output, SimpleChanges, Type, ViewContainerRef
-} from '@angular/core';
+import { ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, EventEmitter, Injector, Input, NgModuleFactory, NgModuleRef, OnChanges, OnDestroy, Output, SimpleChanges, Type, ViewContainerRef } from '@angular/core';
 
 import { NgxComponentOutletAdapterBuilder } from '../adapter/adapter-builder';
 import { NgxComponentOutletAdapterRef } from '../adapter/adapter-ref';
@@ -12,6 +9,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     @Input() ngxComponentOutlet: Type<any>;
     @Input() ngxComponentOutletInjector: Injector;
     @Input() ngxComponentOutletContent: any[][];
+    @Input() ngxComponentOutletContext: any;
     @Input() ngxComponentOutletNgModuleFactory: NgModuleFactory<any>;
 
     @Output() ngxComponentOutletActivate = new EventEmitter<any>();
@@ -24,10 +22,17 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
         return this._ngModuleRef ? this._ngModuleRef.componentFactoryResolver : this._componentFactoryResolver;
     }
 
-    private get context(): any {
-        const { context } = this.injector.get(ChangeDetectorRef) as EmbeddedViewRef<any>;
+    cached: any;
 
-        return context;
+    private get context(): any {
+        if (this.cached) {
+            return this.cached;
+        }
+
+        const { context } = this.changeDetectorRef as EmbeddedViewRef<any>;
+        // const { context } = this.viewContainerRef.injector.get(ChangeDetectorRef) as any;
+
+        return this.cached = context;
     }
 
     private get injector(): Injector {
@@ -37,6 +42,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
+        private changeDetectorRef: ChangeDetectorRef,
         private builder: NgxComponentOutletAdapterBuilder
     ) {}
 
@@ -50,6 +56,16 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
             this.destroyAdapterRef();
             this.createAdapterRef();
         }
+
+        if (changes.ngxComponentOutletContext) {
+            this.applyContext();
+        }
+    }
+
+    private applyContext() {
+        if (this.ngxComponentOutletContext && this._adapterRef) {
+            this._adapterRef.updateContext(this.ngxComponentOutletContext);
+        }
     }
 
     ngOnDestroy() {
@@ -59,6 +75,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
 
     private createAdapterRef() {
         if (this.ngxComponentOutlet) {
+            this.applyContext();
             this._adapterRef = this.builder.create(
                 this.ngxComponentOutlet, this.viewContainerRef, this.injector,
                 this.ngxComponentOutletContent, this.context, this.componentFactoryResolver

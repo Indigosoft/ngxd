@@ -1,5 +1,6 @@
 <mat-card class="mat-elevation-z0" *ngIf="ability">
     <mat-card-header>
+        <button (click)="action.emit({ ability: ability })">Click</button>
         <div [ngClass]="ability.icon" mat-card-avatar></div>
         <mat-card-title>{{ ability.amount }}</mat-card-title>
         <mat-card-subtitle>{{ ability.name }}</mat-card-subtitle>

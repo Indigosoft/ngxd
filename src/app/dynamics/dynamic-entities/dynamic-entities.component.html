@@ -1,3 +1,10 @@
+<!--<ng-container *ngFor="let entity of entities; trackBy: trackById">-->
+    <!--<app-dynamic-entity [entity]="entity"></app-dynamic-entity>-->
+<!--</ng-container>-->
+
+
 <ng-container *ngFor="let entity of entities; trackBy: trackById">
-    <app-dynamic-entity [entity]="entity"></app-dynamic-entity>
+    <input #input>
+    <ng-container *ngxComponentOutlet="resolver | resolve: entity; context: { entity: entity, forInput: input.value }"></ng-container>
+    <!--<app-dynamic-entity [entity]="entity"></app-dynamic-entity>-->
 </ng-container>

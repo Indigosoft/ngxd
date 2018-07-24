@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
 
 import { Ability } from './Ability';
@@ -12,6 +12,11 @@ import { Ability } from './Ability';
 export class AbilityEntityComponent {
 
     @Input('entity') ability: Ability;
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
+
+    ngOnChanges(changes) {
+        console.log(changes);
+    }
 
 }
 

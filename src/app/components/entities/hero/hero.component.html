@@ -1,5 +1,6 @@
-<mat-card>
+<mat-card *ngIf="hero">
     <mat-card-header>
+        <button (click)="action.emit({ hero: hero, name: name })">{{ name }}</button> {{ forInput }}
         <div [ngClass]="hero.icon" mat-card-avatar></div>
         <mat-card-title>{{ hero.name }}</mat-card-title>
         <mat-card-subtitle>{{ hero.rank }}</mat-card-subtitle>
@@ -12,7 +13,7 @@
             <mat-tab label="Abilities">
                 <mat-list>
                     <mat-list-item class="ability" *ngFor="let ability of hero.abilities; trackBy: trackById">
-                        <app-dynamic-entity [entity]="ability"></app-dynamic-entity>
+                        <app-dynamic-entity [entity]="ability" (action)="action.emit($event)"></app-dynamic-entity>
                     </mat-list-item>
                 </mat-list>
             </mat-tab>
