@@ -1,6 +1,5 @@
 <mat-card *ngIf="hero">
     <mat-card-header>
-        <button (click)="action.emit({ hero: hero, name: name })">{{ name }}</button> {{ forInput }}
         <div [ngClass]="hero.icon" mat-card-avatar></div>
         <mat-card-title>{{ hero.name }}</mat-card-title>
         <mat-card-subtitle>{{ hero.rank }}</mat-card-subtitle>

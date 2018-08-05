@@ -14,10 +14,6 @@ export class AbilityEntityComponent {
     @Input('entity') ability: Ability;
     @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
-    ngOnChanges(changes) {
-        console.log(changes);
-    }
-
 }
 
 export const COMPONENT = AbilityEntityComponent;

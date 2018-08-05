@@ -19,8 +19,4 @@ export class DynamicEntitiesComponent {
         return entity.id;
     }
 
-    // ngOnChanges(changes) {
-    //     console.log(changes);
-    // }
-
 }

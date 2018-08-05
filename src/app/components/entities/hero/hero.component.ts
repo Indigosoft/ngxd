@@ -20,10 +20,6 @@ export class HeroEntityComponent {
         return id;
     }
 
-    // ngOnChanges(changes) {
-    //     console.log(changes);
-    // }
-
 }
 
 export const COMPONENT = HeroEntityComponent;

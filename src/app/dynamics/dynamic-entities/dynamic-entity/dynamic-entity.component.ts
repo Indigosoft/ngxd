@@ -15,8 +15,4 @@ export class DynamicEntityComponent {
 
     constructor(public resolver: EntityComponentResolver) {}
 
-    ngOnChanges(changes) {
-        console.log(changes);
-    }
-
 }

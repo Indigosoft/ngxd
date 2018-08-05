@@ -2,5 +2,4 @@
     <h1>Dynamic Heroes Example</h1>
 </mat-toolbar>
 
-<input type="text" [(ngModel)]="name">
 <app-dynamic-entities [entities]="entities$ | async" (action)="onAction($event)" [name]="name"></app-dynamic-entities>
