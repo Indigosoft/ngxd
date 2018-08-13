@@ -151,7 +151,6 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     private hasAttachedContextInput(propName) {
-        console.log(this.containerContext[ PRIVATE_CONTEXT_CHANGES ], propName);
         return this.containerContext[ PRIVATE_CONTEXT_CHANGES ].has(propName);
     }
 
@@ -170,7 +169,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         $__DEFAULT.set(propName, defaultDescriptor);
         $__InputRefCounts.set(propName, ($__InputRefCounts.get(propName) || 0) + 1);
 
-        console.info('attach', this.containerContext, JSON.stringify($__DEFAULT), getPropertyDescriptor(this.containerContext, propName));
+        // console.info('attach', this.containerContext, JSON.stringify($__DEFAULT), getPropertyDescriptor(this.containerContext, propName));
 
         Object.defineProperty(this.containerContext, propName, {
             get: () => {
@@ -209,7 +208,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
 
         const defaultDescriptor: PropertyDescriptor = $__DEFAULT.get(propName);
 
-        console.info('detach', JSON.stringify($__DEFAULT), getPropertyDescriptor(this.containerContext, propName));
+        // console.info('detach', JSON.stringify($__DEFAULT), getPropertyDescriptor(this.containerContext, propName));
 
         if (defaultDescriptor) {
             Object.defineProperty(this.containerContext, propName, $__DEFAULT.get(propName));
@@ -231,7 +230,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
             const defaultDescriptor: PropertyDescriptor = getPropertyDescriptor(this.context, property.templateName);
 
             if (!this.hasAttachedContextInput(property.templateName)) {
-                console.info('has attached', this.hasAttachedContextInput(property.templateName));
+                // console.info('has attached', this.hasAttachedContextInput(property.templateName));
                 this.attachContextInput(property.templateName);
             }
 

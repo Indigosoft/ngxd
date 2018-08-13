@@ -1,4 +1,4 @@
-# @ngxd/core
+# NGX Dynamic
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
@@ -20,15 +20,7 @@
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
 ```angular2html
-<!-- host component -->
-<app-dynamic
-    <!-- dynamic component -->
-    [ngxComponentOutlet]="component"
-    <!-- regular input -->
-    [entity]="entity"
-    <!-- regular output -->
-    (action)="onAction($event)">
-</app-dynamic>
+<ng-container *ngxComponentOutlet="component"></ng-container>
 ```
 
 ## Comparison
@@ -88,7 +80,7 @@ import { NgxdModule } from '@ngxd/core';
 
 @NgModule({
   declarations: [ AppComponent ],
-  imports: [ NgxdModule ],
+  imports: [ BrowserModule, NgxdModule ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
@@ -102,7 +94,14 @@ export class AppModule {}
     template: `I'm Dynamic Component A. Hello, {{ name }}!`
 })
 export class CompAComponent {
+    @HostBinding('style.color') @Input() color: string;
     @Input() name: string;
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
+    
+    @HostListener('click', ['$event.target'])
+    onClick($event) {
+        this.action.emit($event);
+    }
 }
 ```
 
@@ -112,7 +111,14 @@ export class CompAComponent {
     template: `I'm Dynamic Component B. Hello, {{ name }}!`
 })
 export class CompBComponent {
+    @HostBinding('style.color') @Input() color: string;
     @Input() name: string;
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
+    
+    @HostListener('click', ['$event.target'])
+    onClick($event) {
+        this.action.emit($event);
+    }
 }
 ```
 
@@ -131,11 +137,20 @@ export class AppModule {}
 
 ```typescript
 @Component({
-    selector: 'app-host-for-dynamic',
-    template: ''
+    selector: 'app-items',
+    template: `
+    <ng-container *ngFor="let item of items">
+        <ng-container *ngxComponentOutlet="
+            item.component;
+            context: { name: item.name }
+        "></ng-container>
+    </ng-container>
+    `
 })
-export class HostComponent {
-    @Input() name: string;
+export class ItemsComponent {
+    @Input() color: string;
+    @Input() items: { name: string; component: Type<any> }[];
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
 }
 ```
 
@@ -144,7 +159,7 @@ export class HostComponent {
 ```typescript
 @NgModule({
     ...
-    declarations: [ ..., HostComponent ],
+    declarations: [ ..., ItemsComponent ],
     ...
 })
 export class AppModule {}
@@ -158,16 +173,24 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-root',
     template: `
-        <app-host-for-dynamic [ngxComponentOutlet]="componentA"
-          [name]="'Angular 5!'"></app-host-for-dynamic>
-        
-        <app-host-for-dynamic [ngxComponentOutlet]="componentB"
-          [name]="'Angular 6?'"></app-host-for-dynamic>
+        <app-items [items]="items" (action)="onAction($event)" color="red"></app-items>
     `
 })
 export class AppComponent {
-    componentA = CompAComponent;
-    componentB = CompBComponent;
+    items = [
+        {
+            name: 'Angular 5!',
+            component: CompAComponent
+        },
+        {
+            name: 'Angular 6!',
+            component: CompBComponent
+        }
+    ];
+    
+    onAction($event) {
+        console.log($event);
+    }
 }
 ```
 
@@ -177,8 +200,8 @@ export class AppComponent {
 import { NgxdModule } from '@ngxd/core';
 
 @NgModule({
-  imports:      [ NgxdModule ],
-  declarations: [ AppComponent, CompAComponent, CompBComponent, HostComponent ],
+  imports:      [ BrowserModule, NgxdModule ],
+  declarations: [ AppComponent, CompAComponent, CompBComponent, ItemsComponent ],
   entryComponents: [ CompAComponent, CompBComponent ],
   bootstrap:    [ AppComponent ]
 })
@@ -190,6 +213,7 @@ export class AppModule {}
 | Input                                     | Type                       | Default | Required | Description |
 | ----------------------------------------- | -------------------------- | ------- | -------- | ----------- |
 | ```[ngxComponentOutlet]```                | ```Type<any>```            | n/a     | yes      |             |
+| ```[ngxComponentOutletContext]```         | ```any```                  | n/a     | no       |             |
 | ```[ngxComponentOutletInjector]```        | ```Injector```             | n/a     | no       |             |
 | ```[ngxComponentOutletContent]```         | ```any[][]```              | n/a     | no       |             |
 | ```[ngxComponentOutletNgModuleFactory]``` | ```NgModuleFactory<any>``` | n/a     | no       |             |

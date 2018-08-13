@@ -30,7 +30,6 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
         }
 
         const { context } = this.changeDetectorRef as EmbeddedViewRef<any>;
-        // const { context } = this.viewContainerRef.injector.get(ChangeDetectorRef) as any;
 
         return this.cached = context;
     }
