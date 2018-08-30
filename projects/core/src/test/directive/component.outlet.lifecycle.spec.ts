@@ -1,7 +1,4 @@
-import {
-    AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, DoCheck, Inject, Input,
-    NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges, Type
-} from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, DoCheck, Inject, Input, NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges, Type } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NgxdModule } from '../../../index';
 import { TestCaseBuilder } from '../../testing/test-case/index';
@@ -184,6 +181,28 @@ class TestComponent {
     activatedComponent: any;
 }
 
+@Component({
+    selector: 'app-test-ng-container-comp',
+    template: '<ng-container *ngxComponentOutlet="component"></ng-container>'
+})
+class TestNgContainerComponent {
+    name;
+    label;
+    component: any;
+    activatedComponent: any;
+}
+
+@Component({
+    selector: 'app-test-ng-container-wtih-context-comp',
+    template: `<ng-container *ngxComponentOutlet="component; context: { name: name }"></ng-container>`
+})
+class TestNgContainerWithContextComponent {
+    name;
+    label;
+    component: any;
+    activatedComponent: any;
+}
+
 const DYNAMIC_COMPONENTS = [
     OnChangesDynamicComponent,
     OnInitDynamicComponent,
@@ -206,21 +225,23 @@ const CHILDREN_DYNAMIC_COMPONENTS = [
     ChildOfFullLifecycleDynamicComponent
 ];
 
-const TEST_COMPONENTS = [ TestComponent, TestHostComponent ];
+const TEST_COMPONENTS = [ TestComponent, TestNgContainerComponent, TestNgContainerWithContextComponent ];
+
+const STRATEGIES = [ ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnPush ];
 
 @NgModule({
     imports: [ NgxdModule ],
-    declarations: [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS, TEST_COMPONENTS ],
+    declarations: [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS, TEST_COMPONENTS, TestHostComponent ],
     exports: [ TEST_COMPONENTS ],
     entryComponents: [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS ],
     providers: [ HookLogger, TestCaseBuilder ]
 })
 class TestModule {}
 
-function makeTest(componentType: Type<any>) {
+function makeTestWithComponent(componentType: Type<any>, component: Type<any>) {
     const builder: TestCaseBuilder = TestBed.get(TestCaseBuilder);
     const logger: HookLogger = TestBed.get(HookLogger);
-    const fixture: ComponentFixture<TestComponent> = TestBed.createComponent(TestComponent);
+    const fixture: ComponentFixture<TestComponent> = TestBed.createComponent(component);
 
     const report = builder.operations([
         builder.operation([
@@ -266,24 +287,57 @@ describe('NgxComponentOutlet check lifecycle hooks', () => {
 
     describe('should calls lifecycle hooks', () => {
 
-        [ DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS ].forEach((components) => {
-            components.forEach((component) =>
-                it(`with ${component.prototype.constructor.name} dynamic component`, fakeAsync(() => {
-                    makeTest(component);
-                }))
-            );
+        STRATEGIES.forEach((strategy) => {
 
-            components.forEach((component) =>
-                it(`with ${component.prototype.constructor.name} dynamic component and change detection strategy OnPush`, fakeAsync(() => {
-                    TestBed.overrideComponent(component, { set: { changeDetection: ChangeDetectionStrategy.OnPush } });
-                    makeTest(component);
-                }))
-            );
+            describe(`ChangeDetectionStrategy ${strategy ? 'Default' : 'OnPush'}`, () => {
+
+                TEST_COMPONENTS.forEach((testComponent) => {
+                    describe(`with ${testComponent.prototype.constructor.name}`, () => {
+
+                        DYNAMIC_COMPONENTS.forEach((component) => {
+                            beforeEach(() => {
+                                TestBed.overrideComponent(component, { set: { changeDetection: strategy } });
+                            });
+
+                            it(`with ${component.prototype.constructor.name}`, fakeAsync(() => {
+                                makeTestWithComponent(component, testComponent);
+                            }));
+                        });
+
+                    });
+                });
+
+            });
+
         });
 
     });
 
-    it('should call lifecycle hooks of extendable class', fakeAsync(() => {
-        pending();
-    }));
+    describe('should call lifecycle hooks of extendable class', () => {
+
+        STRATEGIES.forEach((strategy) => {
+
+            describe(`ChangeDetectionStrategy ${strategy ? 'Default' : 'OnPush'}`, () => {
+
+                TEST_COMPONENTS.forEach((testComponent) => {
+                    describe(`with ${testComponent.prototype.constructor.name}`, () => {
+
+                        CHILDREN_DYNAMIC_COMPONENTS.forEach((component) => {
+                            beforeEach(() => {
+                                TestBed.overrideComponent(component, { set: { changeDetection: strategy } });
+                            });
+
+                            it(`with ${component.prototype.constructor.name}`, fakeAsync(() => {
+                                makeTestWithComponent(component, testComponent);
+                            }));
+                        });
+
+                    });
+                });
+
+            });
+
+        });
+
+    });
 });

@@ -37,7 +37,7 @@ export function markForCheckWrapper(delegateHook: (() => void) | null, cd) {
 }
 
 export function hasProperty(context: any, name: string): boolean {
-    if (context.hasOwnProperty(name)) {
+    if (name in context) {
         return true;
     }
 
@@ -51,7 +51,9 @@ export function hasProperty(context: any, name: string): boolean {
 }
 
 export function getPropertyDescriptor(context: any, name: string): PropertyDescriptor {
-    if (context.hasOwnProperty(name)) {
+    const descriptor = Object.getOwnPropertyDescriptor(context, name);
+
+    if (descriptor) {
         return Object.getOwnPropertyDescriptor(context, name);
     }
 
@@ -62,4 +64,18 @@ export function getPropertyDescriptor(context: any, name: string): PropertyDescr
     }
 
     return void 0;
+}
+
+export function deletePropertyDescriptor(context: any, name: string) {
+    const descriptor = Object.getOwnPropertyDescriptor(context, name);
+
+    if (descriptor) {
+        delete context[name];
+    }
+
+    const prototype = Object.getPrototypeOf(context);
+
+    if (prototype) {
+        return deletePropertyDescriptor(prototype, name);
+    }
 }

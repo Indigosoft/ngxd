@@ -14,7 +14,7 @@ function _find(control: AbstractControlSchema, path: Array<string | number> | st
 
     return (<Array<string | number>>path).reduce((v: AbstractControlSchema, name) => {
         if (v instanceof FormGroupSchema) {
-            return v.controls.hasOwnProperty(name as string) ? v.controls[ name ] : null;
+            return name in v.controls ? v.controls[ name ] : null;
         }
 
         if (v instanceof FormArraySchema) {

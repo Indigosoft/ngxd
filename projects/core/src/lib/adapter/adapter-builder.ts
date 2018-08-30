@@ -13,7 +13,7 @@ export class NgxComponentOutletAdapterBuilder {
         viewContainerRef: ViewContainerRef,
         injector: Injector,
         projectableNodes: any[][],
-        context: TComponent,
+        host: TComponent,
         componentFactoryResolver: ComponentFactoryResolver
     ): NgxComponentOutletAdapterRef<TComponent> {
         const componentFactory: ComponentFactory<TComponent> =
@@ -27,14 +27,14 @@ export class NgxComponentOutletAdapterBuilder {
 
         const config = STRATEGY_CONFIG[ this.getStrategyType(componentType) ];
 
-        return this.createAdapterRef(componentFactory, componentRef, viewContainerRef, context, config, componentFactoryResolver);
+        return this.createAdapterRef(componentFactory, componentRef, viewContainerRef, host, config, componentFactoryResolver);
     }
 
     private createAdapterRef<TComponent>(
         componentFactory: ComponentFactory<TComponent>,
         componentRef: ComponentRef<TComponent>,
         viewContainerRef: ViewContainerRef,
-        context: TComponent,
+        host: TComponent,
         config: StrategyConfig,
         componentFactoryResolver: ComponentFactoryResolver
     ): NgxComponentOutletAdapterRef<TComponent> {
@@ -45,7 +45,7 @@ export class NgxComponentOutletAdapterBuilder {
         );
 
         return new NgxComponentOutletAdapterRef({
-            componentFactory, componentRef, context,
+            componentFactory, componentRef, host,
             onInitComponentRef, doCheckComponentRef
         });
     }

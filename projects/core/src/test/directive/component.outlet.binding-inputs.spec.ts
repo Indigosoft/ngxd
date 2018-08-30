@@ -279,7 +279,7 @@ describe('check binding inputs', () => {
             expect(component.activatedComponent.name).toBe('React');
         }));
 
-        fit('should binding when host component have input with getter and setter', fakeAsync(() => {
+        it('should binding when host component have input with getter and setter', fakeAsync(() => {
             const template = `
             <app-test-host-with-getter-and-setter [name]="name" [ngxComponentOutlet]="component"
                 (ngxComponentOutletActivate)="activatedComponent = $event"></app-test-host-with-getter-and-setter>`;
@@ -410,7 +410,6 @@ describe('check binding inputs', () => {
 
     describe('without host component', () => {
 
-
         it('should bind inputs without host', fakeAsync(() => {
             const template = `<ng-container *ngxComponentOutlet="component"></ng-container>`;
             TestBed.overrideComponent(TestComponent, { set: { template: template } });
@@ -430,6 +429,57 @@ describe('check binding inputs', () => {
             content = fixture.debugElement.nativeElement.innerHTML;
 
             expect(content).toContain('name: React');
+            expect(content).toContain('label: Library');
+        }));
+
+        it('should bind inputs without host in ngFor', fakeAsync(() => {
+            const template = `<ng-container *ngFor="let name of names"><ng-container *ngxComponentOutlet="component; context: { name: name }"></ng-container></ng-container>`;
+            TestBed.overrideComponent(TestComponent, { set: { template: template } });
+            fixture = TestBed.createComponent(TestComponent);
+            component = fixture.componentInstance;
+            component.names = [ 'Angular', 'React' ];
+
+            fixture.detectChanges();
+            content = fixture.debugElement.nativeElement.innerHTML;
+
+            expect(content).toContain('name: Angular');
+            expect(content).toContain('name: React');
+            expect(content).toContain('label: Framework');
+
+            component.names = [ 'Angular2', 'React2' ];
+            component.label = 'Library';
+
+            fixture.detectChanges();
+            content = fixture.debugElement.nativeElement.innerHTML;
+
+            expect(content).toContain('name: Angular2');
+            expect(content).toContain('name: React2');
+            expect(content).toContain('label: Library');
+        }));
+
+        it('should bind inputs without host in ngFor with different context input names', fakeAsync(() => {
+            const template = `<ng-container *ngFor="let name of names"><ng-container *ngxComponentOutlet="component; context: { name: name, customLabel: label }"></ng-container></ng-container>`;
+            TestBed.overrideComponent(TestComponent, { set: { template: template } });
+            fixture = TestBed.createComponent(TestComponent);
+            component = fixture.componentInstance;
+            component.component = DifferentPropertiesDynamicComponent;
+            component.names = [ 'Angular', 'React' ];
+
+            fixture.detectChanges();
+            content = fixture.debugElement.nativeElement.innerHTML;
+
+            expect(content).toContain('name: Angular');
+            expect(content).toContain('name: React');
+            expect(content).toContain('label: Framework');
+
+            component.names = [ 'Angular2', 'React2' ];
+            component.label = 'Library';
+
+            fixture.detectChanges();
+            content = fixture.debugElement.nativeElement.innerHTML;
+
+            expect(content).toContain('name: Angular2');
+            expect(content).toContain('name: React2');
             expect(content).toContain('label: Library');
         }));
 
@@ -618,6 +668,7 @@ class WithGetterAndSetterTestHostComponent {
 class TestComponent {
     name = 'Angular';
     label = 'Framework';
+    names: string[];
     component: any = DynamicComponent;
     activatedComponent: any;
 

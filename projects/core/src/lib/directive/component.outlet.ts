@@ -24,7 +24,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
 
     cached: any;
 
-    private get context(): any {
+    private get host(): any {
         if (this.cached) {
             return this.cached;
         }
@@ -77,7 +77,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
             this.applyContext();
             this._adapterRef = this.builder.create(
                 this.ngxComponentOutlet, this.viewContainerRef, this.injector,
-                this.ngxComponentOutletContent, this.context, this.componentFactoryResolver
+                this.ngxComponentOutletContent, this.host, this.componentFactoryResolver
             );
             this.ngxComponentOutletActivate.emit(this._adapterRef.componentRef.instance);
         }
