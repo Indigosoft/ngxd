@@ -11,7 +11,7 @@ export abstract class NgxdResolver<TType, TComponent> {
 
     resolve(type: TType): Type<TComponent> | null {
         if (type && type.constructor) {
-            return this.config.get(type.constructor as Type<TType>) || null;
+            return this.config.get(type.constructor as Type<TType>) || this.config.get(type) || null;
         }
 
         return this.config.get(type) || null;
