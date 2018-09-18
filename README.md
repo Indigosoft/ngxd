@@ -19,7 +19,7 @@
 
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
-```angular2html
+```html
 <!-- host component -->
 <app-dynamic
     <!-- dynamic component -->
