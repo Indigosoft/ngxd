@@ -3,7 +3,7 @@
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
 [![npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
-[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/thekiba/@ngxd/core/blob/master/LICENSE)
+[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/IndigoSoft/@ngxd/core/blob/master/LICENSE)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org)
 [![CircleCI](https://img.shields.io/circleci/project/github/IndigoSoft/ngxd/master.svg?label=Circle%20CI&style=flat-square)](https://circleci.com/gh/IndigoSoft/ngxd)
 [![Travis](https://img.shields.io/travis/IndigoSoft/ngxd/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/IndigoSoft/ngxd)
@@ -15,12 +15,71 @@
 [![GitHub stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/IndigoSoft/ngxd)
 [![npm Downloads](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
 
+# NGX Dynamic v0.x to v6 Update Guide
+ 
+NGX Dynamic v6 will arriving soon! While this is a major version change (from 0.x to 6.x).
+
+- [MIGRATION.md](./MIGRATION.md)
+
 ## Example Usage
 
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
-```angular2html
+```html
 <ng-container *ngxComponentOutlet="component"></ng-container>
+```
+
+## Dynamic Components In 5 minutes
+
+There are several modes of operation of the directive.
+
+### Through The Parent Component
+A simple variant of binding through the parent component.
+```typescript
+@Component({
+  template: `
+  <ng-container
+    *ngxComponentOutlet="component”
+  ></ng-container>`
+})
+class DynamicComponent {
+  @Input() entity;
+  @Output() action;
+}
+```
+
+### Through The Context
+Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
+```html
+<ng-container *ngFor=“let color of colors”
+  <ng-container
+    *ngxComponentOutlet="
+      component;
+      context: { color: color }
+  ”></ng-container>
+</ng-container>
+```
+
+### Pipe For Selecting The Component
+For ease of selecting the required component, there is ResolvePipe, which expects NgxdResolver to enter, and returns the required component.
+```html
+<ng-container *ngxComponentOutlet="
+    resolver | resolve: entity
+”></ng-container>
+```
+
+### Through The Host Component (deprecated)
+Through the host component, when the inputs and outputs are initialized explicitly. This option is difficult to use and deprecated.
+```html
+<!-- host component -->
+<app-dynamic
+    <!-- dynamic component -->
+    [ngxComponentOutlet]="component"
+    <!-- regular input -->
+    [entity]="entity"
+    <!-- regular output -->
+    (action)="onAction($event)">
+</app-dynamic>
 ```
 
 ## Comparison
@@ -55,7 +114,7 @@ Table of heroes with table schema form
 
 [Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
 
-[Github](https://github.com/thekiba/ngx-component-outlet/tree/master/src)
+[Github](https://github.com/IndigoSoft/ngxd/tree/master/src)
 
 ## Getting started
 
@@ -226,4 +285,4 @@ export class AppModule {}
 
 ## Advanced Use Cases
 
-Here is a [demo repository showing ngx-component-outlet and Angular](https://github.com/thekiba/ngx-component-outlet/tree/master/src) in action.
+Here is a [demo repository](./src) showing NGX Dynamic and Angular in action.

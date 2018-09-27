@@ -19,8 +19,61 @@
 
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
-```angular2html
+```html
 <ng-container *ngxComponentOutlet="component"></ng-container>
+```
+
+## Dynamic Components In 5 minutes
+
+There are several modes of operation of the directive.
+
+### Through The Parent Component
+A simple variant of binding through the parent component.
+```typescript
+@Component({
+  template: `
+  <ng-container
+    *ngxComponentOutlet="component”
+  ></ng-container>`
+})
+class DynamicComponent {
+  @Input() entity;
+  @Output() action;
+}
+```
+
+### Through The Context
+Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
+```html
+<ng-container *ngFor=“let color of colors”
+  <ng-container
+    *ngxComponentOutlet="
+      component;
+      context: { color: color }
+  ”></ng-container>
+</ng-container>
+```
+
+### Pipe For Selecting The Component
+For ease of selecting the required component, there is ResolvePipe, which expects NgxdResolver to enter, and returns the required component.
+```html
+<ng-container *ngxComponentOutlet="
+    resolver | resolve: entity
+”></ng-container>
+```
+
+### Through The Host Component (deprecated)
+Through the host component, when the inputs and outputs are initialized explicitly. This option is difficult to use and deprecated.
+```html
+<!-- host component -->
+<app-dynamic
+    <!-- dynamic component -->
+    [ngxComponentOutlet]="component"
+    <!-- regular input -->
+    [entity]="entity"
+    <!-- regular output -->
+    (action)="onAction($event)">
+</app-dynamic>
 ```
 
 ## Comparison
