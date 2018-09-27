@@ -1,0 +1,4 @@
+<ng-container *ngFor="let entity of entities; trackBy: trackById">
+    <app-dynamic-entity [entity]="entity" (action)="action.emit($event)"></app-dynamic-entity>
+</ng-container>
+

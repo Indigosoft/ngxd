@@ -1,15 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material';
 
-import { DynamicsModule } from '../../components/dynamic-entities/dynamics.module';
-import { EntitiesModule } from '../../components/entities/entities.module';
+import { DynamicEntitiesModule } from '@app/dynamics/dynamic-entities';
+import { EntitiesModule } from '@app/components/entities';
+import { NgxdModule } from '@ngxd/core';
 
 import { EntitiesPageComponent } from './entities.component';
 import { EntitiesRouting } from './entities.routing';
 
 @NgModule({
-    imports: [ CommonModule, DynamicsModule, EntitiesRouting, EntitiesModule, MatToolbarModule ],
+    imports: [ CommonModule, DynamicEntitiesModule, EntitiesRouting, EntitiesModule, MatToolbarModule, NgxdModule, FormsModule ],
     declarations: [ EntitiesPageComponent ]
 })
 export class EntitiesPageModule {}

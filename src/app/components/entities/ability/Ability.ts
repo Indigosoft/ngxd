@@ -1,6 +1,6 @@
-import { EntityObject } from '../EntityObject';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
 
-export class Ability implements EntityObject {
+export class Ability implements DynamicEntityObject {
 
     id: string;
     name: string;
@@ -12,10 +12,6 @@ export class Ability implements EntityObject {
         this.name = name;
         this.icon = icon;
         this.amount = amount || 0;
-    }
-
-    flatten(): EntityObject[] {
-        return [];
     }
 
 }

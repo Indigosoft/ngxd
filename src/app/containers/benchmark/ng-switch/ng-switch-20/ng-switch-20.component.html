@@ -1,0 +1,26 @@
+<button mat-button (click)="create()">Create {{ count }} items</button>
+<button mat-button (click)="clear()">Clear</button>
+<button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
+
+<div *ngFor="let item of (items$ | async); trackBy: trackById" [ngSwitch]="item.type">
+    <app-dynamic-00001 *ngSwitchCase="1" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00001>
+    <app-dynamic-00002 *ngSwitchCase="2" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00002>
+    <app-dynamic-00003 *ngSwitchCase="3" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00003>
+    <app-dynamic-00004 *ngSwitchCase="4" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00004>
+    <app-dynamic-00005 *ngSwitchCase="5" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00005>
+    <app-dynamic-00006 *ngSwitchCase="6" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00006>
+    <app-dynamic-00007 *ngSwitchCase="7" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00007>
+    <app-dynamic-00008 *ngSwitchCase="8" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00008>
+    <app-dynamic-00009 *ngSwitchCase="9" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00009>
+    <app-dynamic-00010 *ngSwitchCase="10" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00010>
+    <app-dynamic-00011 *ngSwitchCase="11" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00011>
+    <app-dynamic-00012 *ngSwitchCase="12" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00012>
+    <app-dynamic-00013 *ngSwitchCase="13" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00013>
+    <app-dynamic-00014 *ngSwitchCase="14" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00014>
+    <app-dynamic-00015 *ngSwitchCase="15" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00015>
+    <app-dynamic-00016 *ngSwitchCase="16" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00016>
+    <app-dynamic-00017 *ngSwitchCase="17" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00017>
+    <app-dynamic-00018 *ngSwitchCase="18" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00018>
+    <app-dynamic-00019 *ngSwitchCase="19" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00019>
+    <app-dynamic-00020 *ngSwitchCase="20" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00020>
+</div>

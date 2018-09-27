@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { provideEntity } from '../entity.provider';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
 
 import { Hero } from './Hero';
 
@@ -11,7 +11,10 @@ import { Hero } from './Hero';
 })
 export class HeroEntityComponent {
 
+    @Input() name: string;
+    @Input() forInput: string;
     @Input('entity') hero: Hero;
+    @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
     trackById(index, { id }): string {
         return id;
@@ -19,5 +22,5 @@ export class HeroEntityComponent {
 
 }
 
-export const PROVIDERS = provideEntity(Hero, HeroEntityComponent);
-export const COMPONENTS = [ HeroEntityComponent ];
+export const COMPONENT = HeroEntityComponent;
+export const PROVIDERS = DynamicEntityModule.provide(Hero, HeroEntityComponent);

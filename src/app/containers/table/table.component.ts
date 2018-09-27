@@ -1,27 +1,12 @@
-import { DataSource } from '@angular/cdk/table';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { EntitiesService, EntityObject } from '../../components/entities';
-import { TableColumn, TableColumnTypes } from '../../components/table-columns';
-import { TableSchema } from '../../components/table-schema';
-
-class EntitiesDataSource extends DataSource<EntityObject> {
-    constructor(private source: Observable<EntityObject[]>) { super(); }
-
-    connect(): Observable<EntityObject[]> {
-        return this.source;
-    }
-
-    disconnect(): void {}
-}
-
-const DISPLAYED_COLUMNS = [ 'id', 'name', 'icon' ];
-
-const TABLE_SCHEMA: TableSchema = [
-    new TableColumn({ def: 'id', header: 'Id', type: TableColumnTypes.Id }),
-    new TableColumn({ def: 'name', header: 'Name', type: TableColumnTypes.Text }),
-    new TableColumn({ def: 'icon', header: 'Image', type: TableColumnTypes.Icon })
-];
+import { MatDialog } from '@angular/material';
+import { EntitiesService, Hero } from '@app/components/entities';
+import { TableSchema, TableService } from '@app/components/table';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { EntitySchemaModalComponent } from '@app/schemas/entity-schema';
+import { TableColumnSchemaModalComponent } from '@app/schemas/table-schema';
+import { Observable } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-table-page',
@@ -31,14 +16,56 @@ const TABLE_SCHEMA: TableSchema = [
 })
 export class TablePageComponent {
 
-    schema$: BehaviorSubject<TableSchema> = new BehaviorSubject<TableSchema>(TABLE_SCHEMA);
-    dataSource: DataSource<any> = new EntitiesDataSource(this.entityDataService.getFlattenEntities());
-    displayedColumns: string[] = DISPLAYED_COLUMNS;
+    entities$: Observable<DynamicEntityObject[]> = this.entities.getFlattenEntities();
+    schema$: Observable<TableSchema> = this.table.getTableSchema();
 
-    constructor(private entityDataService: EntitiesService) {}
+    constructor(
+        private entities: EntitiesService,
+        private table: TableService,
+        private dialog: MatDialog
+    ) {}
 
-    onSchemaChanged(schema) {
-        this.schema$.next(schema);
+    onTableAction($event) {
+        switch ($event.type) {
+            case 'edit':
+                return this.onEditEntity($event.data);
+            case 'delete':
+                return this.onDeleteEntity($event.data);
+        }
+    }
+
+    onChangeTableSchema(schema: TableSchema): void {
+        this.table.setTableSchema(schema);
+    }
+
+    onCreateColumn() {
+        const dialogRef = this.dialog.open(TableColumnSchemaModalComponent, { width: '100vw' });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((createdColumn) => this.table.createColumn(createdColumn));
+    }
+
+    onCreateEntity() {
+        const entity: Hero = new Hero({
+            id: null, name: null, rank: null, icon: null,
+            abilities: [], items: []
+        });
+        entity.id = null;
+        const dialogRef = this.dialog.open(EntitySchemaModalComponent, { width: '100vw', data: entity });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((createdEntity) => this.entities.createEntity(createdEntity));
+    }
+
+    onEditEntity(entity: DynamicEntityObject) {
+        const dialogRef = this.dialog.open(EntitySchemaModalComponent, { width: '100vw', data: entity });
+
+        dialogRef.afterClosed().pipe(take(1), filter(_ => _))
+                 .subscribe((updatedEntity) => this.entities.updateEntity(updatedEntity));
+    }
+
+    onDeleteEntity(entity: DynamicEntityObject) {
+        this.entities.deleteEntity(entity);
     }
 
 }

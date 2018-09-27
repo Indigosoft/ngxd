@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import { LayoutModule } from './layout/layout.module';
-import { NgxComponentOutletModule } from '../../lib/ngx-component-outlet';
-
-import { ROUTES } from './app.routes';
+import { NgxdModule } from '@ngxd/core';
+import { NgxdFormsModule } from '@ngxd/forms';
 
 import { AppComponent } from './app.component';
+
+import { ROUTES } from './app.routes';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
     declarations: [
@@ -19,12 +21,13 @@ import { AppComponent } from './app.component';
 
         LayoutModule,
 
-        NgxComponentOutletModule.forRoot(),
+        ReactiveFormsModule,
+        NgxdModule,
+        NgxdFormsModule.forRoot(),
 
         RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
     ],
     providers: [],
     bootstrap: [ AppComponent ]
 })
-export class AppModule {
-}
+export class AppModule {}

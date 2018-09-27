@@ -2,4 +2,4 @@
     <h1>Dynamic Heroes Example</h1>
 </mat-toolbar>
 
-<app-dynamics [entities]="entities$ | async"></app-dynamics>
+<app-dynamic-entities [entities]="entities$ | async" (action)="onAction($event)" [name]="name"></app-dynamic-entities>

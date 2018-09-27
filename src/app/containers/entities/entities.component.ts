@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter } from '@angular/core';
+import { EntityComponentResolver } from '@app/dynamics/dynamic-entities/dynamic-entity/dynamic-entity.resolver';
 import { Observable } from 'rxjs';
-import { EntitiesService, EntityObject } from '../../components/entities';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { EntitiesService } from '@app/components/entities';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'app-entities-page',
@@ -10,8 +13,14 @@ import { EntitiesService, EntityObject } from '../../components/entities';
 })
 export class EntitiesPageComponent {
 
-    entities$: Observable<EntityObject[]> = this.entityDataService.getEntities();
+    name: string = 'hello';
+
+    entities$: Observable<DynamicEntityObject[]> = this.entityDataService.getEntities();
 
     constructor(private entityDataService: EntitiesService) {}
+
+    onAction($event) {
+        console.log($event);
+    }
 
 }

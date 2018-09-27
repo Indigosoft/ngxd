@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-
-import { ENTITIES_PROVIDERS } from './index';
-
-import { AbilityEntityModule } from './ability/ability.module';
-import { HeroEntityModule } from './hero/hero.module';
-import { ItemEntityModule } from './item/item.module';
+import { AbilityEntityModule } from './ability';
+import { EntitiesService } from './entities.service';
+import { HeroEntityModule } from './hero';
+import { ItemEntityModule } from './item';
 
 @NgModule({
     imports: [ AbilityEntityModule, HeroEntityModule, ItemEntityModule ],
-    providers: [ ENTITIES_PROVIDERS ]
+    providers: [ EntitiesService ]
 })
 export class EntitiesModule {}

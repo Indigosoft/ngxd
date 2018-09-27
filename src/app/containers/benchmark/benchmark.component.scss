@@ -1,0 +1,35 @@
+h1 {
+    font-weight: 300;
+    margin: 0;
+    padding: 28px 8px;
+    font-size: 20px;
+}
+
+.mat-toolbar {
+    padding: 40px 20px;
+}
+
+.mat-card {
+    width: 100%;
+    height: calc(100% - 70px);
+    margin: 20px;
+}
+
+.mat-card-content {
+    overflow-y: auto;
+    height: calc(100% - 70px);
+}
+
+.average {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 13px;
+}
+
+.break-line {
+    flex-wrap: wrap;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}

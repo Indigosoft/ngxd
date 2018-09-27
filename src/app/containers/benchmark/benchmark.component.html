@@ -1,0 +1,79 @@
+<mat-toolbar color="primary">
+    <h1>Benchmark</h1>
+</mat-toolbar>
+
+<mat-grid-list [cols]="2" rowHeight="500px">
+
+    <mat-grid-tile>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Sandbox</mat-card-title>
+                <mat-card-subtitle>with dynamic components</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-tab-group>
+                    <mat-tab label="Native">
+                        <app-native-benchmark [count]="count" [repeat]="repeat" (event)="onEvent($event)"></app-native-benchmark>
+                    </mat-tab>
+                    <mat-tab label="Ngxd">
+                        <app-ngxd-benchmark [count]="count" [repeat]="repeat" (event)="onEvent($event)"></app-ngxd-benchmark>
+                    </mat-tab>
+                    <mat-tab label="NgIf">
+                        <app-ng-if-benchmark [count]="count" [repeat]="repeat" (event)="onEvent($event)"></app-ng-if-benchmark>
+                    </mat-tab>
+                    <mat-tab label="NgSwitch">
+                        <app-ng-switch-benchmark [count]="count" [repeat]="repeat" (event)="onEvent($event)"></app-ng-switch-benchmark>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Results</mat-card-title>
+                <mat-card-subtitle>latest results</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="container">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="count" (ngModelChange)="clear()" placeholder="Append">
+                            <mat-option [value]="1">1</mat-option>
+                            <mat-option [value]="20">20</mat-option>
+                            <mat-option [value]="100">100</mat-option>
+                            <mat-option [value]="1000">1000</mat-option>
+                            <mat-option [value]="10000">10000</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="repeat" (ngModelChange)="clear()" placeholder="Repeat">
+                            <mat-option [value]="20">20</mat-option>
+                            <mat-option [value]="100">100</mat-option>
+                            <mat-option [value]="1000">1000</mat-option>
+                            <mat-option [value]="10000">10000</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-table *ngIf="columns$ | async as columns" [dataSource]="dataSource">
+                        <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                            <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{ element[column].time | number: '.2-2' }}ms
+                                <span class="average" *ngIf="element[column].count > 1">
+                                    (avg. {{ element[column].average | number: '.2-2' }}ms)
+                                </span>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+                    </mat-table>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+

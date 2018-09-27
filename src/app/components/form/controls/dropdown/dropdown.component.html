@@ -1,0 +1,8 @@
+<mat-form-field>
+    <mat-select [formControl]="control" [placeholder]="schema.label">
+        <mat-option *ngFor="let option of schema.options" [value]="option.value">
+            {{ option.key }}
+        </mat-option>
+    </mat-select>
+    <mat-error *ngIf="control.invalid">{{ control.errors | json }}</mat-error>
+</mat-form-field>

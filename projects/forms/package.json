@@ -1,0 +1,35 @@
+{
+    "name": "@ngxd/forms",
+    "version": "0.1.0-beta.0",
+    "description": "NGXD is a dynamic pattern + library for Angular",
+    "keywords": [
+        "angular",
+        "angular5",
+        "angular6",
+        "angular-library",
+        "angular-components",
+        "dynamic-components",
+        "typescript"
+    ],
+    "author": "thekiba <hr@thekiba.io>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IndigoSoft/ngxd.git"
+    },
+    "maintainers": [
+        {
+            "name": "thekiba",
+            "email": "hr@thekiba.io"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/IndigoSoft/ngxd/issues"
+    },
+    "homepage": "https://github.com/IndigoSoft/ngxd",
+    "peerDependencies": {
+        "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+        "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+        "@angular/forms": "^6.0.0-rc.0 || ^6.0.0"
+    }
+}

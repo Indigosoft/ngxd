@@ -1,0 +1,6 @@
+<div *ngIf="schema.controls.length > 0" fxLayout="row" fxLayoutGap="20px">
+    <h2 mat-line>{{ schema.label || 'Unknown' }}</h2>
+    <ng-container *ngFor="let control of schema.controls; trackBy: trackByIndex; index as index">
+        <app-dynamic-form [form]="array.at(index)" [schema]="control"></app-dynamic-form>
+    </ng-container>
+</div>

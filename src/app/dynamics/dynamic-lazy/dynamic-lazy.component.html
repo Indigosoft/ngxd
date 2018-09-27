@@ -1,0 +1,5 @@
+<app-dynamic-lazy-host
+    [ngxComponentOutlet]="resolver$ | async | resolve: name"
+    [ngxComponentOutletNgModuleFactory]="ngModuleFactory$ | async"
+    [name]="name"
+></app-dynamic-lazy-host>

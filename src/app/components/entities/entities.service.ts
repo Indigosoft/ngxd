@@ -1,24 +1,42 @@
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ENTITIES } from './entities';
-import { EntityObject } from './EntityObject';
+import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { ENTITIES_DATA } from './entities.data';
 
-export type Entities = EntityObject[];
+function flatEntity(entity: DynamicEntityObject): DynamicEntityObject[] {
+    return [ entity ].concat(...Object.values(entity).filter(Array.isArray));
+}
 
+function flatEntities(entities: DynamicEntityObject[]): DynamicEntityObject[] {
+    return entities.reduce((acc, entity) => [ ...acc, ...flatEntity(entity) ], []);
+}
+
+export type Entities = DynamicEntityObject[];
+
+@Injectable()
 export class EntitiesService {
 
-    private entities$: BehaviorSubject<Entities> =
-        new BehaviorSubject<Entities>(ENTITIES);
+    private entities$: BehaviorSubject<Entities> = new BehaviorSubject<Entities>(ENTITIES_DATA);
 
-    getEntities(): Observable<EntityObject[]> {
+    createEntity(createdEntity: DynamicEntityObject) {
+        this.entities$.next([ createdEntity, ...this.entities$.value ]);
+    }
+
+    updateEntity(updatedEntity: DynamicEntityObject) {
+        this.entities$.next(this.entities$.value.map((item) => item.id !== updatedEntity.id ? item : updatedEntity));
+    }
+
+    deleteEntity(deletedEntity: DynamicEntityObject) {
+        this.entities$.next(this.entities$.value.filter((item) => item.id !== deletedEntity.id));
+    }
+
+    getEntities(): Observable<DynamicEntityObject[]> {
         return this.entities$.asObservable();
     }
 
-    getFlattenEntities(): Observable<EntityObject[]> {
-        return this.getEntities().pipe(map((entities) =>
-            entities.reduce((acc, entity) => [
-                ...acc, entity, ...entity.flatten()
-            ], [])));
+    getFlattenEntities(): Observable<DynamicEntityObject[]> {
+        return this.getEntities().pipe(map(flatEntities));
     }
 
 }

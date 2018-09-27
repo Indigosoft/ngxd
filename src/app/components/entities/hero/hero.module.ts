@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule, MatCardModule, MatListModule, MatTabsModule } from '@angular/material';
 
-import { DynamicsModule } from '../../dynamic-entities/dynamics.module';
+import { DynamicEntitiesModule } from '@app/dynamics/dynamic-entities';
 
-import { COMPONENTS, PROVIDERS } from './hero.component';
+import { COMPONENT, PROVIDERS } from './hero.component';
+import { SCHEMA_PROVIDERS } from './hero-schema.builder';
 
 @NgModule({
-    imports: [ CommonModule, DynamicsModule, MatButtonModule, MatCardModule, MatListModule, MatTabsModule ],
-    declarations: [ COMPONENTS ],
-    entryComponents: [ COMPONENTS ],
-    providers: [ PROVIDERS ]
+    imports: [
+        CommonModule, DynamicEntitiesModule,
+        MatButtonModule, MatCardModule, MatListModule, MatTabsModule
+    ],
+    declarations: [ COMPONENT ],
+    providers: [ PROVIDERS, SCHEMA_PROVIDERS ]
 })
 export class HeroEntityModule {}
