@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter } from '@angular/core';
-import { EntityComponentResolver } from '@app/dynamics/dynamic-entities/dynamic-entity/dynamic-entity.resolver';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { EntitiesService } from '@app/components';
+import { DynamicEntityObject } from '@app/dynamics';
 import { Observable } from 'rxjs';
-import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
-import { EntitiesService } from '@app/components/entities';
-import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'app-entities-page',

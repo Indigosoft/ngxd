@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DynamicFormGroupComponentBase, provideFormGroup } from '@app/dynamics';
 import { AbstractControlSchema, FormGroupSchema } from '@ngxd/forms';
-import { provideFormGroup } from '@app/dynamics/dynamic-form';
 
 @Component({
     selector: 'app-form-group',
@@ -9,13 +8,10 @@ import { provideFormGroup } from '@app/dynamics/dynamic-form';
     styleUrls: [ 'group.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormGroupComponent {
+export class FormGroupComponent extends DynamicFormGroupComponentBase {
 
-    @Input() group: FormGroup;
-    @Input() schema: FormGroupSchema;
-
-    toArray<T>(object: { [key: string]: T }): T[] {
-        return Object.keys(object).map((key) => object[key]);
+    toArray<T>(object: { [ key: string ]: T }): T[] {
+        return Object.keys(object).map((key) => object[ key ]);
     }
 
     trackByKey(index, schema: AbstractControlSchema): string {

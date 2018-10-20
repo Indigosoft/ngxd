@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { DynamicEntityComponentBase, DynamicEntityModule } from '@app/dynamics';
 
 import { Hero } from './Hero';
 
@@ -9,12 +9,11 @@ import { Hero } from './Hero';
     styleUrls: [ 'hero.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeroEntityComponent {
+export class HeroEntityComponent extends DynamicEntityComponentBase {
 
+    @Input() entity: Hero;
     @Input() name: string;
     @Input() forInput: string;
-    @Input('entity') hero: Hero;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
     trackById(index, { id }): string {
         return id;

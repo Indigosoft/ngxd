@@ -1,4 +1,1 @@
-<app-dynamic-table-column-host
-    [ngxComponentOutlet]="resolver | resolve: column"
-    [column]="column" [row]="row" (action)="action.emit($event)"
-></app-dynamic-table-column-host>
+<ng-container *ngxComponentOutlet="resolver | resolve: column.type"></ng-container>

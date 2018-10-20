@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
+import { DynamicEntityComponentBase, DynamicEntityModule } from '@app/dynamics';
 
 import { Item } from './Item';
 
@@ -9,9 +9,9 @@ import { Item } from './Item';
     styleUrls: [ 'item.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemEntityComponent {
+export class ItemEntityComponent extends DynamicEntityComponentBase {
 
-    @Input('entity') item: Item;
+    @Input() entity: Item;
 
     trackById(index, { id }): string {
         return id;

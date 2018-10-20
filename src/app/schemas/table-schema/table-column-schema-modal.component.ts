@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { TableColumn, TableSchema } from '@app/components/table';
+import { TableSchema } from '@app/components';
+import { TableColumn } from '@app/dynamics';
 
 @Component({
     selector: 'app-table-column-schema-modal',

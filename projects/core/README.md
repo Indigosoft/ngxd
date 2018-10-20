@@ -3,7 +3,7 @@
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
 [![npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
-[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/thekiba/@ngxd/core/blob/master/LICENSE)
+[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/IndigoSoft/@ngxd/core/blob/master/LICENSE)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org)
 [![CircleCI](https://img.shields.io/circleci/project/github/IndigoSoft/ngxd/master.svg?label=Circle%20CI&style=flat-square)](https://circleci.com/gh/IndigoSoft/ngxd)
 [![Travis](https://img.shields.io/travis/IndigoSoft/ngxd/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/IndigoSoft/ngxd)
@@ -14,6 +14,12 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/IndigoSoft/ngxd)
 [![npm Downloads](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
+
+# NGX Dynamic v0.x to v6 Update Guide
+ 
+NGX Dynamic v6 will arriving soon! While this is a major version change (from 0.x to 6.x).
+
+- [MIGRATION.md](https://github.com/IndigoSoft/ngxd/blob/master/MIGRATION.md)
 
 ## Example Usage
 
@@ -108,7 +114,7 @@ Table of heroes with table schema form
 
 [Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
 
-[Github](https://github.com/thekiba/ngx-component-outlet/tree/master/src)
+[Github](https://github.com/IndigoSoft/ngxd/tree/master/src)
 
 ## Getting started
 
@@ -279,4 +285,4 @@ export class AppModule {}
 
 ## Advanced Use Cases
 
-Here is a [demo repository showing ngx-component-outlet and Angular](https://github.com/thekiba/ngx-component-outlet/tree/master/src) in action.
+Here is a [demo repository](https://github.com/IndigoSoft/ngxd/blob/master/src) showing NGX Dynamic and Angular in action.

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { DynamicEntityObject } from '@app/dynamics';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
 import { ENTITIES_DATA } from './entities.data';
 
 function flatEntity(entity: DynamicEntityObject): DynamicEntityObject[] {

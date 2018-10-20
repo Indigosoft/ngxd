@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Hero } from '@app/components/entities';
+import { Hero } from '@app/components';
 import { DynamicEntityObject } from '@app/dynamics';
 import { AbstractControlSchema, FormSchemaBuilder } from '@ngxd/forms';
 import { BehaviorSubject, combineLatest, merge, Observable, of } from 'rxjs';

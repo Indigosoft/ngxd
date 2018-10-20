@@ -1,20 +1,15 @@
 import { Inject, Injectable, Type } from '@angular/core';
+import { NgxdResolver } from '@ngxd/core';
 import { FormControlSchema } from '@ngxd/forms';
 
+import { DynamicFormControlComponentBase } from './dynamic-form-control.base';
 import { FORM_CONTROL_PROVIDER, FormControlProvider } from './dynamic-form-control.provider';
 
 @Injectable()
-export class FormControlComponentResolver {
-
-    private config: Map<Type<FormControlSchema>, Type<any>>;
+export class FormControlComponentResolver extends NgxdResolver<Type<FormControlSchema>, Type<DynamicFormControlComponentBase>> {
 
     constructor(@Inject(FORM_CONTROL_PROVIDER) providers: FormControlProvider[]) {
-        this.config = providers.reduce((config, provider) =>
-            config.set(provider.type, provider.component), new Map());
-    }
-
-    resolve(column: FormControlSchema): Type<any> {
-        return this.config.get(column.constructor as Type<FormControlSchema>);
+        super(providers);
     }
 
 }

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { provideControl } from '@app/dynamics/dynamic-form';
+import { DynamicFormControlComponentBase, provideControl } from '@app/dynamics';
 import { DropdownControl } from './DropdownControl';
 
 @Component({
@@ -8,8 +7,7 @@ import { DropdownControl } from './DropdownControl';
     templateUrl: 'dropdown.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DropdownControlComponent {
-    @Input() control: FormControl;
+export class DropdownControlComponent extends DynamicFormControlComponentBase {
     @Input() schema: DropdownControl;
 }
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ItemsService } from '../../benchmark.service';
+import { ItemsService, MeasureService } from '../../benchmark.service';
 import { NativeBenchmarkComponent } from '../native.component';
 
 @Component({
@@ -8,4 +8,8 @@ import { NativeBenchmarkComponent } from '../native.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ ItemsService ]
 })
-export class Native100BenchmarkComponent extends NativeBenchmarkComponent {}
+export class Native100BenchmarkComponent extends NativeBenchmarkComponent {
+    constructor(items: ItemsService, measures: MeasureService) {
+        super(items, measures);
+    }
+}

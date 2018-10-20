@@ -6,6 +6,6 @@
     <!--<ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>-->
 <!--</div>-->
 
-<ng-container *ngFor="let item of (items$ | async); trackBy: trackById">
+<div *ngFor="let item of (items$ | async); trackBy: trackById">
     <ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>
-</ng-container>
+</div>

@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AbstractControl, FormArray } from '@angular/forms';
+import { TableSchema } from '@app/components';
 import { AbstractControlSchema, FormArraySchema } from '@ngxd/forms';
 import { BehaviorSubject, concat, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TableSchemaBuilder } from './table-schema.builder';
-import { TableSchema } from '@app/components/table/TableSchema';
 
 @Injectable()
 export class TableSchemaService implements OnDestroy {

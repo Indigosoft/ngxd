@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { TableColumn, TableColumnTypes } from '@app/dynamics';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TableSchema } from './TableSchema';
-import { TableColumn, TableColumnTypes } from './table-columns';
 
 const TABLE_SCHEMA: TableSchema = [
     new TableColumn({

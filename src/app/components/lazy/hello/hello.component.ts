@@ -1,17 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { provideLazy } from '@app/dynamics/dynamic-lazy';
+import { DynamicLazyComponentBase, provideLazy } from '@app/dynamics';
 
 @Component({
     selector: 'app-hello-lazy',
     templateUrl: 'hello.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LazyComponent {
-
-    @Input() name: string;
-
-}
+export class LazyComponent extends DynamicLazyComponentBase {}
 
 export const COMPONENTS = [ LazyComponent ];
 export const PROVIDERS = [ provideLazy('Angular', LazyComponent) ];

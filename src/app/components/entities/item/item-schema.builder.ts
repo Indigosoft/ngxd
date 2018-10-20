@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { DropdownControl, DropdownControlOptions, TextboxControl } from '@app/components/form';
-import { CompositeSchemaBuilder } from '@app/schemas/composite-schema/composite-schema.builder';
-import { provideSchemaBuilder } from '@app/schemas/composite-schema/schema-builder.provider';
-import { SchemaBuilder } from '@app/schemas/composite-schema/schema.builder';
+import { CompositeSchemaBuilder, provideSchemaBuilder, SchemaBuilder } from '@app/schemas';
 import { AbstractControlSchema, FormSchemaBuilder } from '@ngxd/forms';
 import { Item } from './Item';
 

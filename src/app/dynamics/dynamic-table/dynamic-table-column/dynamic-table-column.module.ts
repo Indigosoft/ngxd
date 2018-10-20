@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { NgxdModule } from '@ngxd/core';
-import { DynamicTableColumnHostComponent, DynamicTableColumnComponent } from './dynamic-table-column.component';
+
+import { DynamicTableColumnComponent } from './dynamic-table-column.component';
+import { TableColumnComponentResolver } from './dynamic-table-column.resolver';
 
 @NgModule({
     imports: [ NgxdModule ],
-    declarations: [ DynamicTableColumnHostComponent, DynamicTableColumnComponent ],
-    exports: [ DynamicTableColumnComponent ]
+    declarations: [ DynamicTableColumnComponent ],
+    exports: [ DynamicTableColumnComponent ],
+    providers: [ TableColumnComponentResolver ]
 })
 export class DynamicTableColumnModule {}

@@ -1,4 +1,4 @@
-import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { DynamicEntityObject } from '@app/dynamics';
 
 import { Ability } from './ability';
 import { Hero } from './hero';

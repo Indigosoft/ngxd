@@ -1,18 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { DynamicEntityComponentBase } from './dynamic-entity.base';
 import { EntityComponentResolver } from './dynamic-entity.resolver';
-import { DynamicEntityObject } from './DynamicEntityObject';
 
 @Component({
     selector: 'app-dynamic-entity',
     templateUrl: 'dynamic-entity.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicEntityComponent {
+export class DynamicEntityComponent extends DynamicEntityComponentBase {
 
-    @Input() entity: DynamicEntityObject;
-    @Output() action: EventEmitter<string> = new EventEmitter<string>();
-
-    constructor(public resolver: EntityComponentResolver) {}
+    constructor(public resolver: EntityComponentResolver) {
+        super();
+    }
 
 }

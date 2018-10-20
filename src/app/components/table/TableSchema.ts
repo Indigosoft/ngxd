@@ -1,3 +1,3 @@
-import { TableColumn } from './table-columns';
+import { TableColumn } from '@app/dynamics';
 
 export type TableSchema = TableColumn[];

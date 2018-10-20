@@ -1,4 +1,4 @@
-import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
+import { DynamicEntityObject } from '@app/dynamics';
 
 export class Item implements DynamicEntityObject {
 

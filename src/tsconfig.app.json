@@ -15,5 +15,8 @@
     "exclude": [
         "test.ts",
         "**/*.spec.ts"
-    ]
+    ],
+    "angularCompilerOptions": {
+        "target": "application"
+    }
 }

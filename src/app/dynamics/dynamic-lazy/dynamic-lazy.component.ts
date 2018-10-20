@@ -1,25 +1,18 @@
 import { ChangeDetectionStrategy, Component, Inject, InjectionToken, Injector, Input, NgModuleFactory, NgModuleFactoryLoader } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { DynamicLazyComponentBase } from './dynamic-lazy.base';
 import { LazyComponentResolver } from './dynamic-lazy.resolver';
 
 export const LAZY_MODULE_PATH = new InjectionToken<string>('LAZY_MODULE_PATH');
-
-@Component({
-    selector: 'app-dynamic-lazy-host',
-    template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class DynamicLazyHostComponent {
-    @Input() name: string;
-}
 
 @Component({
     selector: 'app-dynamic-lazy',
     templateUrl: 'dynamic-lazy.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicLazyComponent {
+export class DynamicLazyComponent extends DynamicLazyComponentBase {
 
     @Input() name: string;
 
@@ -36,6 +29,8 @@ export class DynamicLazyComponent {
         @Inject(LAZY_MODULE_PATH) private lazyModulePath: string,
         private ngModuleFactoryLoader: NgModuleFactoryLoader,
         private injector: Injector
-    ) {}
+    ) {
+        super();
+    }
 
 }

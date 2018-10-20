@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ItemsService } from '../../benchmark.service';
-import { NgxdBenchmarkComponent } from '../ngxd.component';
+import { ItemsService, MeasureService } from '../../benchmark.service';
+import { ComponentResolver, NgxdBenchmarkComponent } from '../ngxd.component';
 
 @Component({
     selector: 'app-ngxd-benchmark',
@@ -8,4 +8,8 @@ import { NgxdBenchmarkComponent } from '../ngxd.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ ItemsService ]
 })
-export class Ngxd100BenchmarkComponent extends NgxdBenchmarkComponent {}
+export class Ngxd100BenchmarkComponent extends NgxdBenchmarkComponent {
+    constructor(resolver: ComponentResolver, items: ItemsService, measures: MeasureService) {
+        super(resolver, items, measures);
+    }
+}

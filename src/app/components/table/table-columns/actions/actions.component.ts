@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { provideTableColumn } from '../table-column.provider';
-import { TableColumn } from '../TableColumn';
-import { TableColumnTypes } from '../TableColumnTypes';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DynamicTableColumnComponentBase, provideTableColumn, TableColumnTypes } from '@app/dynamics';
 
 @Component({
     selector: 'app-actions-table-column',
@@ -9,11 +7,7 @@ import { TableColumnTypes } from '../TableColumnTypes';
     styleUrls: [ 'actions.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActionsTableColumnEntityComponent {
-    @Input() row: any;
-    @Input() column: TableColumn;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
-}
+export class ActionsTableColumnEntityComponent extends DynamicTableColumnComponentBase {}
 
 export const COMPONENT = ActionsTableColumnEntityComponent;
 export const PROVIDERS = provideTableColumn(TableColumnTypes.Actions, ActionsTableColumnEntityComponent);

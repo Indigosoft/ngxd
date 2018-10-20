@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LazyComponentResolver } from '@app/dynamics/dynamic-lazy';
+import { LazyComponentResolver } from '@app/dynamics';
 
 import { HelloLazyModule } from './hello';
 

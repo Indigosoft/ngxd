@@ -1,7 +1,7 @@
-<mat-card class="mat-elevation-z0" *ngIf="ability">
+<mat-card *ngIf="entity" class="mat-elevation-z0">
     <mat-card-header>
-        <div [ngClass]="ability.icon" mat-card-avatar></div>
-        <mat-card-title>{{ ability.amount }}</mat-card-title>
-        <mat-card-subtitle>{{ ability.name }}</mat-card-subtitle>
+        <div [ngClass]="entity.icon" mat-card-avatar></div>
+        <mat-card-title>{{ entity.amount }}</mat-card-title>
+        <mat-card-subtitle>{{ entity.name }}</mat-card-subtitle>
     </mat-card-header>
 </mat-card>

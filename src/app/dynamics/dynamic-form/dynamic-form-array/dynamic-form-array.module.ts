@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgxdModule } from '@ngxd/core';
 
-import { DynamicFormArrayComponent, DynamicFormArrayHostComponent } from './dynamic-form-array.component';
+import { DynamicFormArrayComponent } from './dynamic-form-array.component';
 import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
 
 @NgModule({
     imports: [ CommonModule, NgxdModule ],
-    declarations: [ DynamicFormArrayComponent, DynamicFormArrayHostComponent ],
+    declarations: [ DynamicFormArrayComponent ],
     exports: [ DynamicFormArrayComponent ],
     providers: [ FormArrayComponentResolver ]
 })

@@ -5,6 +5,7 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, 
 
 import { BenchmarkPageComponent } from './benchmark.component';
 import { BenchmarkRouting } from './benchmark.routing';
+import { ItemsService } from './benchmark.service';
 import { NativeBenchmarkModule } from './native/native.module';
 import { NgIfBenchmarkModule } from './ng-if/ng-if.module';
 import { NgSwitchBenchmarkModule } from './ng-switch/ng-switch.module';
@@ -17,7 +18,6 @@ import { NgxdBenchmarkModule } from './ngxd/ngxd.module';
         MatSelectModule, MatFormFieldModule, MatButtonModule, MatTabsModule, MatTableModule,
         MatCardModule, NgxdBenchmarkModule, NgSwitchBenchmarkModule, NgIfBenchmarkModule, NativeBenchmarkModule
     ],
-    providers: [],
     declarations: [ BenchmarkPageComponent ]
 })
 export class BenchmarkPageModule {}

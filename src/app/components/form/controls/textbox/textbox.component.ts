@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { provideControl } from '@app/dynamics/dynamic-form';
+import { DynamicFormControlComponentBase, provideControl } from '@app/dynamics';
 import { TextboxControl } from './TextboxControl';
 
 @Component({
@@ -8,8 +7,7 @@ import { TextboxControl } from './TextboxControl';
     templateUrl: 'textbox.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextboxControlComponent {
-    @Input() control: FormControl;
+export class TextboxControlComponent extends DynamicFormControlComponentBase {
     @Input() schema: TextboxControl;
 }
 

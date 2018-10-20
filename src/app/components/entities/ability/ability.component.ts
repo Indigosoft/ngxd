@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { DynamicEntityModule } from '@app/dynamics/dynamic-entities';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { DynamicEntityComponentBase, DynamicEntityModule } from '@app/dynamics';
 
 import { Ability } from './Ability';
 
@@ -9,10 +9,9 @@ import { Ability } from './Ability';
     styleUrls: [ 'ability.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AbilityEntityComponent {
+export class AbilityEntityComponent extends DynamicEntityComponentBase {
 
-    @Input('entity') ability: Ability;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
+    @Input() entity: Ability;
 
 }
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { EntityComponentResolver } from '@app/dynamics/dynamic-entities/dynamic-entity/dynamic-entity.resolver';
-import { DynamicEntityObject } from './dynamic-entity';
+
+import { DynamicEntityObject, EntityComponentResolver } from './dynamic-entity';
 
 @Component({
     selector: 'app-dynamic-entities',

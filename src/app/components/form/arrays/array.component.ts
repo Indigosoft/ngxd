@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { FormArraySchema } from '@ngxd/forms';
-import { provideFormArray } from '@app/dynamics/dynamic-form';
+import { DynamicFormArrayComponentBase, provideFormArray } from '@app/dynamics';
 
 @Component({
     selector: 'app-form-array',
@@ -9,7 +9,7 @@ import { provideFormArray } from '@app/dynamics/dynamic-form';
     styleUrls: [ 'array.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormArrayComponent {
+export class FormArrayComponent extends DynamicFormArrayComponentBase {
 
     @Input() array: FormArray;
     @Input() schema: FormArraySchema;

@@ -1,17 +1,17 @@
-<mat-card *ngIf="item">
+<mat-card *ngIf="entity">
     <mat-card-header>
-        <div [ngClass]="item.icon" mat-card-avatar></div>
-        <mat-card-title>{{ item.name }}</mat-card-title>
-        <mat-card-subtitle>{{ item.rank }}</mat-card-subtitle>
+        <div [ngClass]="entity.icon" mat-card-avatar></div>
+        <mat-card-title>{{ entity.name }}</mat-card-title>
+        <mat-card-subtitle>{{ entity.rank }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-tab-group>
             <mat-tab label="Info">
-                <img [ngClass]="item.icon" alt="" mat-card-image>
+                <img [ngClass]="entity.icon" alt="" mat-card-image>
             </mat-tab>
             <mat-tab label="Abilities">
                 <mat-list>
-                    <mat-list-item class="ability" *ngFor="let ability of item.abilities; trackBy: trackById">
+                    <mat-list-item class="ability" *ngFor="let ability of entity.abilities; trackBy: trackById">
                         <app-dynamic-entity [entity]="ability"></app-dynamic-entity>
                     </mat-list-item>
                 </mat-list>

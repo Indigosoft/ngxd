@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { EntitiesService, Hero } from '@app/components/entities';
-import { TableSchema, TableService } from '@app/components/table';
-import { DynamicEntityObject } from '@app/dynamics/dynamic-entities';
-import { EntitySchemaModalComponent } from '@app/schemas/entity-schema';
-import { TableColumnSchemaModalComponent } from '@app/schemas/table-schema';
+import { EntitiesService, Hero, TableSchema, TableService } from '@app/components';
+import { DynamicEntityObject } from '@app/dynamics';
+import { EntitySchemaModalComponent, TableColumnSchemaModalComponent } from '@app/schemas';
 import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 

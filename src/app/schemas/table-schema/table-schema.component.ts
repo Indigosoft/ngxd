@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { TableSchema } from '@app/components';
 import { AbstractControlSchema } from '@ngxd/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TableSchemaService } from './table-schema.service';
-import { TableSchema } from '@app/components/table';
 
 @Component({
     selector: 'app-table-schema',

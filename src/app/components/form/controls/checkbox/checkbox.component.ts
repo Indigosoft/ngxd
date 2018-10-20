@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { provideControl } from '@app/dynamics/dynamic-form';
+import { DynamicFormControlComponentBase, provideControl } from '@app/dynamics';
 import { CheckboxControl } from './CheckboxControl';
 
 @Component({
@@ -9,8 +8,7 @@ import { CheckboxControl } from './CheckboxControl';
     styleUrls: [ 'checkbox.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextboxControlComponent {
-    @Input() control: FormControl;
+export class TextboxControlComponent extends DynamicFormControlComponentBase {
     @Input() schema: CheckboxControl;
 }
 

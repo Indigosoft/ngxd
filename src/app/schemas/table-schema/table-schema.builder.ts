@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
+import { TableSchema } from '@app/components/table';
+import { CheckboxControl, DropdownControl, DropdownControlOptions, TextboxControl } from '@app/components/form';
+import { TableColumn, TableColumnTypes } from '@app/dynamics';
 import { AbstractControlSchema, FormArraySchema, FormGroupSchema, FormSchemaBuilder } from '@ngxd/forms';
-import { CheckboxControl, DropdownControl, DropdownControlOptions, TextboxControl } from '@app/components/form/controls';
-import { TableColumn, TableColumnTypes, TableSchema } from '@app/components/table';
 
 @Injectable()
 export class TableSchemaBuilder {

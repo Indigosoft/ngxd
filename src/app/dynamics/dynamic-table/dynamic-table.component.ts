@@ -1,6 +1,7 @@
 import { DataSource } from '@angular/cdk/table';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { TableColumn } from '@app/components/table';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { TableColumn } from './dynamic-table-column';
 
 @Component({
     selector: 'app-dynamic-table',

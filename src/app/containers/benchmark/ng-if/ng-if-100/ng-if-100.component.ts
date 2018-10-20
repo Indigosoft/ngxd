@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ItemsService } from '../../benchmark.service';
+import { ItemsService, MeasureService } from '../../benchmark.service';
 import { NgIfBenchmarkComponent } from '../ng-if.component';
 
 // var template = (id) => `<app-dynamic-${String(id).padStart(5, 0)} *ngIf="item.type === ${id}" [id]="item.id" (event)="onEvent($event)"></app-dynamic-${String(id).padStart(5, 0)}>`;
@@ -13,4 +13,8 @@ import { NgIfBenchmarkComponent } from '../ng-if.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ ItemsService ]
 })
-export class NgIf100BenchmarkComponent extends NgIfBenchmarkComponent {}
+export class NgIf100BenchmarkComponent extends NgIfBenchmarkComponent {
+    constructor(items: ItemsService, measures: MeasureService) {
+        super(items, measures);
+    }
+}

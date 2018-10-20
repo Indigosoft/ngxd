@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { provideTableColumn } from '../table-column.provider';
-import { TableColumn } from '../TableColumn';
-import { TableColumnTypes } from '../TableColumnTypes';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DynamicTableColumnComponentBase, provideTableColumn, TableColumnTypes } from '@app/dynamics';
 
 @Component({
     selector: 'app-icon-table-column',
@@ -9,10 +7,7 @@ import { TableColumnTypes } from '../TableColumnTypes';
     styleUrls: [ 'icon.component.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IconTableColumnEntityComponent {
-    @Input() row: any;
-    @Input() column: TableColumn;
-}
+export class IconTableColumnEntityComponent extends DynamicTableColumnComponentBase {}
 
 export const COMPONENT = IconTableColumnEntityComponent;
 export const PROVIDERS = provideTableColumn(TableColumnTypes.Icon, IconTableColumnEntityComponent);

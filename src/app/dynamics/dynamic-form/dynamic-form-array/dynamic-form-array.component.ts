@@ -1,28 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormArray } from '@angular/forms';
-import { FormArraySchema } from '@ngxd/forms';
-import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-@Component({
-    selector: 'app-dynamic-form-array-host',
-    template: '',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class DynamicFormArrayHostComponent {
-    @Input() array: FormArray;
-    @Input() schema: FormArraySchema;
-}
+import { DynamicFormArrayComponentBase } from './dynamic-form-array.base';
+import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
 
 @Component({
     selector: 'app-dynamic-form-array',
     templateUrl: 'dynamic-form-array.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicFormArrayComponent {
+export class DynamicFormArrayComponent extends DynamicFormArrayComponentBase {
 
-    @Input() array: FormArray;
-    @Input() schema: FormArraySchema;
-
-    constructor(public resolver: FormArrayComponentResolver) {}
+    constructor(public resolver: FormArrayComponentResolver) {
+        super();
+    }
 
 }

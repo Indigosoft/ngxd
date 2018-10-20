@@ -1,20 +1,15 @@
 import { Inject, Injectable, Type } from '@angular/core';
+import { NgxdResolver } from '@ngxd/core';
 
-import { ENTITY_PROVIDER, DynamicEntityProvider } from './dynamic-entity.provider';
+import { DynamicEntityComponentBase } from './dynamic-entity.base';
+import { DynamicEntityProvider, ENTITY_PROVIDER } from './dynamic-entity.provider';
 import { DynamicEntityObject } from './DynamicEntityObject';
 
 @Injectable()
-export class EntityComponentResolver {
-
-    private config: Map<Type<DynamicEntityObject>, Type<any>>;
+export class EntityComponentResolver extends NgxdResolver<Type<DynamicEntityObject>, Type<DynamicEntityComponentBase>> {
 
     constructor(@Inject(ENTITY_PROVIDER) providers: DynamicEntityProvider[]) {
-        this.config = providers.reduce((config, provider) =>
-            config.set(provider.type, provider.component), new Map());
-    }
-
-    resolve(entity: DynamicEntityObject): Type<any> {
-        return this.config.get(entity.constructor as Type<DynamicEntityObject>);
+        super(providers);
     }
 
 }
