@@ -1,6 +1,6 @@
 {
     "name": "@ngxd/forms",
-    "version": "0.1.0-beta.0",
+    "version": "0.1.0-beta.1",
     "description": "NGXD is a dynamic pattern + library for Angular",
     "keywords": [
         "angular",
@@ -28,8 +28,8 @@
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
     "peerDependencies": {
-        "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-        "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
-        "@angular/forms": "^6.0.0-rc.0 || ^6.0.0"
+        "@angular/common": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0",
+        "@angular/core": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0",
+        "@angular/forms": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0"
     }
 }
