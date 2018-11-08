@@ -1,6 +1,6 @@
-# NGX Dynamic v0.x to v6 Update Guide
+# NGX Dynamic v0.x to v7 Update Guide
  
-NGX Dynamic v6 will arriving soon! While this is a major version change (from 0.x to 6.x).
+NGX Dynamic v7 will arriving soon! While this is a major version change (from 0.x to 7.x).
 
 ## Backwards compatibility
 

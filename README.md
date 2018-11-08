@@ -15,9 +15,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/IndigoSoft/ngxd)
 [![npm Downloads](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
 
-# NGX Dynamic v0.x to v6 Update Guide
+# NGX Dynamic v0.x to v7 Update Guide
  
-NGX Dynamic v6 will arriving soon! While this is a major version change (from 0.x to 6.x).
+NGX Dynamic v7 will arriving soon! While this is a major version change (from 0.x to 7.x).
 
 - [MIGRATION.md](./MIGRATION.md)
 
