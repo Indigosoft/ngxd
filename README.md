@@ -2,18 +2,15 @@
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
-[![npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
-[![npm License](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square)](https://github.com/IndigoSoft/@ngxd/core/blob/master/LICENSE)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org)
-[![CircleCI](https://img.shields.io/circleci/project/github/IndigoSoft/ngxd/master.svg?label=Circle%20CI&style=flat-square)](https://circleci.com/gh/IndigoSoft/ngxd)
-[![Travis](https://img.shields.io/travis/IndigoSoft/ngxd/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/IndigoSoft/ngxd)
+[![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?maxAge=86400)](https://badge.fury.io/js/@ngxd/core)
+[![Npm Downloads](https://img.shields.io/npm/dt/@ngxd/core.svg?maxAge=86400)](https://www.npmjs.com/package/@ngxd/core)
+[![Npm Downloads Weekly](https://img.shields.io/npm/dw/@ngxd/core.svg?maxAge=86400)](https://www.npmjs.com/package/@ngxd/core)
+[![Licence](https://img.shields.io/npm/l/@ngxd/core.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/blob/master/LICENSE)
 
-[![GitHub contributors](https://img.shields.io/github/contributors/IndigoSoft/ngxd.svg?style=flat-square)](https://github.com/IndigoSoft/ngxd)
-[![GitHub PR Stats](http://issuestats.com/github/IndigoSoft/ngxd/badge/pr?style=flat-square)](http://issuestats.com/github/IndigoSoft/ngxd)
-[![GitHub Issue Stats](http://issuestats.com/github/IndigoSoft/ngxd/badge/issue?style=flat-square)](http://issuestats.com/github/IndigoSoft/ngxd)
-
-[![GitHub stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&style=flat-square)](https://github.com/IndigoSoft/ngxd)
-[![npm Downloads](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square)](https://www.npmjs.com/package/@ngxd/core)
+[![GitHub Contributors](https://img.shields.io/github/contributors/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/graphs/contributors)
+[![GitHub PR](https://img.shields.io/github/issues-pr/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/pulls)
+[![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&maxAge=86400)](https://github.com/IndigoSoft/ngxd)
 
 # NGX Dynamic v0.x to v7 Update Guide
  
@@ -38,9 +35,10 @@ A simple variant of binding through the parent component.
 ```typescript
 @Component({
   template: `
-  <ng-container
-    *ngxComponentOutlet="component”
-  ></ng-container>`
+    <ng-container
+      *ngxComponentOutlet="component"
+    ></ng-container>
+  `
 })
 class DynamicComponent {
   @Input() entity;
@@ -56,16 +54,17 @@ Additionally there is autobinding through the context. This is useful when you n
     *ngxComponentOutlet="
       component;
       context: { color: color }
-  ”></ng-container>
+  "></ng-container>
 </ng-container>
 ```
 
 ### Pipe For Selecting The Component
 For ease of selecting the required component, there is ResolvePipe, which expects NgxdResolver to enter, and returns the required component.
 ```html
-<ng-container *ngxComponentOutlet="
+<ng-container
+  *ngxComponentOutlet="
     resolver | resolve: entity
-”></ng-container>
+"></ng-container>
 ```
 
 ### Through The Host Component (deprecated)
@@ -230,26 +229,30 @@ export class AppModule {}
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-root',
-    template: `
-        <app-items [items]="items" (action)="onAction($event)" color="red"></app-items>
-    `
+  selector: 'app-root',
+  template: `
+    <app-items
+      [items]="items"
+      (action)="onAction($event)"
+      color="red"
+    ></app-items>
+  `
 })
 export class AppComponent {
-    items = [
-        {
-            name: 'Angular 5!',
-            component: CompAComponent
-        },
-        {
-            name: 'Angular 6!',
-            component: CompBComponent
-        }
-    ];
-    
-    onAction($event) {
-        console.log($event);
+  items = [
+    {
+      name: 'Angular 5!',
+      component: CompAComponent
+    },
+    {
+      name: 'Angular 6!',
+      component: CompBComponent
     }
+  ];
+    
+  onAction($event) {
+    console.log($event);
+  }
 }
 ```
 
