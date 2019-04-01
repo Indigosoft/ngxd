@@ -55,7 +55,7 @@ class HostInputAdapter<TComponent> {
             },
             set: (value: any) => {
                 if (this.defaultDescriptor && this.defaultDescriptor.set) {
-                    this.defaultDescriptor.set.call(host);
+                    this.defaultDescriptor.set.call(host, value);
                 }
 
                 this.value = value;
@@ -337,8 +337,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private attachOutputs(): void {
         for (const property of this.componentFactory.outputs) {
             if (property.templateName in this.host) {
-                this.componentRef.instance[ property.propName ]
+                const subscription = this.componentRef.instance[ property.propName ]
                     .subscribe(this.host[ property.templateName ]);
+                this.attachedOutputs.push(subscription);
             }
         }
     }
