@@ -262,9 +262,10 @@ function makeTestWithComponent(componentType: Type<any>, component: Type<any>) {
         builder.operation([
             builder.changeInput('label', FRAMEWORK)
         ]),
-        builder.operation([]),
         builder.operation([
-            builder.resetComponent(),
+            builder.resetComponent()
+        ]),
+        builder.operation([
             builder.resetInput('name'),
             builder.resetInput('label')
         ]),
