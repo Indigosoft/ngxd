@@ -224,7 +224,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         }
         for (const property of this.componentFactory.inputs) {
             const templateName = property.templateName;
-            if (props.includes(templateName) || this.defaultDescriptors.find(_ => _.templateName === templateName )) {
+            if (props.indexOf(templateName) > -1 || this.defaultDescriptors.find(_ => _.templateName === templateName )) {
                 continue;
             }
 
