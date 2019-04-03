@@ -2,15 +2,16 @@
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
-[![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?maxAge=86400)](https://badge.fury.io/js/@ngxd/core)
-[![Npm Downloads](https://img.shields.io/npm/dt/@ngxd/core.svg?maxAge=86400)](https://www.npmjs.com/package/@ngxd/core)
-[![Npm Downloads Weekly](https://img.shields.io/npm/dw/@ngxd/core.svg?maxAge=86400)](https://www.npmjs.com/package/@ngxd/core)
-[![Licence](https://img.shields.io/npm/l/@ngxd/core.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/blob/master/LICENSE)
+[![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square&maxAge=300)](https://badge.fury.io/js/@ngxd/core)
+[![Npm Downloads](https://img.shields.io/npm/dt/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
+[![Npm Downloads Weekly](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
+[![Travis](https://img.shields.io/travis/com/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://travis-ci.com/IndigoSoft/ngxd)
+[![Licence](https://img.shields.io/npm/l/@ngxd/core.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/blob/master/LICENSE)
 
-[![GitHub Contributors](https://img.shields.io/github/contributors/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/graphs/contributors)
-[![GitHub PR](https://img.shields.io/github/issues-pr/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/pulls)
-[![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?maxAge=86400)](https://github.com/IndigoSoft/ngxd/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?label=GitHub%20Stars&maxAge=86400)](https://github.com/IndigoSoft/ngxd)
+[![GitHub Contributors](https://img.shields.io/github/contributors/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/graphs/contributors)
+[![GitHub PR](https://img.shields.io/github/issues-pr/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/pulls)
+[![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?style=flat-square&label=GitHub%20Stars&maxAge=300)](https://github.com/IndigoSoft/ngxd)
 
 # NGX Dynamic v0.x to v7 Update Guide
  
