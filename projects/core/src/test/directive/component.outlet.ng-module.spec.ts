@@ -3,52 +3,53 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NgxdModule } from '../../../index';
 
 describe('NgxComponentOutlet check custom ngModule', () => {
-    let fixture: ComponentFixture<TestComponent>;
-    let component: TestComponent;
-    let compiler: Compiler;
-    let content: string;
+  let fixture: ComponentFixture<TestComponent>;
+  let component: TestComponent;
+  let compiler: Compiler;
+  let content: string;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({ imports: [ TestModule ] });
-    });
+  beforeEach(() => {
+    TestBed.configureTestingModule({ imports: [TestModule] });
+  });
 
-    it('should use custom ngModuleFactory', fakeAsync(() => {
-        compiler = TestBed.get(Compiler);
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+  it('should use custom ngModuleFactory', fakeAsync(() => {
+    compiler = TestBed.get(Compiler);
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
 
-        fixture.componentInstance.module = compiler.compileModuleSync(DynamicModule);
-        fixture.detectChanges();
+    fixture.componentInstance.module = compiler.compileModuleSync(DynamicModule);
+    fixture.detectChanges();
 
-        content = fixture.debugElement.nativeElement.innerHTML;
-        expect(content).toContain('Dynamic Component');
-    }));
+    content = fixture.debugElement.nativeElement.innerHTML;
+    expect(content).toContain('Dynamic Component');
+  }));
 });
 
 @Component({
-    selector: 'app-comp-dynamic',
-    template: 'Dynamic Component'
+  selector: 'app-comp-dynamic',
+  template: 'Dynamic Component',
 })
 class DynamicComponent {}
 
 @NgModule({
-    declarations: [ DynamicComponent ],
-    entryComponents: [ DynamicComponent ]
+  declarations: [DynamicComponent],
+  entryComponents: [DynamicComponent],
 })
 class DynamicModule {}
 
 @Component({
-    selector: 'app-test-comp',
-    template: '<ng-container *ngxComponentOutlet="component; ngModuleFactory: module"></ng-container>'
+  selector: 'app-test-comp',
+  template:
+    '<ng-container *ngxComponentOutlet="component; ngModuleFactory: module"></ng-container>',
 })
 class TestComponent {
-    component: any = DynamicComponent;
-    module: NgModuleFactory<any>;
+  component: any = DynamicComponent;
+  module: NgModuleFactory<any>;
 }
 
 @NgModule({
-    imports: [ NgxdModule ],
-    declarations: [ TestComponent ],
-    exports: [ TestComponent ]
+  imports: [NgxdModule],
+  declarations: [TestComponent],
+  exports: [TestComponent],
 })
 class TestModule {}

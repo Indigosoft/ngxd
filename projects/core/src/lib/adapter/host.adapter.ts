@@ -4,55 +4,55 @@ import { HostInputAdapter } from './host-input.adapter';
 export const PRIVATE_HOST_ADAPTER = PRIVATE_CONTEXT_PREFIX + 'HOST_ADAPTER';
 
 export class HostAdapter<TComponent> {
-    inputs: Map<string, HostInputAdapter<TComponent>>;
-    state: any;
-    refCount: number;
+  inputs: Map<string, HostInputAdapter<TComponent>>;
+  state: any;
+  refCount: number;
 
-    constructor(private host: TComponent) {
-        if (PRIVATE_HOST_ADAPTER in host) {
-            return host[ PRIVATE_HOST_ADAPTER ];
-        }
-
-        this.inputs = new Map<string, HostInputAdapter<TComponent>>();
-        this.state = {};
-        this.refCount = 0;
-
-        host[ PRIVATE_HOST_ADAPTER ] = this;
+  constructor(private host: TComponent) {
+    if (PRIVATE_HOST_ADAPTER in host) {
+      return host[PRIVATE_HOST_ADAPTER];
     }
 
-    attach(): void {
-        this.refCount++;
+    this.inputs = new Map<string, HostInputAdapter<TComponent>>();
+    this.state = {};
+    this.refCount = 0;
+
+    host[PRIVATE_HOST_ADAPTER] = this;
+  }
+
+  attach(): void {
+    this.refCount++;
+  }
+
+  attachInput(propertyDef: PropertyDef): BindingDef {
+    const adapter = new HostInputAdapter<TComponent>(this.host, propertyDef.outsidePropName);
+    adapter.attach();
+    this.inputs.set(propertyDef.outsidePropName, adapter);
+    return { ...propertyDef, defaultDescriptor: adapter.defaultDescriptor };
+  }
+
+  getInputAdapter(bindingDef: BindingDef): HostInputAdapter<TComponent> {
+    return this.inputs.get(bindingDef.outsidePropName);
+  }
+
+  detachInput(bindingDef: BindingDef): void {
+    const adapter = this.inputs.get(bindingDef.outsidePropName);
+    adapter.detach();
+
+    if (adapter.disposed) {
+      this.inputs.delete(bindingDef.outsidePropName);
     }
+  }
 
-    attachInput(propertyDef: PropertyDef): BindingDef {
-        const adapter = new HostInputAdapter<TComponent>(this.host, propertyDef.outsidePropName);
-        adapter.attach();
-        this.inputs.set(propertyDef.outsidePropName, adapter);
-        return { ...propertyDef, defaultDescriptor: adapter.defaultDescriptor };
+  detach(): void {
+    this.refCount--;
+
+    if (this.refCount <= 0) {
+      this.dispose();
     }
+  }
 
-    getInputAdapter(bindingDef: BindingDef): HostInputAdapter<TComponent> {
-        return this.inputs.get(bindingDef.outsidePropName);
-    }
-
-    detachInput(bindingDef: BindingDef): void {
-        const adapter = this.inputs.get(bindingDef.outsidePropName);
-        adapter.detach();
-
-        if (adapter.disposed) {
-            this.inputs.delete(bindingDef.outsidePropName);
-        }
-    }
-
-    detach(): void {
-        this.refCount--;
-
-        if (this.refCount <= 0) {
-            this.dispose();
-        }
-    }
-
-    private dispose(): void {
-        delete this.host[ PRIVATE_HOST_ADAPTER ];
-    }
+  private dispose(): void {
+    delete this.host[PRIVATE_HOST_ADAPTER];
+  }
 }
