@@ -17,6 +17,7 @@
         "test:core": "ng test core",
         "test:forms": "ng test forms",
         "lint": "ng lint",
+        "lint:core": "ng lint core",
         "e2e": "ng e2e"
     },
     "dependencies": {

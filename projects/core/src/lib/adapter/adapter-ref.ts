@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ComponentFactory, ComponentRef, SimpleChange } from '@angular/core';
+import { ChangeDetectorRef, ComponentFactory, ComponentRef, SimpleChange, Type } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PropertyDef, hasProperty, markForCheckWrapper, onChangesWrapper, PRIVATE_PREFIX, toPropertyDef } from '../utils';
 import { HostAdapter } from './host.adapter';
@@ -38,7 +38,10 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         this.host = config.host;
         this.onInitComponentRef = config.onInitComponentRef || this.componentRef as any;
         this.doCheckComponentRef = config.doCheckComponentRef || this.componentRef as any;
-        this.changeDetectorRef = this.componentRef.injector.get(ChangeDetectorRef, this.componentRef.changeDetectorRef);
+        this.changeDetectorRef = this.componentRef.injector.get<ChangeDetectorRef>(
+            ChangeDetectorRef as Type<ChangeDetectorRef>,
+            this.componentRef.changeDetectorRef
+        );
 
         this.attachHost();
         this.attachInputs();

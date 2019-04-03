@@ -1,11 +1,26 @@
-import { ChangeDetectorRef, ComponentFactoryResolver, Directive, EmbeddedViewRef, EventEmitter, Injector, Input, NgModuleFactory, NgModuleRef, OnChanges, OnDestroy, Output, SimpleChanges, Type, ViewContainerRef } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    ComponentFactoryResolver,
+    Directive,
+    EmbeddedViewRef,
+    EventEmitter,
+    Injector,
+    Input,
+    NgModuleFactory,
+    NgModuleRef,
+    OnChanges,
+    OnDestroy,
+    Output,
+    SimpleChanges,
+    Type,
+    ViewContainerRef
+} from '@angular/core';
 
 import { NgxComponentOutletAdapterBuilder } from '../adapter/adapter.builder';
 import { NgxComponentOutletAdapterRef } from '../adapter/adapter-ref';
 
 @Directive({ selector: '[ngxComponentOutlet]' })
-export class NgxComponentOutlet implements OnChanges, OnDestroy {
-
+export class NgxComponentOutletDirective implements OnChanges, OnDestroy {
     @Input() ngxComponentOutlet: Type<any>;
     @Input() ngxComponentOutletInjector: Injector;
     @Input() ngxComponentOutletContent: any[][];
