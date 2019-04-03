@@ -207,12 +207,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     updateContext(context): void {
-        if (!context) {
-            return;
-        }
-
-        for (const propName in context) {
-            const descriptor = this.defaultDescriptors.find(_ => _.propName === propName);
+        const props = context ? Object.keys(context) : [];
+        for (const propName of props) {
+            const descriptor = this.defaultDescriptors.find(_ => _.templateName === propName);
             this.defaultDescriptors = this.defaultDescriptors.filter(_ => _ !== descriptor);
 
             if (descriptor) {
@@ -224,6 +221,22 @@ export class NgxComponentOutletAdapterRef<TComponent> {
             if (property && this.context[ property.templateName ] !== context[ propName ]) {
                 this.context[ property.templateName ] = context[ propName ];
             }
+        }
+        for (const property of this.componentFactory.inputs) {
+            const templateName = property.templateName;
+            if (props.includes(templateName) || this.defaultDescriptors.find(_ => _.templateName === templateName )) {
+                continue;
+            }
+
+            this.attachHostInput(property);
+            const localContext = this.context;
+            localContext[ templateName ] = this.host[ templateName ];
+
+            const subscription = this.hostAdapter.getInputAdapter(templateName).changes.subscribe((value) => {
+                localContext[ templateName ] = value;
+            });
+
+            this.attachedInputs.push(subscription);
         }
     }
 
@@ -237,9 +250,13 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         this.hostAdapter = null;
     }
 
-    private attachHostInput(templateName) {
-        this.hostAdapter.attachInput(templateName);
-    }
+    private attachHostInput(property: ComponentProperty): PropertyDescriptor {
+        this.hostAdapter.attachInput(property.templateName);
+        const adapterHostInput = this.hostAdapter.getInputAdapter(property.templateName);
+        const defaultDescriptor: PropertyDescriptor = adapterHostInput.defaultDescriptor;
+        this.defaultDescriptors.push(<DefaultComponentProperty>{ ...property, defaultDescriptor });
+        return defaultDescriptor;
+}
 
     private detachHostInput(templateName) {
         this.hostAdapter.detachInput(templateName);
@@ -248,14 +265,8 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private attachInputs(): void {
         this.defaultDescriptors = [];
         for (const property of this.componentFactory.inputs) {
-            this.attachHostInput(property.templateName);
-            const adapterHostInput = this.hostAdapter.getInputAdapter(property.templateName);
-            const defaultDescriptor: PropertyDescriptor = adapterHostInput.defaultDescriptor;
-
-            // const defaultDescriptor: PropertyDescriptor = getPropertyDescriptor(this.host, property.templateName);
+            const defaultDescriptor: PropertyDescriptor = this.attachHostInput(property);
             this.attachInput(this.host, this.context, this.componentRef.instance, property, defaultDescriptor);
-
-            this.defaultDescriptors.push(<DefaultComponentProperty>{ ...property, defaultDescriptor });
         }
     }
 
