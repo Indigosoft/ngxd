@@ -2,13 +2,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NgxComponentOutletAdapterBuilder } from './adapter/adapter-builder';
 
 import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter/adapter-components';
-import { NgxContainer } from './container/container.component';
 import { NgxComponentOutlet } from './directive/component.outlet';
-import { NgxComponentOutletResolvePipe } from './pipe/resolve.pipe';
+import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
 
 @NgModule({
     declarations: [
-        NgxContainer,
         NgxComponentOutlet,
         NgxComponentOutletResolvePipe,
         OnInitOnlyComponent,
@@ -21,7 +19,6 @@ import { NgxComponentOutletResolvePipe } from './pipe/resolve.pipe';
         OnInitAndDoCheckComponent
     ],
     exports: [
-        NgxContainer,
         NgxComponentOutlet,
         NgxComponentOutletResolvePipe
     ],

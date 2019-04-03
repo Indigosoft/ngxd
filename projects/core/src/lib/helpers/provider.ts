@@ -1,13 +1,8 @@
 import { InjectionToken, Type, ValueProvider } from '@angular/core';
 
-export abstract class DynamicMatcher<TType, TComponent> {}
-
 export abstract class NgxdProvider<TType, TComponent> {
     type: TType | Type<TType>;
-    typeMatch?: 'full' | 'type';
     component: TComponent;
-    canActivate?: any[];
-    matcher?: DynamicMatcher<TType, TComponent>;
 }
 
 export type DynamicFn<TType, TComponent> = (provider: NgxdProvider<TType, TComponent>) => ValueProvider;
