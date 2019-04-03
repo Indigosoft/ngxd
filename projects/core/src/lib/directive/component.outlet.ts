@@ -62,7 +62,7 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     }
 
     private applyContext() {
-        if (this.ngxComponentOutletContext && this._adapterRef) {
+        if (this._adapterRef) {
             this._adapterRef.updateContext(this.ngxComponentOutletContext);
         }
     }
@@ -74,11 +74,13 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
 
     private createAdapterRef() {
         if (this.ngxComponentOutlet) {
-            this.applyContext();
             this._adapterRef = this.builder.create(
                 this.ngxComponentOutlet, this.viewContainerRef, this.injector,
                 this.ngxComponentOutletContent, this.host, this.componentFactoryResolver
             );
+            if (this.ngxComponentOutletContext) {
+                this.applyContext();
+            }
             this.ngxComponentOutletActivate.emit(this._adapterRef.componentRef.instance);
         }
     }
