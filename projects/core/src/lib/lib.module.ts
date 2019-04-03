@@ -23,7 +23,8 @@ import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
         NgxComponentOutletResolvePipe
     ],
     providers: [
-        NgxComponentOutletAdapterBuilder
+        NgxComponentOutletAdapterBuilder,
+        { provide: NgxComponentOutletResolvePipe, useFactory: () => {} }
     ]
 })
 export class NgxdModule {
