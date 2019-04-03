@@ -2,12 +2,12 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NgxComponentOutletAdapterBuilder } from './adapter/adapter.builder';
 
 import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter/lifecycle.components';
-import { NgxComponentOutlet } from './directive/component.outlet';
+import { NgxComponentOutletDirective } from './directive/component.outlet';
 import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
 
 @NgModule({
     declarations: [
-        NgxComponentOutlet,
+        NgxComponentOutletDirective,
         NgxComponentOutletResolvePipe,
         OnInitOnlyComponent,
         DoCheckOnlyComponent,
@@ -19,7 +19,7 @@ import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
         OnInitAndDoCheckComponent
     ],
     exports: [
-        NgxComponentOutlet,
+        NgxComponentOutletDirective,
         NgxComponentOutletResolvePipe
     ],
     providers: [

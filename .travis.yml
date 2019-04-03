@@ -1,0 +1,14 @@
+language: node_js
+
+node_js: lts/*
+
+cache: npm
+
+env: CI=true
+
+addons:
+  chrome: stable
+
+script:
+  - npm run lint:core
+  - npm run test:core
