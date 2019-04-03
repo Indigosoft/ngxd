@@ -12,3 +12,4 @@ addons:
 script:
   - npm run lint:core
   - npm run test:core
+  - npm run build:core
