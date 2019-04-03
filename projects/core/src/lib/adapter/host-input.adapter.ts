@@ -45,11 +45,11 @@ export class HostInputAdapter<TComponent> {
         }
     }
 
-    attach() {
+    attach(): void {
         this.refCount++;
     }
 
-    detach() {
+    detach(): void {
         this.refCount--;
 
         if (this.refCount <= 0) {
@@ -57,7 +57,7 @@ export class HostInputAdapter<TComponent> {
         }
     }
 
-    private dispose() {
+    private dispose(): void {
         const defaultValue = this.host[ this.name ];
 
         this.disposed = true;

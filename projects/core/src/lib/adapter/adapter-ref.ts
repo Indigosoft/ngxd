@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, ComponentFactory, ComponentRef, SimpleChange } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ComponentProperty, hasProperty, markForCheckWrapper, onChangesWrapper, PRIVATE_PREFIX, toComponentProperty } from '../utils';
+import { PropertyDef, hasProperty, markForCheckWrapper, onChangesWrapper, PRIVATE_PREFIX, toPropertyDef } from '../utils';
 import { HostAdapter } from './host.adapter';
 import { LifecycleComponent } from './lifecycle.strategies';
 
-interface DefaultComponentProperty extends ComponentProperty {
+interface BindingDef extends PropertyDef {
     defaultDescriptor: PropertyDescriptor;
 }
 
@@ -28,7 +28,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     private changeDetectorRef: ChangeDetectorRef;
     private attachedInputs: Subscription[] = [];
     private attachedOutputs: Subscription[] = [];
-    private defaultComponentProperties: DefaultComponentProperty[] = [];
+    private bindingDefs: BindingDef[] = [];
 
     private hostAdapter: HostAdapter<TComponent>;
 
@@ -70,30 +70,28 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     updateContext(context): void {
         const contextProps = context ? Object.keys(context) : [];
         for (const contextPropName of contextProps) {
-            const defaultComponentProperty = this.defaultComponentProperties.find(_ => _.outsidePropName === contextPropName);
-            this.defaultComponentProperties = this.defaultComponentProperties.filter(_ => _ !== defaultComponentProperty);
-
-            if (defaultComponentProperty) {
-                this.detachHostInput(defaultComponentProperty);
+            const bindingDef = this.bindingDefs.find(_ => _.outsidePropName === contextPropName);
+            this.bindingDefs = this.bindingDefs.filter(_ => _ !== bindingDef);
+            if (bindingDef) {
+                this.detachHostInput(bindingDef);
             }
 
-            const componentProperty = this.componentFactory.inputs.map(toComponentProperty)
+            const propertyDef = this.componentFactory.inputs.map(toPropertyDef)
                                           .find(_ => _.outsidePropName === contextPropName);
-
-            if (componentProperty && this.context[ componentProperty.outsidePropName ] !== context[ contextPropName ]) {
-                this.context[ componentProperty.outsidePropName ] = context[ contextPropName ];
+            if (propertyDef && this.context[ propertyDef.outsidePropName ] !== context[ contextPropName ]) {
+                this.context[ propertyDef.outsidePropName ] = context[ contextPropName ];
             }
         }
         for (const property of this.componentFactory.inputs) {
-            const componentProperty = toComponentProperty(property);
-            const attachedByContext = contextProps.indexOf(componentProperty.outsidePropName) > -1 ||
-                this.defaultComponentProperties.find(_ => _.outsidePropName === componentProperty.outsidePropName );
+            const propertyDef = toPropertyDef(property);
+            const attachedByContext = contextProps.indexOf(propertyDef.outsidePropName) > -1 ||
+                this.bindingDefs.find(_ => _.outsidePropName === propertyDef.outsidePropName );
             if (attachedByContext) {
                 continue;
             }
 
-            const defaultComponentProperty: DefaultComponentProperty = this.attachHostInput(componentProperty);
-            this.attachInput(defaultComponentProperty);
+            const bindingDef: BindingDef = this.attachHostInput(propertyDef);
+            this.attachInput(bindingDef);
         }
     }
 
@@ -107,29 +105,28 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         this.hostAdapter = null;
     }
 
-    private attachHostInput(property: ComponentProperty): DefaultComponentProperty {
-        this.hostAdapter.attachInput(property.outsidePropName);
-        const adapterHostInput = this.hostAdapter.getInputAdapter(property.outsidePropName);
-        const defaultDescriptor: PropertyDescriptor = adapterHostInput.defaultDescriptor;
-        const defaultComponentProperty = { ...property, defaultDescriptor };
-        this.defaultComponentProperties.push(defaultComponentProperty);
-        return defaultComponentProperty;
+    private attachHostInput(propertyDef: PropertyDef): BindingDef {
+        const adapterHostInput = this.hostAdapter.attachInput(propertyDef);
+        const bindingDef: BindingDef = { ...propertyDef, defaultDescriptor: adapterHostInput.defaultDescriptor };
+        this.bindingDefs.push(bindingDef);
+        return bindingDef;
 }
 
-    private detachHostInput(componentProperty: ComponentProperty): void {
-        this.hostAdapter.detachInput(componentProperty.outsidePropName);
+    private detachHostInput(propertyDef: PropertyDef): void {
+        this.hostAdapter.detachInput(propertyDef);
     }
 
     private attachInputs(): void {
-        this.defaultComponentProperties = [];
+        this.bindingDefs = [];
         for (const property of this.componentFactory.inputs) {
-            const componentProperty = toComponentProperty(property);
-            const defaultComponentProperty: DefaultComponentProperty = this.attachHostInput(componentProperty);
-            this.attachInput(defaultComponentProperty);
+            const propertyDef = toPropertyDef(property);
+            const bindingDef: BindingDef = this.attachHostInput(propertyDef);
+            this.attachInput(bindingDef);
         }
     }
 
-    private attachInput({ insidePropName, outsidePropName, defaultDescriptor }: DefaultComponentProperty) {
+    private attachInput(bindingDef: BindingDef) {
+        const { insidePropName, outsidePropName, defaultDescriptor } = bindingDef;
         const containerContext = this.host;
         const context: TComponent = this.context;
         const instance: TComponent = this.componentRef.instance;
@@ -171,7 +168,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
             context[ outsidePropName ] = defaultValue;
         }
 
-        const subscription = this.hostAdapter.getInputAdapter(outsidePropName).changes.subscribe((value) => {
+        const subscription = this.hostAdapter.getInputAdapter(bindingDef).changes.subscribe((value) => {
             context[ outsidePropName ] = value;
         });
 
@@ -192,8 +189,8 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     private disposeInputs(): void {
-        for (const descriptor of this.defaultComponentProperties) {
-            this.detachHostInput(descriptor);
+        for (const bindingDef of this.bindingDefs) {
+            this.detachHostInput(bindingDef);
         }
 
         for (const subscription of this.attachedInputs) {
@@ -204,11 +201,11 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     }
 
     private attachOutputs(): void {
-        const componentProps = this.componentFactory.outputs.map(toComponentProperty);
-        for (const property of componentProps) {
-            if (property.outsidePropName in this.host) {
-                const subscription = this.componentRef.instance[ property.insidePropName ]
-                    .subscribe(this.host[ property.outsidePropName ]);
+        const propertyDefs = this.componentFactory.outputs.map(toPropertyDef);
+        for (const propertyDef of propertyDefs) {
+            if (propertyDef.outsidePropName in this.host) {
+                const subscription = this.componentRef.instance[ propertyDef.insidePropName ]
+                    .subscribe(this.host[ propertyDef.outsidePropName ]);
                 this.attachedOutputs.push(subscription);
             }
         }

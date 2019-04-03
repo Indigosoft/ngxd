@@ -80,13 +80,13 @@ export function deletePropertyDescriptor(context: any, name: string) {
     }
 }
 
-export interface ComponentProperty {
+export interface PropertyDef {
     insidePropName: string;
     outsidePropName: string;
 }
 
 // {propName: "insidePropName", templateName: "outsidePropName"}
-export function toComponentProperty(property: { propName: string; templateName: string; }): ComponentProperty {
+export function toPropertyDef(property: { propName: string; templateName: string; }): PropertyDef {
     return { insidePropName: property.propName, outsidePropName: property.templateName };
 }
 
