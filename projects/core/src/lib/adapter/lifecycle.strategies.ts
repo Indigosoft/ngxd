@@ -1,7 +1,6 @@
-import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Type, ViewContainerRef } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, DoCheck, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { hasProperty } from '../utils';
-import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter-components';
-import { LifecycleComponent } from './adapter-ref';
+import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './lifecycle.components';
 
 export enum LifecycleStrategyType {
     Default,
@@ -10,13 +9,15 @@ export enum LifecycleStrategyType {
     OnInitAndDoCheck
 }
 
+export type LifecycleComponent = OnInit & DoCheck | OnInit | DoCheck | any;
+
 export interface StrategyConfig {
     componentType?: Type<LifecycleComponent>;
     useOnInitComponent?: boolean;
     useDoCheckComponent?: boolean;
 }
 
-export interface FeatureComponents {
+export interface LifecycleComponents {
     onInitComponentRef: ComponentRef<LifecycleComponent>;
     doCheckComponentRef: ComponentRef<LifecycleComponent>;
 }
@@ -65,24 +66,37 @@ function resolveStrategyType<T = any>(component: Type<T>): LifecycleStrategyType
     return LifecycleStrategyType.Default;
 }
 
-export function createFeatureComponents(
+function createLifecycleComponents(
     viewContainerRef: ViewContainerRef,
     config: StrategyConfig,
     componentFactoryResolver: ComponentFactoryResolver
-): FeatureComponents {
+): LifecycleComponents {
     if (!config.componentType) {
         return FEATURE_COMPONENTS_DISABLE;
     }
 
-    const featureComponentFactory: ComponentFactory<LifecycleComponent> =
+    const lifecycleComponentFactory: ComponentFactory<LifecycleComponent> =
         componentFactoryResolver.resolveComponentFactory(config.componentType);
 
-    const featureComponentRef: ComponentRef<LifecycleComponent> =
-        viewContainerRef.createComponent(featureComponentFactory, viewContainerRef.length);
+    const lifecycleComponentRef: ComponentRef<LifecycleComponent> =
+        viewContainerRef.createComponent(lifecycleComponentFactory, viewContainerRef.length);
 
     return {
-        onInitComponentRef: config.useOnInitComponent ? featureComponentRef : null,
-        doCheckComponentRef: config.useDoCheckComponent ? featureComponentRef : null
+        onInitComponentRef: config.useOnInitComponent ? lifecycleComponentRef : null,
+        doCheckComponentRef: config.useDoCheckComponent ? lifecycleComponentRef : null
     };
 
+}
+
+export function resolveLifecycleComponents<TComponent>(
+    componentType: Type<TComponent>,
+    viewContainerRef: ViewContainerRef,
+    componentFactoryResolver: ComponentFactoryResolver
+): LifecycleComponents {
+    const strategyConfig: StrategyConfig = resolveStrategy(componentType);
+    return createLifecycleComponents(
+        viewContainerRef,
+        strategyConfig,
+        componentFactoryResolver
+    );
 }

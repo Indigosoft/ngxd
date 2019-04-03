@@ -79,3 +79,15 @@ export function deletePropertyDescriptor(context: any, name: string) {
         return deletePropertyDescriptor(prototype, name);
     }
 }
+
+export interface ComponentProperty {
+    insidePropName: string;
+    outsidePropName: string;
+}
+
+// {propName: "insidePropName", templateName: "outsidePropName"}
+export function toComponentProperty(property: { propName: string; templateName: string; }): ComponentProperty {
+    return { insidePropName: property.propName, outsidePropName: property.templateName };
+}
+
+export const PRIVATE_CONTEXT_PREFIX = '__ngxContext__';

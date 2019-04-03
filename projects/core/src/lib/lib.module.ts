@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { NgxComponentOutletAdapterBuilder } from './adapter/adapter-builder';
+import { NgxComponentOutletAdapterBuilder } from './adapter/adapter.builder';
 
-import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter/adapter-components';
+import { DoCheckOnlyComponent, OnInitAndDoCheckComponent, OnInitOnlyComponent } from './adapter/lifecycle.components';
 import { NgxComponentOutlet } from './directive/component.outlet';
 import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
 

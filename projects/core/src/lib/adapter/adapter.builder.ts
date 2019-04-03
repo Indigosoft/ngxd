@@ -1,17 +1,6 @@
-import {
-    ChangeDetectorRef,
-    ComponentFactory,
-    ComponentFactoryResolver,
-    ComponentRef, ElementRef,
-    Injectable,
-    Injector,
-    NgModuleRef,
-    Type,
-    ViewContainerRef, ViewRef
-} from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
-import { resolveStrategy, StrategyConfig, createFeatureComponents } from './lifecycle-strategies';
-
+import { resolveLifecycleComponents } from './lifecycle.strategies';
 
 /**
  * @deprecated
@@ -36,21 +25,9 @@ export class NgxComponentOutletAdapterBuilder {
                 projectableNodes
             );
 
-        const config = resolveStrategy(componentType);
-        return this.createAdapterRef(componentFactory, componentRef, viewContainerRef, host, config, componentFactoryResolver);
-    }
-
-    private createAdapterRef<TComponent>(
-        componentFactory: ComponentFactory<TComponent>,
-        componentRef: ComponentRef<TComponent>,
-        viewContainerRef: ViewContainerRef,
-        host: TComponent,
-        config: StrategyConfig,
-        componentFactoryResolver: ComponentFactoryResolver
-    ): NgxComponentOutletAdapterRef<TComponent> {
-        const { onInitComponentRef, doCheckComponentRef } = createFeatureComponents(
+        const { onInitComponentRef, doCheckComponentRef } = resolveLifecycleComponents(
+            componentFactory.componentType,
             viewContainerRef,
-            config,
             componentFactoryResolver
         );
 

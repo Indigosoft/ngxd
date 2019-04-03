@@ -2,14 +2,17 @@ import {
     ChangeDetectorRef,
     ComponentFactory,
     ComponentFactoryResolver,
-    ComponentRef, ElementRef, Injectable,
+    ComponentRef,
+    ElementRef,
+    Injectable,
     Injector,
     NgModuleRef,
     Type,
-    ViewContainerRef, ViewRef
+    ViewContainerRef,
+    ViewRef
 } from '@angular/core';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
-import { createFeatureComponents, resolveStrategy, StrategyConfig } from './lifecycle-strategies';
+import { resolveLifecycleComponents } from './lifecycle.strategies';
 
 /**
  * @experimental
@@ -124,10 +127,16 @@ export class DynamicComponentRef<T> implements ComponentRef<T> {
         const componentFactory: ComponentFactory<T> =
             componentFactoryResolver.resolveComponentFactory(this.componentType);
 
-        const config = resolveStrategy(this.componentType);
-        this.componentAdapterRef = this.createAdapterRef(
-            componentFactory, componentRef, viewContainerRef,
-            host, config, componentFactoryResolver);
+        const { onInitComponentRef, doCheckComponentRef } = resolveLifecycleComponents(
+            componentFactory.componentType,
+            viewContainerRef,
+            componentFactoryResolver
+        );
+
+        this.componentAdapterRef = new NgxComponentOutletAdapterRef({
+            componentFactory, componentRef, host,
+            onInitComponentRef, doCheckComponentRef
+        });
     }
 
     updateContext(context) {
@@ -145,25 +154,6 @@ export class DynamicComponentRef<T> implements ComponentRef<T> {
         this._onDestroy = callback;
     }
 
-    private createAdapterRef<TComponent>(
-        componentFactory: ComponentFactory<TComponent>,
-        componentRef: ComponentRef<TComponent>,
-        viewContainerRef: ViewContainerRef,
-        host: TComponent,
-        config: StrategyConfig,
-        componentFactoryResolver: ComponentFactoryResolver
-    ): NgxComponentOutletAdapterRef<TComponent> {
-        const { onInitComponentRef, doCheckComponentRef } = createFeatureComponents(
-            viewContainerRef,
-            config,
-            componentFactoryResolver
-        );
-
-        return new NgxComponentOutletAdapterRef({
-            componentFactory, componentRef, host,
-            onInitComponentRef, doCheckComponentRef
-        });
-    }
 }
 
 /**
