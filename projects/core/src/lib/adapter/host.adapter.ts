@@ -1,4 +1,4 @@
-import { PropertyDef, PRIVATE_CONTEXT_PREFIX } from '../utils';
+import { PropertyDef, PRIVATE_CONTEXT_PREFIX, BindingDef } from '../utils';
 import { HostInputAdapter } from './host-input.adapter';
 
 export const PRIVATE_HOST_ADAPTER = PRIVATE_CONTEXT_PREFIX + 'HOST_ADAPTER';
@@ -24,23 +24,23 @@ export class HostAdapter<TComponent> {
         this.refCount++;
     }
 
-    attachInput(propertyDef: PropertyDef): HostInputAdapter<TComponent> {
+    attachInput(propertyDef: PropertyDef): BindingDef {
         const adapter = new HostInputAdapter<TComponent>(this.host, propertyDef.outsidePropName);
         adapter.attach();
         this.inputs.set(propertyDef.outsidePropName, adapter);
-        return adapter;
+        return { ...propertyDef, defaultDescriptor: adapter.defaultDescriptor };
     }
 
-    getInputAdapter(propertyDef: PropertyDef): HostInputAdapter<TComponent> {
-        return this.inputs.get(propertyDef.outsidePropName);
+    getInputAdapter(bindingDef: BindingDef): HostInputAdapter<TComponent> {
+        return this.inputs.get(bindingDef.outsidePropName);
     }
 
-    detachInput(propertyDef: PropertyDef): void {
-        const adapter = this.inputs.get(propertyDef.outsidePropName);
+    detachInput(bindingDef: BindingDef): void {
+        const adapter = this.inputs.get(bindingDef.outsidePropName);
         adapter.detach();
 
         if (adapter.disposed) {
-            this.inputs.delete(propertyDef.outsidePropName);
+            this.inputs.delete(bindingDef.outsidePropName);
         }
     }
 
