@@ -2,7 +2,7 @@
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
-[![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square&maxAge=300)](https://badge.fury.io/js/@ngxd/core)
+[![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
 [![Npm Downloads](https://img.shields.io/npm/dt/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
 [![Npm Downloads Weekly](https://img.shields.io/npm/dw/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
 [![Travis](https://img.shields.io/travis/com/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://travis-ci.com/IndigoSoft/ngxd)
