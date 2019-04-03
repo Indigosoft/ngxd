@@ -91,3 +91,7 @@ export function toPropertyDef(property: { propName: string; templateName: string
 }
 
 export const PRIVATE_CONTEXT_PREFIX = '__ngxContext__';
+
+export interface BindingDef extends PropertyDef {
+    defaultDescriptor: PropertyDescriptor;
+}
