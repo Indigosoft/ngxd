@@ -1,6 +1,6 @@
 {
     "name": "ngx-component-outlet-app",
-    "version": "7.0.3",
+    "version": "8.0.0",
     "private": true,
     "license": "MIT",
     "scripts": {
