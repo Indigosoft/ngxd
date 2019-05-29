@@ -1,3 +1,7 @@
+# [8.0.0](https://github.com/IndigoSoft/ngxd/compare/v7.0.3...v8.0.0) (2019-05-29)
+
+
+
 ## [7.0.3](https://github.com/IndigoSoft/ngxd/compare/v7.0.2...v7.0.3) (2019-04-03)
 
 
