@@ -27,6 +27,7 @@
         "url": "https://github.com/IndigoSoft/ngxd/issues"
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
+    "schematics": "./schematics/collection.json",
     "peerDependencies": {
         "@angular/common": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0  || ^8.0.0",
         "@angular/core": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
