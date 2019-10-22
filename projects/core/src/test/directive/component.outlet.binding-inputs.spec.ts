@@ -318,6 +318,18 @@ describe('check binding inputs', () => {
       expect(component.activatedComponent.name).toBe('Angular');
     }));
 
+    it('should binding when host component have input with getter and setter and method call', fakeAsync(() => {
+      const template = `
+            <app-test-host-with-method-call-in-setter [name]="name" [ngxComponentOutlet]="component"
+                (ngxComponentOutletActivate)="activatedComponent = $event"></app-test-host-with-method-call-in-setter>`;
+
+      TestBed.overrideComponent(TestComponent, { set: { template } });
+      fixture = TestBed.createComponent(TestComponent);
+      component = fixture.componentInstance;
+
+      expect(() => fixture.detectChanges()).not.toThrowError();
+    }));
+
     it('should have input value when lifecycle hook onInit called', fakeAsync(() => {
       fixture = TestBed.createComponent(TestComponent);
       component = fixture.componentInstance;
@@ -690,6 +702,30 @@ class WithGetterAndSetterTestHostComponent {
 
 @Component({
   // tslint:disable-next-line:component-selector
+  selector: 'app-test-host-with-method-call-in-setter',
+  template: '',
+  providers: [{ provide: BaseHostComponent, useExisting: WithMethodCallInSetterTestHostComponent }],
+})
+class WithMethodCallInSetterTestHostComponent {
+  _name: string;
+
+  get name(): string {
+    return this._name;
+  }
+
+  @Input()
+  set name(name: string) {
+    this._name = name;
+    this.method();
+  }
+
+  private method(): void {
+    return void 0;
+  }
+}
+
+@Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-comp',
   template: `
     <app-test-host
@@ -726,6 +762,7 @@ class TestComponent {
     WithGetterTestHostComponent,
     WithSetterTestHostComponent,
     WithGetterAndSetterTestHostComponent,
+    WithMethodCallInSetterTestHostComponent,
   ],
   exports: [
     TestComponent,
@@ -733,6 +770,7 @@ class TestComponent {
     WithGetterTestHostComponent,
     WithSetterTestHostComponent,
     WithGetterAndSetterTestHostComponent,
+    WithMethodCallInSetterTestHostComponent,
   ],
   entryComponents: [
     DynamicComponent,
