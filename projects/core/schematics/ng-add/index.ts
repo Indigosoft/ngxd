@@ -8,16 +8,13 @@ const packageJson = readFileSync(path.join(__dirname, '..', '..', 'package.json'
 const version = JSON.parse(packageJson).version;
 // Just return the tree
 export function ngAdd(): Rule {
-    return (tree: Tree, _context: SchematicContext) => {
-        addPackageJsonDependency(
-            tree,
-            {
-                type: NodeDependencyType.Default,
-                version: version,
-                name: '@ngxd/core'
-            }
-        );
-        _context.addTask(new NodePackageInstallTask());
-        return tree;
-    };
+  return (tree: Tree, _context: SchematicContext) => {
+    addPackageJsonDependency(tree, {
+      type: NodeDependencyType.Default,
+      version: version,
+      name: '@ngxd/core',
+    });
+    _context.addTask(new NodePackageInstallTask());
+    return tree;
+  };
 }
