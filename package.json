@@ -11,6 +11,7 @@
         "start:prod": "node --max-old-space-size=4096 ./node_modules/.bin/ng serve --prod",
         "build": "ng build --prod",
         "build:core": "ng build core --prod",
+        "postbuild:core": "cd ./projects/core && npm run build",
         "build:forms": "ng build forms --prod",
         "build:core:watch": "ng build core",
         "build:forms:watch": "ng build forms",

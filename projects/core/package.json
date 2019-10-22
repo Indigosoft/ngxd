@@ -13,6 +13,13 @@
     ],
     "author": "thekiba <hr@thekiba.io>",
     "license": "MIT",
+    "scripts": {
+        "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+        "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/core/",
+        "copy:files": "cp --parents -p schematics/*/files/** ../../dist/core/",
+        "copy:collection": "cp schematics/collection.json ../../dist/core/schematics/collection.json",
+        "postbuild": "npm run copy:collection"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/IndigoSoft/ngxd.git"
