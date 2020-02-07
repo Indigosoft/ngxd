@@ -1,3 +1,12 @@
+# [9.0.0](https://github.com/IndigoSoft/ngxd/compare/v8.0.0...v9.0.0) (2020-02-07)
+
+
+### Bug Fixes
+
+* hide angular v9 warning ([77598e9](https://github.com/IndigoSoft/ngxd/commit/77598e9))
+
+
+
 # [8.0.0](https://github.com/IndigoSoft/ngxd/compare/v7.0.3...v8.0.0) (2019-05-29)
 
 
