@@ -13,6 +13,13 @@
     ],
     "author": "thekiba <hr@thekiba.io>",
     "license": "MIT",
+    "scripts": {
+        "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+        "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/core/",
+        "copy:files": "cp --parents -p schematics/*/files/** ../../dist/core/",
+        "copy:collection": "cp schematics/collection.json ../../dist/core/schematics/collection.json",
+        "postbuild": "npm run copy:collection"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/IndigoSoft/ngxd.git"
@@ -27,6 +34,7 @@
         "url": "https://github.com/IndigoSoft/ngxd/issues"
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
+    "schematics": "./schematics/collection.json",
     "peerDependencies": {
         "@angular/common": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
         "@angular/core": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
