@@ -62,7 +62,7 @@ class TestComponent {
 
   projectableNodes: any[][];
 
-  @ViewChild(TemplateRef) set templateRef(templateRef: TemplateRef<any>) {
+  @ViewChild(TemplateRef, /* TODO: add static flag */ {}) set templateRef(templateRef: TemplateRef<any>) {
     if (this.viewContainerRef && templateRef) {
       this.projectableNodes = [this.viewContainerRef.createEmbeddedView(templateRef).rootNodes];
     }
