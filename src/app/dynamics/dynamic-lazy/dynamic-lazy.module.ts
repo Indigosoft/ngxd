@@ -10,7 +10,7 @@ import { DynamicLazyComponent, LAZY_MODULE_PATH } from './dynamic-lazy.component
     exports: [ DynamicLazyComponent ]
 })
 export class DynamicLazyModule {
-    static forChild(lazyModulePath: string): ModuleWithProviders {
+    static forChild(lazyModulePath: string): ModuleWithProviders<DynamicLazyModule> {
         return {
             ngModule: DynamicLazyModule,
             providers: [ { provide: LAZY_MODULE_PATH, useValue: lazyModulePath } ]
