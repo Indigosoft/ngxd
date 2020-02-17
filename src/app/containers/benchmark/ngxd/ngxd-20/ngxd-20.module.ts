@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, Output, Injectable } from '@angular/core';
 import { MatButtonModule } from '@angular/material';
 import { NgxdModule } from '@ngxd/core';
 
@@ -8,6 +8,7 @@ import { Top20ComponentsModule } from '../../components/top-20-components.module
 import { ComponentResolver } from '../ngxd.component';
 import { Ngxd20BenchmarkComponent } from './ngxd-20.component';
 
+@Injectable()
 export class Top20ComponentResolver extends ComponentResolver {
     constructor() {
         super(TOP_20_COMPONENTS);
