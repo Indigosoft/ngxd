@@ -6,9 +6,9 @@ import { DynamicFormArrayComponent } from './dynamic-form-array.component';
 import { FormArrayComponentResolver } from './dynamic-form-array.resolver';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule ],
-    declarations: [ DynamicFormArrayComponent ],
-    exports: [ DynamicFormArrayComponent ],
-    providers: [ FormArrayComponentResolver ]
+  imports: [CommonModule, NgxdModule],
+  declarations: [DynamicFormArrayComponent],
+  exports: [DynamicFormArrayComponent],
+  providers: [FormArrayComponentResolver],
 })
 export class DynamicFormArrayModule {}

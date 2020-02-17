@@ -4,19 +4,17 @@ import { DynamicEntityComponentBase, DynamicEntityModule } from '@app/dynamics';
 import { Item } from './Item';
 
 @Component({
-    selector: 'app-item-entity',
-    templateUrl: 'item.component.html',
-    styleUrls: [ 'item.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-item-entity',
+  templateUrl: 'item.component.html',
+  styleUrls: ['item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemEntityComponent extends DynamicEntityComponentBase {
+  @Input() entity: Item;
 
-    @Input() entity: Item;
-
-    trackById(index, { id }): string {
-        return id;
-    }
-
+  trackById(index, { id }): string {
+    return id;
+  }
 }
 
 export const COMPONENT = ItemEntityComponent;

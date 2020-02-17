@@ -3,9 +3,11 @@
 <button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
 
 <!--<div *ngFor="let item of (items$ | async); trackBy: trackById">-->
-    <!--<ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>-->
+<!--<ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>-->
 <!--</div>-->
 
 <div *ngFor="let item of (items$ | async); trackBy: trackById">
-    <ng-container *ngxComponentOutlet="resolver | resolve: item.type; context: { item: item }"></ng-container>
+  <ng-container
+    *ngxComponentOutlet="(resolver | resolve: item.type); context: { item: item }"
+  ></ng-container>
 </div>

@@ -6,9 +6,7 @@ import { LAZY_PROVIDER, LazyProvider } from './dynamic-lazy.provider';
 
 @Injectable()
 export class LazyComponentResolver extends NgxdResolver<string, Type<DynamicLazyComponentBase>> {
-
-    constructor(@Inject(LAZY_PROVIDER) providers: LazyProvider[]) {
-        super(providers);
-    }
-
+  constructor(@Inject(LAZY_PROVIDER) providers: LazyProvider[]) {
+    super(providers);
+  }
 }

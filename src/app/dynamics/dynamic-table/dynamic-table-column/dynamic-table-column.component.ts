@@ -5,16 +5,16 @@ import { TableColumnComponentResolver } from './dynamic-table-column.resolver';
 import { TableColumn } from './TableColumn';
 
 @Component({
-    selector: 'app-dynamic-table-column',
-    templateUrl: 'dynamic-table-column.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-dynamic-table-column',
+  templateUrl: 'dynamic-table-column.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicTableColumnComponent extends DynamicTableColumnComponentBase {
-    @Input() row: any;
-    @Input() column: TableColumn;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  @Input() row: any;
+  @Input() column: TableColumn;
+  @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(public resolver: TableColumnComponentResolver) {
-        super();
-    }
+  constructor(public resolver: TableColumnComponentResolver) {
+    super();
+  }
 }

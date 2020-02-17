@@ -8,58 +8,49 @@ import { TableSchemaBuilder } from './table-schema.builder';
 
 @Injectable()
 export class TableSchemaService implements OnDestroy {
+  private form$: BehaviorSubject<AbstractControl> = new BehaviorSubject<AbstractControl>(null);
+  private formSchema$: BehaviorSubject<AbstractControlSchema> = new BehaviorSubject<
+    AbstractControlSchema
+  >(null);
 
-    private form$: BehaviorSubject<AbstractControl> = new BehaviorSubject<AbstractControl>(null);
-    private formSchema$: BehaviorSubject<AbstractControlSchema> = new BehaviorSubject<AbstractControlSchema>(null);
+  constructor(private builder: TableSchemaBuilder) {}
 
-    constructor(private builder: TableSchemaBuilder) {}
+  getForm(): Observable<AbstractControl> {
+    return this.form$.asObservable();
+  }
 
-    getForm(): Observable<AbstractControl> {
-        return this.form$.asObservable();
-    }
+  getFormSchema(): Observable<AbstractControlSchema> {
+    return this.formSchema$.asObservable();
+  }
 
-    getFormSchema(): Observable<AbstractControlSchema> {
-        return this.formSchema$.asObservable();
-    }
+  getFormRawValue(): Observable<TableSchema> {
+    return this.getForm().pipe(switchMap(this.extractValue));
+  }
 
-    getFormRawValue(): Observable<TableSchema> {
-        return this.getForm().pipe(
-            switchMap(this.extractValue)
-        );
-    }
+  getFormIsInvalid(): Observable<boolean> {
+    return this.getForm().pipe(switchMap(this.extractFormIsInvalid));
+  }
 
-    getFormIsInvalid(): Observable<boolean> {
-        return this.getForm().pipe(
-            switchMap(this.extractFormIsInvalid)
-        );
-    }
+  createForm(schema: TableSchema): void {
+    const formSchema: FormArraySchema = this.builder.formSchema(schema);
+    const form: AbstractControl = this.builder.form(formSchema);
+    form.patchValue(schema);
+    form.markAsDirty();
 
-    createForm(schema: TableSchema): void {
-        const formSchema: FormArraySchema = this.builder.formSchema(schema);
-        const form: AbstractControl = this.builder.form(formSchema);
-        form.patchValue(schema);
-        form.markAsDirty();
+    this.formSchema$.next(formSchema);
+    this.form$.next(form);
+  }
 
-        this.formSchema$.next(formSchema);
-        this.form$.next(form);
-    }
+  ngOnDestroy() {
+    this.form$.complete();
+    this.formSchema$.complete();
+  }
 
-    ngOnDestroy() {
-        this.form$.complete();
-        this.formSchema$.complete();
-    }
+  private extractValue(form: AbstractControl): Observable<TableSchema> {
+    return form.valueChanges.pipe(map(() => (<FormArray>form).getRawValue()));
+  }
 
-    private extractValue(form: AbstractControl): Observable<TableSchema> {
-        return form.valueChanges.pipe(
-            map(() => (<FormArray>form).getRawValue())
-        );
-    }
-
-    private extractFormIsInvalid(form: AbstractControl): Observable<boolean> {
-        return concat(
-            of(form.invalid),
-            form.valueChanges.pipe(map(() => form.invalid))
-        );
-    }
-
+  private extractFormIsInvalid(form: AbstractControl): Observable<boolean> {
+    return concat(of(form.invalid), form.valueChanges.pipe(map(() => form.invalid)));
+  }
 }

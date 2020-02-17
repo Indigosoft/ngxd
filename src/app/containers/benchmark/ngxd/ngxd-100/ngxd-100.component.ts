@@ -3,13 +3,13 @@ import { ItemsService, MeasureService } from '../../benchmark.service';
 import { ComponentResolver, NgxdBenchmarkComponent } from '../ngxd.component';
 
 @Component({
-    selector: 'app-ngxd-benchmark',
-    templateUrl: '../ngxd.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [ ItemsService ]
+  selector: 'app-ngxd-benchmark',
+  templateUrl: '../ngxd.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ItemsService],
 })
 export class Ngxd100BenchmarkComponent extends NgxdBenchmarkComponent {
-    constructor(resolver: ComponentResolver, items: ItemsService, measures: MeasureService) {
-        super(resolver, items, measures);
-    }
+  constructor(resolver: ComponentResolver, items: ItemsService, measures: MeasureService) {
+    super(resolver, items, measures);
+  }
 }

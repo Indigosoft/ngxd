@@ -3,7 +3,7 @@ import { TableColumnModule } from './table-columns';
 import { TableService } from './table.service';
 
 @NgModule({
-    exports: [ TableColumnModule ],
-    providers: [ TableService ]
+  exports: [TableColumnModule],
+  providers: [TableService],
 })
 export class TableModule {}

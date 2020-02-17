@@ -3,6 +3,6 @@ import { Route, RouterModule } from '@angular/router';
 
 import { EntitiesPageComponent } from './entities.component';
 
-const routes: Route[] = [ { path: '', component: EntitiesPageComponent } ];
+const routes: Route[] = [{ path: '', component: EntitiesPageComponent }];
 
 export const EntitiesRouting: ModuleWithProviders = RouterModule.forChild(routes);

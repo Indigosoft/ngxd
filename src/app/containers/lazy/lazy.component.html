@@ -1,17 +1,17 @@
 <mat-toolbar color="primary">
-    <h1>Lazy Components Example</h1>
+  <h1>Lazy Components Example</h1>
 </mat-toolbar>
 
 <mat-grid-list [cols]="2" rowHeight="500px">
-    <mat-grid-tile>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Dynamic Component</mat-card-title>
-                <mat-card-subtitle>example</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <app-dynamic-lazy [name]="'Angular'"></app-dynamic-lazy>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Dynamic Component</mat-card-title>
+        <mat-card-subtitle>example</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-dynamic-lazy [name]="'Angular'"></app-dynamic-lazy>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
 </mat-grid-list>

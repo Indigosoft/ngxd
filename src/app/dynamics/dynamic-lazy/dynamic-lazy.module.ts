@@ -5,15 +5,15 @@ import { NgxdModule } from '@ngxd/core';
 import { DynamicLazyComponent, LAZY_MODULE_PATH } from './dynamic-lazy.component';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule ],
-    declarations: [ DynamicLazyComponent ],
-    exports: [ DynamicLazyComponent ]
+  imports: [CommonModule, NgxdModule],
+  declarations: [DynamicLazyComponent],
+  exports: [DynamicLazyComponent],
 })
 export class DynamicLazyModule {
-    static forChild(lazyModulePath: string): ModuleWithProviders<DynamicLazyModule> {
-        return {
-            ngModule: DynamicLazyModule,
-            providers: [ { provide: LAZY_MODULE_PATH, useValue: lazyModulePath } ]
-        };
-    }
+  static forChild(lazyModulePath: string): ModuleWithProviders<DynamicLazyModule> {
+    return {
+      ngModule: DynamicLazyModule,
+      providers: [{ provide: LAZY_MODULE_PATH, useValue: lazyModulePath }],
+    };
+  }
 }

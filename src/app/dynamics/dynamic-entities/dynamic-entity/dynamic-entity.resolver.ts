@@ -6,10 +6,11 @@ import { DynamicEntityProvider, ENTITY_PROVIDER } from './dynamic-entity.provide
 import { DynamicEntityObject } from './DynamicEntityObject';
 
 @Injectable()
-export class EntityComponentResolver extends NgxdResolver<Type<DynamicEntityObject>, Type<DynamicEntityComponentBase>> {
-
-    constructor(@Inject(ENTITY_PROVIDER) providers: DynamicEntityProvider[]) {
-        super(providers);
-    }
-
+export class EntityComponentResolver extends NgxdResolver<
+  Type<DynamicEntityObject>,
+  Type<DynamicEntityComponentBase>
+> {
+  constructor(@Inject(ENTITY_PROVIDER) providers: DynamicEntityProvider[]) {
+    super(providers);
+  }
 }

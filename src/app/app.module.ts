@@ -12,22 +12,20 @@ import { ROUTES } from './app.routes';
 import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
 
-        LayoutModule,
+    LayoutModule,
 
-        ReactiveFormsModule,
-        NgxdModule,
-        NgxdFormsModule.forRoot(),
+    ReactiveFormsModule,
+    NgxdModule,
+    NgxdFormsModule.forRoot(),
 
-        RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
-    ],
-    providers: [],
-    bootstrap: [ AppComponent ]
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

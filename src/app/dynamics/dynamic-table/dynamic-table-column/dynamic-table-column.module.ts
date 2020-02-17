@@ -5,9 +5,9 @@ import { DynamicTableColumnComponent } from './dynamic-table-column.component';
 import { TableColumnComponentResolver } from './dynamic-table-column.resolver';
 
 @NgModule({
-    imports: [ NgxdModule ],
-    declarations: [ DynamicTableColumnComponent ],
-    exports: [ DynamicTableColumnComponent ],
-    providers: [ TableColumnComponentResolver ]
+  imports: [NgxdModule],
+  declarations: [DynamicTableColumnComponent],
+  exports: [DynamicTableColumnComponent],
+  providers: [TableColumnComponentResolver],
 })
 export class DynamicTableColumnModule {}

@@ -3,5 +3,5 @@
 <button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
 
 <div *ngFor="let item of (items$ | async); trackBy: trackById">
-    <app-dynamic-00050 [id]="item.id" (event)="onEvent($event)"></app-dynamic-00050>
+  <app-dynamic-00050 [id]="item.id" (event)="onEvent($event)"></app-dynamic-00050>
 </div>

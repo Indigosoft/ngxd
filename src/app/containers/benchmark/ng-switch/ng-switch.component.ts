@@ -4,9 +4,7 @@ import { ItemsService, MeasureService } from '../benchmark.service';
 
 @Injectable()
 export abstract class NgSwitchBenchmarkComponent extends BenchmarkComponentBase {
-
-    constructor(items: ItemsService, measures: MeasureService) {
-        super(items, measures, 'ng-switch');
-    }
-
+  constructor(items: ItemsService, measures: MeasureService) {
+    super(items, measures, 'ng-switch');
+  }
 }

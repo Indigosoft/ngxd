@@ -3,24 +3,104 @@
 <button mat-button (click)="auto()">Auto {{ left > 0 ? left : repeat }}</button>
 
 <div *ngFor="let item of (items$ | async); trackBy: trackById">
-    <app-dynamic-00001 *ngIf="item.type === 1" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00001>
-    <app-dynamic-00002 *ngIf="item.type === 2" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00002>
-    <app-dynamic-00003 *ngIf="item.type === 3" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00003>
-    <app-dynamic-00004 *ngIf="item.type === 4" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00004>
-    <app-dynamic-00005 *ngIf="item.type === 5" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00005>
-    <app-dynamic-00006 *ngIf="item.type === 6" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00006>
-    <app-dynamic-00007 *ngIf="item.type === 7" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00007>
-    <app-dynamic-00008 *ngIf="item.type === 8" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00008>
-    <app-dynamic-00009 *ngIf="item.type === 9" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00009>
-    <app-dynamic-00010 *ngIf="item.type === 10" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00010>
-    <app-dynamic-00011 *ngIf="item.type === 11" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00011>
-    <app-dynamic-00012 *ngIf="item.type === 12" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00012>
-    <app-dynamic-00013 *ngIf="item.type === 13" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00013>
-    <app-dynamic-00014 *ngIf="item.type === 14" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00014>
-    <app-dynamic-00015 *ngIf="item.type === 15" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00015>
-    <app-dynamic-00016 *ngIf="item.type === 16" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00016>
-    <app-dynamic-00017 *ngIf="item.type === 17" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00017>
-    <app-dynamic-00018 *ngIf="item.type === 18" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00018>
-    <app-dynamic-00019 *ngIf="item.type === 19" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00019>
-    <app-dynamic-00020 *ngIf="item.type === 20" [id]="item.id" (event)="onEvent($event)"></app-dynamic-00020>
+  <app-dynamic-00001
+    *ngIf="item.type === 1"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00001>
+  <app-dynamic-00002
+    *ngIf="item.type === 2"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00002>
+  <app-dynamic-00003
+    *ngIf="item.type === 3"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00003>
+  <app-dynamic-00004
+    *ngIf="item.type === 4"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00004>
+  <app-dynamic-00005
+    *ngIf="item.type === 5"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00005>
+  <app-dynamic-00006
+    *ngIf="item.type === 6"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00006>
+  <app-dynamic-00007
+    *ngIf="item.type === 7"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00007>
+  <app-dynamic-00008
+    *ngIf="item.type === 8"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00008>
+  <app-dynamic-00009
+    *ngIf="item.type === 9"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00009>
+  <app-dynamic-00010
+    *ngIf="item.type === 10"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00010>
+  <app-dynamic-00011
+    *ngIf="item.type === 11"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00011>
+  <app-dynamic-00012
+    *ngIf="item.type === 12"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00012>
+  <app-dynamic-00013
+    *ngIf="item.type === 13"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00013>
+  <app-dynamic-00014
+    *ngIf="item.type === 14"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00014>
+  <app-dynamic-00015
+    *ngIf="item.type === 15"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00015>
+  <app-dynamic-00016
+    *ngIf="item.type === 16"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00016>
+  <app-dynamic-00017
+    *ngIf="item.type === 17"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00017>
+  <app-dynamic-00018
+    *ngIf="item.type === 18"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00018>
+  <app-dynamic-00019
+    *ngIf="item.type === 19"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00019>
+  <app-dynamic-00020
+    *ngIf="item.type === 20"
+    [id]="item.id"
+    (event)="onEvent($event)"
+  ></app-dynamic-00020>
 </div>

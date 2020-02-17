@@ -4,19 +4,19 @@ $width: 500px;
 $height: 600px;
 
 .mat-card-image {
-    height: $height;
+  height: $height;
 }
 
 .mat-card {
-    max-width: $width;
-    min-height: $height;
-    margin: 20px;
+  max-width: $width;
+  min-height: $height;
+  margin: 20px;
 }
 
 .ability {
-    height: inherit !important;
+  height: inherit !important;
 }
 
 .item {
-    height: inherit !important;
+  height: inherit !important;
 }

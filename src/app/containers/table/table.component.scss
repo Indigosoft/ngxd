@@ -2,29 +2,29 @@ $width: 500px;
 $height: 300px;
 
 h1 {
-    font-weight: 300;
-    margin: 0;
-    padding: 28px 8px;
-    font-size: 20px;
+  font-weight: 300;
+  margin: 0;
+  padding: 28px 8px;
+  font-size: 20px;
 }
 
 .mat-toolbar {
-    padding: 40px 20px;
+  padding: 40px 20px;
 }
 
 .mat-card {
-    width: 100%;
-    height: calc(100% - 70px - 52px);
-    margin: 20px;
+  width: 100%;
+  height: calc(100% - 70px - 52px);
+  margin: 20px;
 }
 
 .mat-card-content {
-    overflow-y: auto;
-    height: calc(100% - 70px - 52px);
+  overflow-y: auto;
+  height: calc(100% - 70px - 52px);
 }
 
 .new-column {
-    border: 1px red dotted;
-    padding: 20px;
-    margin-top: 10px;
+  border: 1px red dotted;
+  padding: 20px;
+  margin-top: 10px;
 }

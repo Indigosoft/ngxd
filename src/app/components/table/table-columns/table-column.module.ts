@@ -7,6 +7,12 @@ import { IdTableColumnModule } from './id/id.module';
 import { TextTableColumnModule } from './text/text.module';
 
 @NgModule({
-    imports: [ CommonModule, ActionsTableColumnModule, IconTableColumnModule, IdTableColumnModule, TextTableColumnModule ]
+  imports: [
+    CommonModule,
+    ActionsTableColumnModule,
+    IconTableColumnModule,
+    IdTableColumnModule,
+    TextTableColumnModule,
+  ],
 })
 export class TableColumnModule {}

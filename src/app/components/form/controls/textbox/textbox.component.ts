@@ -3,12 +3,12 @@ import { DynamicFormControlComponentBase, provideControl } from '@app/dynamics';
 import { TextboxControl } from './TextboxControl';
 
 @Component({
-    selector: 'app-textbox-control',
-    templateUrl: 'textbox.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-textbox-control',
+  templateUrl: 'textbox.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextboxControlComponent extends DynamicFormControlComponentBase {
-    @Input() schema: TextboxControl;
+  @Input() schema: TextboxControl;
 }
 
 export const COMPONENT = TextboxControlComponent;
