@@ -1,7 +1,8 @@
-import { AfterViewChecked, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewChecked, EventEmitter, Input, Output, Directive } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Item, Items, ItemsService, MeasureService, MeasureType } from './benchmark.service';
 
+@Directive()
 export abstract class BenchmarkComponentBase implements AfterViewChecked {
     @Input() count: number;
     @Input() repeat: number;

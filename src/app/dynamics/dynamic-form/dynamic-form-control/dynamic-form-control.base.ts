@@ -1,7 +1,8 @@
-import { Input } from '@angular/core';
+import { Input, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FormControlSchema } from '@ngxd/forms';
 
+@Directive()
 export class DynamicFormControlComponentBase {
 
     @Input() control: FormControl;
