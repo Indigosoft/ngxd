@@ -3,12 +3,10 @@ import { FormSchemaBuilder } from './forms.builder';
 
 @NgModule({})
 export class NgxdFormsModule {
-    static forRoot(): ModuleWithProviders<NgxdFormsModule><NgxdFormsModule> {
-        return {
-            ngModule: NgxdFormsModule,
-            providers: [
-                FormSchemaBuilder
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders<NgxdFormsModule> {
+    return {
+      ngModule: NgxdFormsModule,
+      providers: [FormSchemaBuilder],
+    };
+  }
 }
