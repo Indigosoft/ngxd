@@ -4,21 +4,19 @@ import { FormArraySchema } from '@ngxd/forms';
 import { DynamicFormArrayComponentBase, provideFormArray } from '@app/dynamics';
 
 @Component({
-    selector: 'app-form-array',
-    templateUrl: 'array.component.html',
-    styleUrls: [ 'array.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-form-array',
+  templateUrl: 'array.component.html',
+  styleUrls: ['array.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormArrayComponent extends DynamicFormArrayComponentBase {
+  @Input() array: FormArray;
+  @Input() schema: FormArraySchema;
 
-    @Input() array: FormArray;
-    @Input() schema: FormArraySchema;
-
-    trackByIndex(index): string {
-        return String(index);
-    }
-
+  trackByIndex(index): string {
+    return String(index);
+  }
 }
 
 export const COMPONENT = FormArrayComponent;
-export const PROVIDERS = [ provideFormArray(FormArraySchema, FormArrayComponent) ];
+export const PROVIDERS = [provideFormArray(FormArraySchema, FormArrayComponent)];

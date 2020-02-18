@@ -103,10 +103,8 @@ describe('NgxComponentOutlet check rendering component', () => {
     fixture.detectChanges();
     content = fixture.debugElement.nativeElement.innerHTML;
 
-    const activatedComponent: DynamicComponent = component.activatedComponent;
-
     expect(content).toContain('Dynamic Component');
-    expect(activatedComponent).toEqual(jasmine.any(DynamicComponent));
+    expect(component.activatedComponent).toEqual(jasmine.any(DynamicComponent));
     expect(component.deactivatedComponent).toBeUndefined();
 
     component.component = DynamicComponent;
@@ -115,21 +113,25 @@ describe('NgxComponentOutlet check rendering component', () => {
     content = fixture.debugElement.nativeElement.innerHTML;
 
     expect(content).toContain('Dynamic Component');
-    expect(component.activatedComponent).toBe(activatedComponent);
+    expect(component.activatedComponent).toEqual(jasmine.any(DynamicComponent));
     expect(component.deactivatedComponent).toBeUndefined();
   }));
 });
 
+// tslint:disable-next-line:component-selector
 @Component({ selector: 'app-comp-dynamic', template: 'Dynamic Component' })
 class DynamicComponent {}
 
+// tslint:disable-next-line:component-selector
 @Component({ selector: 'app-comp-another-dynamic', template: 'Dynamic Another Component' })
 class AnotherDynamicComponent {}
 
+// tslint:disable-next-line:component-selector
 @Component({ selector: 'app-test-host', template: '' })
 class TestHostComponent {}
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-comp',
   template: `
     <app-test-host

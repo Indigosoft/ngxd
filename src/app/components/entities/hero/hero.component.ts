@@ -4,21 +4,19 @@ import { DynamicEntityComponentBase, DynamicEntityModule } from '@app/dynamics';
 import { Hero } from './Hero';
 
 @Component({
-    selector: 'app-hero-entity',
-    templateUrl: 'hero.component.html',
-    styleUrls: [ 'hero.component.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-hero-entity',
+  templateUrl: 'hero.component.html',
+  styleUrls: ['hero.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroEntityComponent extends DynamicEntityComponentBase {
+  @Input() entity: Hero;
+  @Input() name: string;
+  @Input() forInput: string;
 
-    @Input() entity: Hero;
-    @Input() name: string;
-    @Input() forInput: string;
-
-    trackById(index, { id }): string {
-        return id;
-    }
-
+  trackById(index, { id }): string {
+    return id;
+  }
 }
 
 export const COMPONENT = HeroEntityComponent;

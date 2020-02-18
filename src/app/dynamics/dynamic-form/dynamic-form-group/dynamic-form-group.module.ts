@@ -6,9 +6,9 @@ import { DynamicFormGroupComponent } from './dynamic-form-group.component';
 import { FormGroupComponentResolver } from './dynamic-form-group.resolver';
 
 @NgModule({
-    imports: [ CommonModule, NgxdModule ],
-    declarations: [ DynamicFormGroupComponent ],
-    exports: [ DynamicFormGroupComponent ],
-    providers: [ FormGroupComponentResolver ]
+  imports: [CommonModule, NgxdModule],
+  declarations: [DynamicFormGroupComponent],
+  exports: [DynamicFormGroupComponent],
+  providers: [FormGroupComponentResolver],
 })
 export class DynamicFormGroupModule {}

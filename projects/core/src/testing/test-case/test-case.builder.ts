@@ -1,4 +1,4 @@
-import { Type } from '@angular/core';
+import { Type, Injectable } from '@angular/core';
 import {
   ChangeComponent,
   ChangeInput,
@@ -9,6 +9,7 @@ import {
 } from './operations/index';
 import { Executable } from './test-case.interfaces';
 
+@Injectable()
 export class TestCaseBuilder {
   operations(operations: Executable[]): Operations {
     return new Operations(operations);

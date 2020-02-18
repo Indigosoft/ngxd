@@ -5,6 +5,6 @@ import { FormControlsModule } from './controls';
 import { FormGroupsModule } from './groups';
 
 @NgModule({
-    exports: [ FormArraysModule, FormControlsModule, FormGroupsModule ]
+  exports: [FormArraysModule, FormControlsModule, FormGroupsModule],
 })
 export class FormSchemaModule {}

@@ -1,20 +1,4 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  DoCheck,
-  Inject,
-  Input,
-  NgModule,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  Type,
-} from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, DoCheck, Inject, Input, NgModule, OnChanges, OnDestroy, OnInit, SimpleChanges, Type, Injectable, Directive } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NgxdModule } from '../../../index';
 import { TestCaseBuilder } from '../../testing/test-case/index';
@@ -24,6 +8,7 @@ const REACT = 'React';
 const FRAMEWORK = 'Framework';
 const LIBRARY = 'Library';
 
+@Injectable()
 class HookLogger {
   hooks: {
     ctor: Type<any>;
@@ -42,6 +27,7 @@ class HookLogger {
   }
 }
 
+@Directive()
 class DynamicComponentBase {
   @Input() name: string;
   @Input() label: string;

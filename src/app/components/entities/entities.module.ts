@@ -5,7 +5,7 @@ import { HeroEntityModule } from './hero';
 import { ItemEntityModule } from './item';
 
 @NgModule({
-    imports: [ AbilityEntityModule, HeroEntityModule, ItemEntityModule ],
-    providers: [ EntitiesService ]
+  imports: [AbilityEntityModule, HeroEntityModule, ItemEntityModule],
+  providers: [EntitiesService],
 })
 export class EntitiesModule {}

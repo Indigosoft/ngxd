@@ -1,41 +1,41 @@
 <mat-toolbar color="primary">
-    <h1>Dynamic Table Example</h1>
+  <h1>Dynamic Table Example</h1>
 </mat-toolbar>
 
 <mat-grid-list [cols]="7" rowHeight="700px">
-    <mat-grid-tile [colspan]="3">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Basic Table</mat-card-title>
-                <mat-card-subtitle>with dynamic components</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <app-dynamic-table
-                    [schema]="schema$ | async"
-                    [dataSource]="entities$ | async"
-                    (action)="onTableAction($event)"
-                ></app-dynamic-table>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="onCreateEntity()">New Entity</button>
-            </mat-card-actions>
-        </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="4">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Table Schema</mat-card-title>
-                <mat-card-subtitle>with dynamic forms</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <app-table-schema
-                    [schema]="schema$ | async"
-                    (schemaChange)="onChangeTableSchema($event)"
-                ></app-table-schema>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="onCreateColumn()">New Column</button>
-            </mat-card-actions>
-        </mat-card>
-    </mat-grid-tile>
+  <mat-grid-tile [colspan]="3">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Basic Table</mat-card-title>
+        <mat-card-subtitle>with dynamic components</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-dynamic-table
+          [schema]="schema$ | async"
+          [dataSource]="entities$ | async"
+          (action)="onTableAction($event)"
+        ></app-dynamic-table>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="onCreateEntity()">New Entity</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Table Schema</mat-card-title>
+        <mat-card-subtitle>with dynamic forms</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table-schema
+          [schema]="schema$ | async"
+          (schemaChange)="onChangeTableSchema($event)"
+        ></app-table-schema>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="onCreateColumn()">New Column</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
 </mat-grid-list>

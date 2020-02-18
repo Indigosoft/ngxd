@@ -7,8 +7,13 @@ import { DynamicFormGroupModule } from './dynamic-form-group';
 import { DynamicFormComponent } from './dynamic-form.component';
 
 @NgModule({
-    imports: [ CommonModule, DynamicFormControlModule, DynamicFormGroupModule, DynamicFormArrayModule ],
-    declarations: [ DynamicFormComponent ],
-    exports: [ DynamicFormComponent, DynamicFormControlModule, DynamicFormGroupModule, DynamicFormArrayModule ]
+  imports: [CommonModule, DynamicFormControlModule, DynamicFormGroupModule, DynamicFormArrayModule],
+  declarations: [DynamicFormComponent],
+  exports: [
+    DynamicFormComponent,
+    DynamicFormControlModule,
+    DynamicFormGroupModule,
+    DynamicFormArrayModule,
+  ],
 })
 export class DynamicFormModule {}

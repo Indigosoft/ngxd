@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   ComponentFactory,
   ComponentRef,
+  isDevMode,
   SimpleChange,
   Type,
 } from '@angular/core';
@@ -16,6 +17,7 @@ import {
   toPropertyDef,
 } from '../utils';
 import { HostAdapter } from './host.adapter';
+import { isLifeCycleComponent } from './lifecycle.components';
 import { LifecycleComponent } from './lifecycle.strategies';
 
 export interface NgxComponentOutletAdapterRefConfig<TComponent> {
@@ -199,7 +201,27 @@ export class NgxComponentOutletAdapterRef<TComponent> {
           defaultDescriptor.set.call(context, value);
         }
 
-        instance[insidePropName] = value;
+        try {
+          instance[insidePropName] = value;
+        } catch (e) {
+          // Todo: add more debug
+          if (isDevMode()) {
+            const constructorName = (instance as any).constructor.name;
+            console.log(`You should use get and set descriptors both with dynamic components:
+ERROR: not found '${insidePropName}' input, it has getter only, please add setter!
+
+  class ${constructorName} {
+
+    get ${insidePropName}() { ... }
+
+    // Please add that 👇
+    set ${insidePropName}() { ... }
+
+  }`);
+            console.error(e);
+          }
+        }
+        this.changeDetectorRef.markForCheck();
       },
     });
   }
@@ -208,17 +230,23 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     const instance: TComponent & LifecycleComponent = this.componentRef.instance as any;
 
     if (hasProperty(this.componentRef.componentType.prototype, 'ngOnChanges')) {
-      const markForCheckWrapped = markForCheckWrapper(
-        instance.ngDoCheck,
-        this.changeDetectorRef
-      ).bind(instance);
+      if (isLifeCycleComponent(this.onInitComponentRef.instance)) {
+        this.onInitComponentRef.instance.attach(instance, this.changeDetectorRef);
+      } else {
+        // this.onInitComponentRef.instance.ngOnInit = onChangesWrapper(instance.ngOnInit).bind(
+        //   instance
+        // );
+        console.warn('todo: add for OnInit on dynamic component');
+      }
 
-      this.onInitComponentRef.instance.ngOnInit = onChangesWrapper(instance.ngOnInit).bind(
-        instance
-      );
-      this.doCheckComponentRef.instance.ngDoCheck = onChangesWrapper(markForCheckWrapped).bind(
-        instance
-      );
+      if (isLifeCycleComponent(this.doCheckComponentRef.instance)) {
+        this.doCheckComponentRef.instance.attach(instance, this.changeDetectorRef);
+      } else {
+        // this.doCheckComponentRef.instance.ngDoCheck = onChangesWrapper(markForCheckWrapped).bind(
+        //   instance
+        // );
+        console.warn('todo: add for DoCheck on dynamic component');
+      }
     } else {
       this.doCheckComponentRef.instance.ngDoCheck = markForCheckWrapper(
         instance.ngDoCheck,

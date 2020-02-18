@@ -1,3 +1,22 @@
+## [9.0.1](https://github.com/IndigoSoft/ngxd/compare/v9.0.0...v9.0.1) (2020-02-18)
+
+
+### Bug Fixes
+
+* **core:** fixes Ivy ([7ef62c9](https://github.com/IndigoSoft/ngxd/commit/7ef62c9)), closes [#28](https://github.com/IndigoSoft/ngxd/issues/28) [#29](https://github.com/IndigoSoft/ngxd/issues/29)
+
+
+### Features
+
+* up angular version to 9 ([04b4789](https://github.com/IndigoSoft/ngxd/commit/04b4789))
+
+
+### BREAKING CHANGES
+
+* **core:** Components with getter and setter without both are not supported
+
+
+
 # [9.0.0](https://github.com/IndigoSoft/ngxd/compare/v8.0.0...v9.0.0) (2020-02-07)
 
 

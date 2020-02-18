@@ -3,6 +3,6 @@ import { Route, RouterModule } from '@angular/router';
 
 import { LazyPageComponent } from './lazy.component';
 
-const routes: Route[] = [ { path: '', component: LazyPageComponent } ];
+const routes: Route[] = [{ path: '', component: LazyPageComponent }];
 
 export const LazyRouting: ModuleWithProviders = RouterModule.forChild(routes);

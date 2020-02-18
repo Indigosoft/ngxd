@@ -8,16 +8,19 @@ import { EntityComponentResolver } from './dynamic-entity.resolver';
 import { DynamicEntityObject } from './DynamicEntityObject';
 
 @NgModule({
-    imports: [ NgxdModule ],
-    declarations: [ DynamicEntityComponent ],
-    exports: [ DynamicEntityComponent ],
-    providers: [ EntityComponentResolver ]
+  imports: [NgxdModule],
+  declarations: [DynamicEntityComponent],
+  exports: [DynamicEntityComponent],
+  providers: [EntityComponentResolver],
 })
 export class DynamicEntityModule {
-    static provide(type: Type<DynamicEntityObject>, component: Type<DynamicEntityComponentBase>): Provider[] {
-        return [
-            { provide: ENTITY_PROVIDER, useValue: { type, component }, multi: true },
-            { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: component, multi: true }
-        ];
-    }
+  static provide(
+    type: Type<DynamicEntityObject>,
+    component: Type<DynamicEntityComponentBase>
+  ): Provider[] {
+    return [
+      { provide: ENTITY_PROVIDER, useValue: { type, component }, multi: true },
+      { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: component, multi: true },
+    ];
+  }
 }

@@ -1,17 +1,18 @@
 :host {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
-.angular-logo, .github-logo {
-    height: 26px;
-    margin: 0 4px 3px 0;
-    vertical-align: middle;
+.angular-logo,
+.github-logo {
+  height: 26px;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
 }
