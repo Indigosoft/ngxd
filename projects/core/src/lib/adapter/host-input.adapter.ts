@@ -1,3 +1,4 @@
+import { isDevMode } from '@angular/core';
 import { Subject } from 'rxjs';
 import { getPropertyDescriptor, PRIVATE_CONTEXT_PREFIX } from '../utils';
 
@@ -19,6 +20,23 @@ export class HostInputAdapter<TComponent> {
 
     this.changes = new Subject<any>();
     this.defaultDescriptor = getPropertyDescriptor(host, name);
+
+    if (this.defaultDescriptor && this.defaultDescriptor.get && !this.defaultDescriptor.set) {
+      if (isDevMode()) {
+        const constructorName = (host as any).constructor.name;
+        console.log(`You should use get and set descriptors both with dynamic components:
+ERROR: not found '${name}' input, it has setter only, please add getter!
+
+  class ${constructorName} {
+
+    // Please add that 👇
+    get ${name}() { ... }
+
+    set ${name}() { ... }
+
+  }`);
+      }
+    }
     this.refCount = 0;
 
     const defaultValue = host[name];

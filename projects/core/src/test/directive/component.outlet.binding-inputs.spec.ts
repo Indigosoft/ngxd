@@ -166,18 +166,17 @@ describe('check binding inputs', () => {
       expect(component.activatedComponent.name).toBe('Angular');
       expect(component.activatedComponent.label).toBe('Framework');
 
-      const activatedComponent = component.activatedComponent;
       component.component = WithGetterDynamicComponent;
 
-      expect(fixture.detectChanges.bind(fixture)).toThrow();
+      fixture.detectChanges();
       content = fixture.debugElement.nativeElement.innerHTML;
 
       expect(content).toContain('Dynamic With Getter Component');
       expect(content).not.toContain('name: Angular');
       expect(content).not.toContain('label: Framework');
-      expect(component.activatedComponent).toBe(activatedComponent);
-      expect(component.activatedComponent.name).toBe('Angular');
-      expect(component.activatedComponent.label).toBe('Framework');
+      expect(component.activatedComponent).toEqual(jasmine.any(WithGetterDynamicComponent));
+      expect(component.activatedComponent.name).toBeUndefined();
+      expect(component.activatedComponent.label).toBeUndefined();
     }));
 
     it('should binding when dynamic component have input with setter only', fakeAsync(() => {
@@ -269,8 +268,8 @@ describe('check binding inputs', () => {
       content = fixture.debugElement.nativeElement.innerHTML;
 
       expect(content).toContain('Dynamic Component');
-      expect(content).toContain('name: Angular');
-      expect(component.activatedComponent.name).toBe('Angular');
+      expect(content).not.toContain('name: Angular');
+      expect(component.activatedComponent.name).toBeUndefined();
 
       component.component = AnotherDynamicComponent;
 
@@ -528,6 +527,7 @@ describe('check binding inputs', () => {
 class BaseHostComponent {}
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-dynamic',
   template: 'Dynamic Component name: {{ name }}, label: {{ label }}',
 })
@@ -550,6 +550,7 @@ class DynamicComponent implements OnInit, OnChanges {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-another-dynamic',
   template: 'Dynamic Another Component name: {{ name }}, label: {{ label }}',
 })
@@ -559,45 +560,54 @@ class AnotherDynamicComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-different-properties-dynamic',
   template: 'Dynamic Different Properties Component name: {{ customName }}, label: {{ label }}',
 })
 class DifferentPropertiesDynamicComponent {
+  // tslint:disable-next-line:no-input-rename
   @Input('name') customName: string;
+  // tslint:disable-next-line:no-input-rename
   @Input('customLabel') label: string;
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-with-getter-dynamic',
   template: 'Dynamic With Getter Component name: {{ customName }}',
 })
 class WithGetterDynamicComponent {
   private _customName: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('name') get customName(): string {
     return this._customName;
   }
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-with-setter-dynamic',
   template: 'Dynamic With Setter Component name: {{ customName }}',
 })
 class WithSetterDynamicComponent {
   private _customName: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('name') set customName(name: string) {
     this._customName = name;
   }
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-with-getter-and-setter-dynamic',
   template: 'Dynamic With Getter And Setter Component name: {{ customName }}',
 })
 class WithGetterAndSetterDynamicComponent {
   private _customName: string;
 
+  // tslint:disable-next-line:no-input-rename
   @Input('name')
   get customName(): string {
     return this._customName;
@@ -609,12 +619,14 @@ class WithGetterAndSetterDynamicComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-comp-a',
   template: 'Dynamic Empty Component',
 })
 class EmptyDynamicComponent {}
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-host',
   template: '',
   providers: [{ provide: BaseHostComponent, useExisting: TestHostComponent }],
@@ -625,6 +637,7 @@ class TestHostComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-host-with-getter',
   template: '',
 })
@@ -638,6 +651,7 @@ class WithGetterTestHostComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-host-with-setter',
   template: '',
 })
@@ -652,6 +666,7 @@ class WithSetterTestHostComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-host-with-getter-and-setter',
   template: '',
   providers: [{ provide: BaseHostComponent, useExisting: WithGetterAndSetterTestHostComponent }],
@@ -674,6 +689,7 @@ class WithGetterAndSetterTestHostComponent {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-test-comp',
   template: `
     <app-test-host

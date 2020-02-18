@@ -58,7 +58,9 @@ const FEATURE_COMPONENTS_DISABLE = {
 
 export function resolveStrategy(component: Type<any>) {
   const type = resolveStrategyType(component);
-  return STRATEGY_CONFIG[type];
+
+  const USE_ONLY_DEFAULT_STRATEGY_FOR_IVY = LifecycleStrategyType.OnInitAndDoCheck;
+  return STRATEGY_CONFIG[USE_ONLY_DEFAULT_STRATEGY_FOR_IVY];
 }
 
 function resolveStrategyType<T = any>(component: Type<T>): LifecycleStrategyType {

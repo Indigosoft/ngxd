@@ -27,9 +27,13 @@ export class NgxComponentOutletAdapterBuilder {
       TComponent
     > = componentFactoryResolver.resolveComponentFactory(componentType);
 
-    const componentRef: ComponentRef<TComponent> = viewContainerRef.createComponent(
-      componentFactory,
-      viewContainerRef.length,
+    // const componentRef: ComponentRef<TComponent> = viewContainerRef.createComponent(
+    //   componentFactory,
+    //   viewContainerRef.length,
+    //   injector,
+    //   projectableNodes
+    // );
+    const componentRef: ComponentRef<TComponent> = componentFactory.create(
       injector,
       projectableNodes
     );
@@ -40,12 +44,16 @@ export class NgxComponentOutletAdapterBuilder {
       componentFactoryResolver
     );
 
-    return new NgxComponentOutletAdapterRef({
+    const adapterRef = new NgxComponentOutletAdapterRef({
       componentFactory,
       componentRef,
       host,
       onInitComponentRef,
       doCheckComponentRef,
     });
+
+    viewContainerRef.insert(componentRef.hostView, viewContainerRef.length);
+
+    return adapterRef;
   }
 }
