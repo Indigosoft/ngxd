@@ -56,6 +56,7 @@ ERROR: not found '${name}' input, it has setter only, please add getter!
         this.value = value;
         this.changes.next(value);
       },
+      configurable: true,
     });
 
     if (typeof defaultValue !== 'undefined') {
