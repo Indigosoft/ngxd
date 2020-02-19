@@ -1,6 +1,10 @@
 # ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9+
 
-> Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
+<p align="center">
+  <img src="images/ngxd-5-minutes.png" width="882px" alt="preview">
+</p>
+
+> 🥳 Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
 [![Npm](https://img.shields.io/npm/v/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
 [![Npm Downloads](https://img.shields.io/npm/dt/@ngxd/core.svg?style=flat-square&maxAge=300)](https://www.npmjs.com/package/@ngxd/core)
@@ -12,10 +16,6 @@
 [![GitHub PR](https://img.shields.io/github/issues-pr/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/pulls)
 [![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?style=flat-square&label=GitHub%20Stars&maxAge=300)](https://github.com/IndigoSoft/ngxd)
-
-<p align="center">
-  <img src="images/ngxd-5-minutes.png" width="882px" alt="preview">
-</p>
 
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
