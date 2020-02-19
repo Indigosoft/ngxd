@@ -1,3 +1,12 @@
+## [9.0.3](https://github.com/IndigoSoft/ngxd/compare/v9.0.2...v9.0.3) (2020-02-19)
+
+
+### Bug Fixes
+
+* **core:** made host input descriptor as configurable ([8dda070](https://github.com/IndigoSoft/ngxd/commit/8dda070)), closes [#26](https://github.com/IndigoSoft/ngxd/issues/26) [#29](https://github.com/IndigoSoft/ngxd/issues/29)
+
+
+
 ## [9.0.2](https://github.com/IndigoSoft/ngxd/compare/v9.0.1...v9.0.2) (2020-02-19)
 
 
