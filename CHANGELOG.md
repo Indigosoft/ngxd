@@ -1,3 +1,12 @@
+## [9.0.2](https://github.com/IndigoSoft/ngxd/compare/v9.0.1...v9.0.2) (2020-02-19)
+
+
+### Bug Fixes
+
+* disabled Ivy for library, libs should use ViewEngine compiler ([5ec5c79](https://github.com/IndigoSoft/ngxd/commit/5ec5c79)), closes [#28](https://github.com/IndigoSoft/ngxd/issues/28)
+
+
+
 ## [9.0.1](https://github.com/IndigoSoft/ngxd/compare/v9.0.0...v9.0.1) (2020-02-18)
 
 
