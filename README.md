@@ -36,7 +36,7 @@ A simple variant of binding through the parent component.
   template: `
     <ng-container
       *ngxComponentOutlet="component"></ng-container>`
-      // using @ngxd/core ☝️
+      // using @ngxd/core 👆
 })
 class MyComponent {
   // 🥳 inputs and outputs will binding automatically
