@@ -1,4 +1,4 @@
-# NGX Dynamic
+# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9+
 
 > Best way to quickly use Dynamic Components with [Angular](https://angular.io/)
 
@@ -13,19 +13,17 @@
 [![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?style=flat-square&label=GitHub%20Stars&maxAge=300)](https://github.com/IndigoSoft/ngxd)
 
-# NGX Dynamic v0.x to v7 Update Guide
- 
-NGX Dynamic v7 will arriving soon! While this is a major version change (from 0.x to 7.x).
-
-- [MIGRATION.md](./MIGRATION.md)
-
-## Example Usage
+<p align="center">
+  <img src="images/ngxd-5-minutes.png" width="882px" alt="preview">
+</p>
 
 Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
 ```html
 <ng-container *ngxComponentOutlet="component"></ng-container>
 ```
+
+Here is a [demo example](https://stackblitz.com/edit/angular-simple-dynamic) showing NGX Dynamic and Angular in action.
 
 ## Dynamic Components In 5 minutes
 
@@ -37,25 +35,27 @@ A simple variant of binding through the parent component.
 @Component({
   template: `
     <ng-container
-      *ngxComponentOutlet="component"
-    ></ng-container>
-  `
+      *ngxComponentOutlet="component"></ng-container>`
+      // using @ngxd/core ☝️
 })
-class DynamicComponent {
+class MyComponent {
+  // 🥳 inputs and outputs will binding automatically
   @Input() entity;
   @Output() action;
+  
+  // your dynamic component 👇
+  component = DynamicComponent;
 }
 ```
 
-### Through The Context
+### Through The Context (please, use auto-binding like above)
 Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
 ```html
 <ng-container *ngFor=“let color of colors”
   <ng-container
     *ngxComponentOutlet="
       component;
-      context: { color: color }
-  "></ng-container>
+      context: { color: color }"></ng-container>
 </ng-container>
 ```
 
@@ -64,11 +64,10 @@ For ease of selecting the required component, there is ResolvePipe, which expect
 ```html
 <ng-container
   *ngxComponentOutlet="
-    resolver | resolve: entity
-"></ng-container>
+    resolver | resolve: entity"></ng-container>
 ```
 
-### Through The Host Component (deprecated)
+### Through The Host Component (deprecated, please, use auto-binding like above)
 Through the host component, when the inputs and outputs are initialized explicitly. This option is difficult to use and deprecated.
 ```html
 <!-- host component -->
@@ -100,35 +99,13 @@ Through the host component, when the inputs and outputs are initialized explicit
 | Activate Event         |  ✅                | ⭕️ manually              | ❌                |
 | Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
 
-## Demo
-
-#### [Heroes](https://ngx-component-outlet-demo.stackblitz.io/)
-
-List of heroes
-
-#### [Table And Form](https://ngx-component-outlet-demo.stackblitz.io/table)
-
-Table of heroes with table schema form
-
-#### Editable Demo
-
-[Stackblitz](https://stackblitz.com/edit/ngx-component-outlet-demo)
-
-[Github](https://github.com/IndigoSoft/ngxd/tree/master/src)
-
 ## Getting started
 
 ### Step 1: Install ```@ngxd/core```:
 
-#### NPM
-
 ```bash
 npm install --save @ngxd/core
-```
-
-#### Yarn
-
-```bash
+# or
 yarn add @ngxd/core
 ```
 
@@ -139,137 +116,32 @@ import { NgxdModule } from '@ngxd/core';
 
 @NgModule({
   declarations: [ AppComponent ],
+  // have import NgxdModule here 👇
   imports: [ BrowserModule, NgxdModule ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
 ```
 
-### Step 3: Create components that your want to use dynamically:
+### Step 3: Use NgxComponentOutlet directly:
 
 ```typescript
 @Component({
-    selector: 'app-dynamic-comp-a',
-    template: `I'm Dynamic Component A. Hello, {{ name }}!`
-})
-export class CompAComponent {
-    @HostBinding('style.color') @Input() color: string;
-    @Input() name: string;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
-    
-    @HostListener('click', ['$event.target'])
-    onClick($event) {
-        this.action.emit($event);
-    }
-}
-```
-
-```typescript
-@Component({
-    selector: 'app-dynamic-comp-b',
-    template: `I'm Dynamic Component B. Hello, {{ name }}!`
-})
-export class CompBComponent {
-    @HostBinding('style.color') @Input() color: string;
-    @Input() name: string;
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
-    
-    @HostListener('click', ['$event.target'])
-    onClick($event) {
-        this.action.emit($event);
-    }
-}
-```
-
-### Step 4: Add components to ```declarations``` and ```entryComponents```:
-
-```typescript
-@NgModule({
-    ...
-    declarations: [ ..., CompAComponent, CompBComponent ],
-    entryComponents: [ CompAComponent, CompBComponent ]
-})
-export class AppModule {}
-```
-
-### Step 5: Create a host component with the same inputs/outputs:
-
-```typescript
-@Component({
-    selector: 'app-items',
-    template: `
-    <ng-container *ngFor="let item of items">
-        <ng-container *ngxComponentOutlet="
-            item.component;
-            context: { name: item.name }
-        "></ng-container>
-    </ng-container>
-    `
-})
-export class ItemsComponent {
-    @Input() color: string;
-    @Input() items: { name: string; component: Type<any> }[];
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
-}
-```
-
-### Step 6: Add the component to ```declarations```:
-
-```typescript
-@NgModule({
-    ...
-    declarations: [ ..., ItemsComponent ],
-    ...
-})
-export class AppModule {}
-```
-
-### Step 7: Now show dynamic component in AppComponent:
-
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
   template: `
-    <app-items
-      [items]="items"
-      (action)="onAction($event)"
-      color="red"
-    ></app-items>
-  `
+    <ng-container
+      *ngxComponentOutlet="component"></ng-container>`
+      // using @ngxd/core 👆
 })
-export class AppComponent {
-  items = [
-    {
-      name: 'Angular 5!',
-      component: CompAComponent
-    },
-    {
-      name: 'Angular 6!',
-      component: CompBComponent
-    }
-  ];
-    
-  onAction($event) {
-    console.log($event);
-  }
+class MyComponent {
+  // 🥳 inputs and outputs will binding automatically
+  @Input() entity;
+  @Output() action;
+  
+  // your dynamic component 👇
+  component = DynamicComponent;
 }
 ```
 
-#### And you will have in AppModule:
-
-```typescript
-import { NgxdModule } from '@ngxd/core';
-
-@NgModule({
-  imports:      [ BrowserModule, NgxdModule ],
-  declarations: [ AppComponent, CompAComponent, CompBComponent, ItemsComponent ],
-  entryComponents: [ CompAComponent, CompBComponent ],
-  bootstrap:    [ AppComponent ]
-})
-export class AppModule {}
-```
 
 ## API
 
@@ -287,6 +159,3 @@ export class AppModule {}
 | ```(ngxComponentOutletActivate)```        | ```any```                  |             |
 | ```(ngxComponentOutletDeactivate)```      | ```any```                  |             |
 
-## Advanced Use Cases
-
-Here is a [demo repository](./src) showing NGX Dynamic and Angular in action.
