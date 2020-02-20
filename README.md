@@ -25,11 +25,56 @@ Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
 Here is a [demo example](https://stackblitz.com/edit/angular-simple-dynamic) showing NGX Dynamic and Angular in action.
 
-## Dynamic Components In 5 minutes
+
+# Getting started
+
+## Step 1: Install ```@ngxd/core```:
+
+```bash
+npm install --save @ngxd/core
+# or
+yarn add @ngxd/core
+```
+
+## Step 2: Import the NgxdModule:
+
+```typescript
+import { NgxdModule } from '@ngxd/core';
+
+@NgModule({
+  declarations: [ AppComponent ],
+  // have import NgxdModule here 👇
+  imports: [ BrowserModule, NgxdModule ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+```
+
+## Step 3: Use NgxComponentOutlet directly:
+
+```typescript
+@Component({
+  template: `
+    <ng-container
+      *ngxComponentOutlet="component"></ng-container>`
+      // using @ngxd/core 👆
+})
+class MyComponent {
+  // 🥳 inputs and outputs will binding automatically
+  @Input() entity;
+  @Output() action;
+  
+  // your dynamic component 👇
+  component = DynamicComponent;
+}
+```
+
+
+# Dynamic Components In 5 minutes
 
 There are several modes of operation of the directive.
 
-### Through The Parent Component
+## Through The Parent Component
 A simple variant of binding through the parent component.
 ```typescript
 @Component({
@@ -48,7 +93,7 @@ class MyComponent {
 }
 ```
 
-### Through The Context (please, use auto-binding like above)
+## Through The Context (please, use auto-binding like above)
 Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
 ```html
 <ng-container *ngFor=“let color of colors”
@@ -59,7 +104,7 @@ Additionally there is autobinding through the context. This is useful when you n
 </ng-container>
 ```
 
-### Pipe For Selecting The Component
+## Pipe For Selecting The Component
 For ease of selecting the required component, there is ResolvePipe, which expects NgxdResolver to enter, and returns the required component.
 ```html
 <ng-container
@@ -67,7 +112,7 @@ For ease of selecting the required component, there is ResolvePipe, which expect
     resolver | resolve: entity"></ng-container>
 ```
 
-### Through The Host Component (deprecated, please, use auto-binding like above)
+## Through The Host Component (deprecated, please, use auto-binding like above)
 Through the host component, when the inputs and outputs are initialized explicitly. This option is difficult to use and deprecated.
 ```html
 <!-- host component -->
@@ -81,7 +126,8 @@ Through the host component, when the inputs and outputs are initialized explicit
 </app-dynamic>
 ```
 
-## Comparison
+
+# Comparison
 
 | Feature                | NgxComponentOutlet | ComponentFactoryResolver | NgComponentOutlet |
 | ---------------------- | ------------------ | ------------------------ | ----------------- |
@@ -99,51 +145,8 @@ Through the host component, when the inputs and outputs are initialized explicit
 | Activate Event         |  ✅                | ⭕️ manually              | ❌                |
 | Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
 
-## Getting started
 
-### Step 1: Install ```@ngxd/core```:
-
-```bash
-npm install --save @ngxd/core
-# or
-yarn add @ngxd/core
-```
-
-### Step 2: Import the NgxdModule:
-
-```typescript
-import { NgxdModule } from '@ngxd/core';
-
-@NgModule({
-  declarations: [ AppComponent ],
-  // have import NgxdModule here 👇
-  imports: [ BrowserModule, NgxdModule ],
-  bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
-
-### Step 3: Use NgxComponentOutlet directly:
-
-```typescript
-@Component({
-  template: `
-    <ng-container
-      *ngxComponentOutlet="component"></ng-container>`
-      // using @ngxd/core 👆
-})
-class MyComponent {
-  // 🥳 inputs and outputs will binding automatically
-  @Input() entity;
-  @Output() action;
-  
-  // your dynamic component 👇
-  component = DynamicComponent;
-}
-```
-
-
-## API
+# API
 
 | Input                                     | Type                       | Default | Required | Description |
 | ----------------------------------------- | -------------------------- | ------- | -------- | ----------- |
