@@ -710,6 +710,7 @@ class WithMethodCallInSetterTestHostComponent {
   _name: string;
 
   get name(): string {
+    this.method();
     return this._name;
   }
 

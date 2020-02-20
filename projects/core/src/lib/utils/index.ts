@@ -80,21 +80,31 @@ export function deletePropertyDescriptor(context: any, name: string) {
   }
 }
 
-export interface PropertyDef {
+export interface PropertyDef<T> {
+  context: T;
+  dynamicContext: T;
+  hostContext: T;
   insidePropName: string;
   outsidePropName: string;
 }
 
 // {propName: "insidePropName", templateName: "outsidePropName"}
-export function toPropertyDef(property: { propName: string; templateName: string }): PropertyDef {
-  return {
+export function toPropertyDef<T>(
+  context: T,
+  dynamicContext: T,
+  hostContext: T
+): (property: { propName: string; templateName: string }) => PropertyDef<T> {
+  return (property: { propName: string; templateName: string }) => ({
+    context: context,
+    dynamicContext: dynamicContext,
+    hostContext: hostContext,
     insidePropName: property.propName,
     outsidePropName: property.templateName,
-  };
+  });
 }
 
 export const PRIVATE_CONTEXT_PREFIX = '__ngxContext__';
 
-export interface BindingDef extends PropertyDef {
+export interface BindingDef<T> extends PropertyDef<T> {
   defaultDescriptor: PropertyDescriptor;
 }
