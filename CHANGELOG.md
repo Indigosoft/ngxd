@@ -1,3 +1,12 @@
+## [9.0.4](https://github.com/IndigoSoft/ngxd/compare/v9.0.3...v9.0.4) (2020-02-20)
+
+
+### Bug Fixes
+
+* **core:** call setter on host component with host context ([c8b5d1d](https://github.com/IndigoSoft/ngxd/commit/c8b5d1d)), closes [#21](https://github.com/IndigoSoft/ngxd/issues/21)
+
+
+
 ## [9.0.3](https://github.com/IndigoSoft/ngxd/compare/v9.0.2...v9.0.3) (2020-02-19)
 
 
