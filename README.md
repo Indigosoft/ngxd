@@ -96,7 +96,7 @@ class MyComponent {
 ## Through The Context (please, use auto-binding like above)
 Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
 ```html
-<ng-container *ngFor=“let color of colors”
+<ng-container *ngFor="let color of colors"
   <ng-container
     *ngxComponentOutlet="
       component;
