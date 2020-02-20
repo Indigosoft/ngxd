@@ -8,7 +8,6 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
-import { resolveLifecycleComponents } from './lifecycle.strategies';
 
 /**
  * @deprecated
@@ -27,30 +26,20 @@ export class NgxComponentOutletAdapterBuilder {
       TComponent
     > = componentFactoryResolver.resolveComponentFactory(componentType);
 
-    // const componentRef: ComponentRef<TComponent> = viewContainerRef.createComponent(
-    //   componentFactory,
-    //   viewContainerRef.length,
-    //   injector,
-    //   projectableNodes
-    // );
     const componentRef: ComponentRef<TComponent> = componentFactory.create(
       injector,
       projectableNodes
     );
 
-    const { onInitComponentRef, doCheckComponentRef } = resolveLifecycleComponents(
-      componentFactory.componentType,
+    const adapterRef = new NgxComponentOutletAdapterRef(
+      {
+        componentFactory,
+        componentRef,
+        host,
+      },
       viewContainerRef,
       componentFactoryResolver
     );
-
-    const adapterRef = new NgxComponentOutletAdapterRef({
-      componentFactory,
-      componentRef,
-      host,
-      onInitComponentRef,
-      doCheckComponentRef,
-    });
 
     viewContainerRef.insert(componentRef.hostView, viewContainerRef.length);
 

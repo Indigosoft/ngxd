@@ -1,5 +1,4 @@
 import {
-  ComponentFactory,
   ComponentFactoryResolver,
   ComponentRef,
   DoCheck,
@@ -7,29 +6,30 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
-import { hasProperty } from '../utils';
+import { createComponentRef, Disposable, hasOnChangesHook, hasProperty } from '../utils';
 import {
   DoCheckOnlyComponent,
+  isLifecycleComponent,
   OnInitAndDoCheckComponent,
   OnInitOnlyComponent,
 } from './lifecycle.components';
 
-export enum LifecycleStrategyType {
+enum LifecycleStrategyType {
   Default,
   OnInitOnly,
   DoCheckOnly,
   OnInitAndDoCheck,
 }
 
-export type LifecycleComponent = OnInit & DoCheck | OnInit | DoCheck | any;
+type LifecycleComponent = OnInit & DoCheck | OnInit | DoCheck | any;
 
-export interface StrategyConfig {
+interface StrategyConfig {
   componentType?: Type<LifecycleComponent>;
   useOnInitComponent?: boolean;
   useDoCheckComponent?: boolean;
 }
 
-export interface LifecycleComponents {
+interface LifecycleComponents {
   onInitComponentRef: ComponentRef<LifecycleComponent>;
   doCheckComponentRef: ComponentRef<LifecycleComponent>;
 }
@@ -56,49 +56,41 @@ const FEATURE_COMPONENTS_DISABLE = {
   doCheckComponentRef: null,
 };
 
-export function resolveStrategy(component: Type<any>) {
-  const type = resolveStrategyType(component);
-
-  const USE_ONLY_DEFAULT_STRATEGY_FOR_IVY = LifecycleStrategyType.OnInitAndDoCheck;
-  return STRATEGY_CONFIG[USE_ONLY_DEFAULT_STRATEGY_FOR_IVY];
-}
-
-function resolveStrategyType<T = any>(component: Type<T>): LifecycleStrategyType {
+function resolveLifecycleStrategy(component: Type<any>) {
   const hasNgOnInit: boolean = hasProperty(component.prototype, 'ngOnInit');
   const hasNgDoCheck: boolean = hasProperty(component.prototype, 'ngDoCheck');
   const hasNgOnChanges: boolean = hasProperty(component.prototype, 'ngOnChanges');
 
+  let type;
   if (hasNgOnChanges && !hasNgOnInit && !hasNgDoCheck) {
-    return LifecycleStrategyType.OnInitAndDoCheck;
+    type = LifecycleStrategyType.OnInitAndDoCheck;
+  } else if (hasNgOnChanges && !hasNgOnInit) {
+    type = LifecycleStrategyType.OnInitOnly;
+  } else if (!hasNgDoCheck) {
+    type = LifecycleStrategyType.DoCheckOnly;
+  } else {
+    type = LifecycleStrategyType.Default;
   }
 
-  if (hasNgOnChanges && !hasNgOnInit) {
-    return LifecycleStrategyType.OnInitOnly;
-  }
-
-  if (!hasNgDoCheck) {
-    return LifecycleStrategyType.DoCheckOnly;
-  }
-
-  return LifecycleStrategyType.Default;
+  const USE_ONLY_INIT_AND_DO_CHECK_STRATEGY_FOR_IVY = LifecycleStrategyType.OnInitAndDoCheck;
+  return STRATEGY_CONFIG[USE_ONLY_INIT_AND_DO_CHECK_STRATEGY_FOR_IVY];
 }
 
 function createLifecycleComponents(
+  componentType: Type<LifecycleComponent>,
   viewContainerRef: ViewContainerRef,
-  config: StrategyConfig,
   componentFactoryResolver: ComponentFactoryResolver
 ): LifecycleComponents {
+  const config: StrategyConfig = resolveLifecycleStrategy(componentType);
+
   if (!config.componentType) {
     return FEATURE_COMPONENTS_DISABLE;
   }
 
-  const lifecycleComponentFactory: ComponentFactory<
-    LifecycleComponent
-  > = componentFactoryResolver.resolveComponentFactory(config.componentType);
-
-  const lifecycleComponentRef: ComponentRef<LifecycleComponent> = viewContainerRef.createComponent(
-    lifecycleComponentFactory,
-    viewContainerRef.length
+  const lifecycleComponentRef = createComponentRef(
+    config.componentType,
+    viewContainerRef,
+    componentFactoryResolver
   );
 
   return {
@@ -107,11 +99,51 @@ function createLifecycleComponents(
   };
 }
 
-export function resolveLifecycleComponents<TComponent>(
-  componentType: Type<TComponent>,
+export function attachLifecycle<TComponent>(
+  componentRef: ComponentRef<TComponent>,
   viewContainerRef: ViewContainerRef,
   componentFactoryResolver: ComponentFactoryResolver
-): LifecycleComponents {
-  const strategyConfig: StrategyConfig = resolveStrategy(componentType);
-  return createLifecycleComponents(viewContainerRef, strategyConfig, componentFactoryResolver);
+): Disposable {
+  const component = componentRef.instance;
+  const componentType: Type<TComponent> = component.constructor as Type<TComponent>;
+
+  let components = createLifecycleComponents(
+    componentType,
+    viewContainerRef,
+    componentFactoryResolver
+  );
+  components = {
+    onInitComponentRef: components.onInitComponentRef || componentRef,
+    doCheckComponentRef: components.doCheckComponentRef || componentRef,
+  };
+
+  if (hasOnChangesHook(component)) {
+    if (isLifecycleComponent(components.onInitComponentRef.instance)) {
+      components.onInitComponentRef.instance.attach(component, componentRef.changeDetectorRef);
+    } else {
+      console.warn('todo: add for OnInit on dynamic component');
+    }
+
+    if (isLifecycleComponent(components.doCheckComponentRef.instance)) {
+      components.doCheckComponentRef.instance.attach(component, componentRef.changeDetectorRef);
+    } else {
+      console.warn('todo: add for DoCheck on dynamic component');
+    }
+  } else {
+    if (isLifecycleComponent(components.doCheckComponentRef.instance)) {
+      components.doCheckComponentRef.instance.attach(component, componentRef.changeDetectorRef);
+    } else {
+      console.warn('todo: add for DoCheck on dynamic component');
+    }
+  }
+
+  return () => {
+    if (isLifecycleComponent(components.doCheckComponentRef.instance)) {
+      components.doCheckComponentRef.destroy();
+    }
+
+    if (isLifecycleComponent(components.onInitComponentRef.instance)) {
+      components.onInitComponentRef.destroy();
+    }
+  };
 }

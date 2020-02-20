@@ -1,39 +1,45 @@
-import { OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  DoCheck,
+  OnChanges,
+  OnInit,
+  Type,
+  ViewContainerRef,
+} from '@angular/core';
 
 export const PRIVATE_PREFIX = '__ngxOnChanges_';
 
-export type OnChangesExpando = OnChanges & {
-  __ngOnChanges_: SimpleChanges | null | undefined;
-  [key: string]: any;
-};
+export type Disposable = Function;
 
-export function onChangesWrapper(delegateHook: (() => void) | null) {
-  return function(this: OnChangesExpando) {
-    const simpleChanges = this[PRIVATE_PREFIX];
-
-    if (simpleChanges != null) {
-      if (this.ngOnChanges) {
-        this.ngOnChanges(simpleChanges);
-      }
-      this[PRIVATE_PREFIX] = null;
-    }
-
-    if (delegateHook) {
-      delegateHook.apply(this);
-    }
-  };
+export function hasOnChangesHook(component: unknown): component is OnChanges {
+  return component && hasProperty(component, 'ngOnChanges');
 }
 
-export function markForCheckWrapper(delegateHook: (() => void) | null, cd) {
-  return function(this) {
-    if (delegateHook) {
-      delegateHook.apply(this);
-    }
+export function hasDoCheckHook(component: unknown): component is DoCheck {
+  return component && hasProperty(component, 'ngDoCheck');
+}
 
-    if (cd) {
-      cd.markForCheck();
-    }
-  };
+export function hasOnInitHook(component: unknown): component is OnInit {
+  return component && hasProperty(component, 'ngOnInit');
+}
+
+export function createComponentRef<T>(
+  componentType: Type<T>,
+  viewContainerRef: ViewContainerRef,
+  componentFactoryResolver: ComponentFactoryResolver
+): ComponentRef<T> {
+  const componentFactory = componentFactoryResolver.resolveComponentFactory(componentType);
+  return viewContainerRef.createComponent(componentFactory, viewContainerRef.length);
+}
+
+export function runOnChangesHook(context: unknown): void {
+  const simpleChanges = context[PRIVATE_PREFIX];
+
+  if (simpleChanges != null && hasOnChangesHook(context)) {
+    context.ngOnChanges(simpleChanges);
+  }
+  context[PRIVATE_PREFIX] = null;
 }
 
 export function hasProperty(context: any, name: string): boolean {

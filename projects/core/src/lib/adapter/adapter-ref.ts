@@ -1,31 +1,22 @@
 import {
   ChangeDetectorRef,
   ComponentFactory,
+  ComponentFactoryResolver,
   ComponentRef,
   isDevMode,
   SimpleChange,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  BindingDef,
-  hasProperty,
-  markForCheckWrapper,
-  onChangesWrapper,
-  PRIVATE_PREFIX,
-  PropertyDef,
-  toPropertyDef,
-} from '../utils';
+import { BindingDef, Disposable, PRIVATE_PREFIX, PropertyDef, toPropertyDef } from '../utils';
 import { HostAdapter } from './host.adapter';
-import { isLifeCycleComponent } from './lifecycle.components';
-import { LifecycleComponent } from './lifecycle.strategies';
+import { attachLifecycle } from './lifecycle.strategies';
 
 export interface NgxComponentOutletAdapterRefConfig<TComponent> {
   componentFactory: ComponentFactory<TComponent>;
   componentRef: ComponentRef<TComponent>;
   host: TComponent;
-  onInitComponentRef?: ComponentRef<LifecycleComponent>;
-  doCheckComponentRef?: ComponentRef<LifecycleComponent>;
 }
 
 export class NgxComponentOutletAdapterRef<TComponent> {
@@ -34,8 +25,6 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   host: TComponent;
   context: TComponent = {} as TComponent;
 
-  private onInitComponentRef: ComponentRef<LifecycleComponent>;
-  private doCheckComponentRef: ComponentRef<LifecycleComponent>;
   private changeDetectorRef: ChangeDetectorRef;
   private attachedInputs: Subscription[] = [];
   private attachedOutputs: Subscription[] = [];
@@ -43,13 +32,16 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   private bindingDefs: BindingDef<TComponent>[] = [];
 
   private hostAdapter: HostAdapter<TComponent>;
+  private detachLifecycle?: Disposable;
 
-  constructor(config: NgxComponentOutletAdapterRefConfig<TComponent>) {
+  constructor(
+    config: NgxComponentOutletAdapterRefConfig<TComponent>,
+    private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {
     this.componentFactory = config.componentFactory;
     this.componentRef = config.componentRef;
     this.host = config.host;
-    this.onInitComponentRef = config.onInitComponentRef || (this.componentRef as any);
-    this.doCheckComponentRef = config.doCheckComponentRef || (this.componentRef as any);
     this.changeDetectorRef = this.componentRef.injector.get<ChangeDetectorRef>(
       ChangeDetectorRef as Type<ChangeDetectorRef>,
       this.componentRef.changeDetectorRef
@@ -74,14 +66,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
       this.componentRef = null;
     }
 
-    if (this.onInitComponentRef) {
-      this.onInitComponentRef.destroy();
-      this.onInitComponentRef = null;
-    }
-
-    if (this.doCheckComponentRef) {
-      this.doCheckComponentRef.destroy();
-      this.doCheckComponentRef = null;
+    if (this.detachLifecycle) {
+      this.detachLifecycle();
+      this.detachLifecycle = null;
     }
   }
 
@@ -227,32 +214,11 @@ ERROR: not found '${insidePropName}' input, it has getter only, please add sette
   }
 
   private attachLifecycle(): void {
-    const instance: TComponent & LifecycleComponent = this.componentRef.instance as any;
-
-    if (hasProperty(this.componentRef.componentType.prototype, 'ngOnChanges')) {
-      if (isLifeCycleComponent(this.onInitComponentRef.instance)) {
-        this.onInitComponentRef.instance.attach(instance, this.changeDetectorRef);
-      } else {
-        // this.onInitComponentRef.instance.ngOnInit = onChangesWrapper(instance.ngOnInit).bind(
-        //   instance
-        // );
-        console.warn('todo: add for OnInit on dynamic component');
-      }
-
-      if (isLifeCycleComponent(this.doCheckComponentRef.instance)) {
-        this.doCheckComponentRef.instance.attach(instance, this.changeDetectorRef);
-      } else {
-        // this.doCheckComponentRef.instance.ngDoCheck = onChangesWrapper(markForCheckWrapped).bind(
-        //   instance
-        // );
-        console.warn('todo: add for DoCheck on dynamic component');
-      }
-    } else {
-      this.doCheckComponentRef.instance.ngDoCheck = markForCheckWrapper(
-        instance.ngDoCheck,
-        this.changeDetectorRef
-      ).bind(instance);
-    }
+    this.detachLifecycle = attachLifecycle(
+      this.componentRef,
+      this.viewContainerRef,
+      this.componentFactoryResolver
+    );
   }
 
   private disposeInputs(): void {

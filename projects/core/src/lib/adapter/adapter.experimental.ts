@@ -12,7 +12,6 @@ import {
   ViewRef,
 } from '@angular/core';
 import { NgxComponentOutletAdapterRef } from './adapter-ref';
-import { resolveLifecycleComponents } from './lifecycle.strategies';
 
 /**
  * @experimental
@@ -140,19 +139,15 @@ export class DynamicComponentRef<T> implements ComponentRef<T> {
       this.componentType
     );
 
-    const { onInitComponentRef, doCheckComponentRef } = resolveLifecycleComponents(
-      componentFactory.componentType,
+    this.componentAdapterRef = new NgxComponentOutletAdapterRef(
+      {
+        componentFactory,
+        componentRef,
+        host,
+      },
       viewContainerRef,
       componentFactoryResolver
     );
-
-    this.componentAdapterRef = new NgxComponentOutletAdapterRef({
-      componentFactory,
-      componentRef,
-      host,
-      onInitComponentRef,
-      doCheckComponentRef,
-    });
   }
 
   updateContext(context) {

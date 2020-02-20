@@ -5,17 +5,17 @@ import {
   DoCheck,
   OnInit,
 } from '@angular/core';
-import { onChangesWrapper } from '../utils';
+import { runOnChangesHook } from '../utils';
 
 const lifeCycleComponentSymbol = Symbol('Life Cycle Component');
 
-export interface LifeCycleComponent {
+interface LifeCycleComponent {
   [lifeCycleComponentSymbol]: boolean;
 
   attach(context: unknown, changeDetectorRef: ChangeDetectorRef): void;
 }
 
-export function isLifeCycleComponent(component: unknown): component is LifeCycleComponent {
+export function isLifecycleComponent(component: unknown): component is LifeCycleComponent {
   return component && component[lifeCycleComponentSymbol];
 }
 
@@ -32,7 +32,7 @@ export class OnInitOnlyComponent implements LifeCycleComponent, OnInit {
 
   ngOnInit() {
     if (this.context) {
-      onChangesWrapper(() => {}).call(this.context);
+      runOnChangesHook(this.context);
     }
   }
 
@@ -55,7 +55,7 @@ export class DoCheckOnlyComponent implements LifeCycleComponent, DoCheck {
 
   ngDoCheck() {
     if (this.context) {
-      onChangesWrapper(() => {}).call(this.context);
+      runOnChangesHook(this.context);
     }
 
     if (this.changeDetectorRef) {
@@ -82,13 +82,13 @@ export class OnInitAndDoCheckComponent implements LifeCycleComponent, OnInit, Do
 
   ngOnInit() {
     if (this.context) {
-      onChangesWrapper(() => {}).call(this.context);
+      runOnChangesHook(this.context);
     }
   }
 
   ngDoCheck() {
     if (this.context) {
-      onChangesWrapper(() => {}).call(this.context);
+      runOnChangesHook(this.context);
     }
 
     if (this.changeDetectorRef) {
