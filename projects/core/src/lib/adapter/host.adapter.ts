@@ -24,18 +24,18 @@ export class HostAdapter<TComponent> {
     this.refCount++;
   }
 
-  attachInput(propertyDef: PropertyDef): BindingDef {
+  attachInput(propertyDef: PropertyDef<TComponent>): BindingDef<TComponent> {
     const adapter = new HostInputAdapter<TComponent>(this.host, propertyDef.outsidePropName);
     adapter.attach();
     this.inputs.set(propertyDef.outsidePropName, adapter);
     return { ...propertyDef, defaultDescriptor: adapter.defaultDescriptor };
   }
 
-  getInputAdapter(bindingDef: BindingDef): HostInputAdapter<TComponent> {
+  getInputAdapter(bindingDef: BindingDef<TComponent>): HostInputAdapter<TComponent> {
     return this.inputs.get(bindingDef.outsidePropName);
   }
 
-  detachInput(bindingDef: BindingDef): void {
+  detachInput(bindingDef: BindingDef<TComponent>): void {
     const adapter = this.inputs.get(bindingDef.outsidePropName);
     adapter.detach();
 

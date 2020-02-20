@@ -32,15 +32,15 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   componentFactory: ComponentFactory<TComponent>;
   componentRef: ComponentRef<TComponent>;
   host: TComponent;
-  context: Partial<TComponent> = {};
+  context: TComponent = {} as TComponent;
 
   private onInitComponentRef: ComponentRef<LifecycleComponent>;
   private doCheckComponentRef: ComponentRef<LifecycleComponent>;
   private changeDetectorRef: ChangeDetectorRef;
   private attachedInputs: Subscription[] = [];
   private attachedOutputs: Subscription[] = [];
-  private propertyDefs: PropertyDef[] = [];
-  private bindingDefs: BindingDef[] = [];
+  private propertyDefs: PropertyDef<TComponent>[] = [];
+  private bindingDefs: BindingDef<TComponent>[] = [];
 
   private hostAdapter: HostAdapter<TComponent>;
 
@@ -54,7 +54,9 @@ export class NgxComponentOutletAdapterRef<TComponent> {
       ChangeDetectorRef as Type<ChangeDetectorRef>,
       this.componentRef.changeDetectorRef
     );
-    this.propertyDefs = this.componentFactory.inputs.map(toPropertyDef);
+    this.propertyDefs = this.componentFactory.inputs.map(
+      toPropertyDef(this.context, this.componentRef.instance, this.host)
+    );
 
     this.attachHost();
     this.attachInputs();
@@ -105,16 +107,16 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         )
     );
     for (const propertyDef of unattachedProps) {
-      const bindingDef: BindingDef = this.attachHostInput(propertyDef);
+      const bindingDef: BindingDef<TComponent> = this.attachHostInput(propertyDef);
       this.attachInput(bindingDef);
     }
   }
 
-  private getPropertyDef(outsidePropName: string): PropertyDef {
+  private getPropertyDef(outsidePropName: string): PropertyDef<TComponent> {
     return this.propertyDefs.find(_ => _.outsidePropName === outsidePropName);
   }
 
-  private getBindingDef(outsidePropName: string): BindingDef {
+  private getBindingDef(outsidePropName: string): BindingDef<TComponent> {
     return this.bindingDefs.find(_ => _.outsidePropName === outsidePropName);
   }
 
@@ -128,13 +130,13 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     this.hostAdapter = null;
   }
 
-  private attachHostInput(propertyDef: PropertyDef): BindingDef {
-    const bindingDef: BindingDef = this.hostAdapter.attachInput(propertyDef);
+  private attachHostInput(propertyDef: PropertyDef<TComponent>): BindingDef<TComponent> {
+    const bindingDef: BindingDef<TComponent> = this.hostAdapter.attachInput(propertyDef);
     this.bindingDefs.push(bindingDef);
     return bindingDef;
   }
 
-  private detachHostInput(bindingDef: BindingDef): void {
+  private detachHostInput(bindingDef: BindingDef<TComponent>): void {
     this.hostAdapter.detachInput(bindingDef);
     this.bindingDefs = this.bindingDefs.filter(_ => _ !== bindingDef);
   }
@@ -142,13 +144,13 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   private attachInputs(): void {
     this.bindingDefs = [];
     for (const propertyDef of this.propertyDefs) {
-      const bindingDef: BindingDef = this.attachHostInput(propertyDef);
+      const bindingDef: BindingDef<TComponent> = this.attachHostInput(propertyDef);
       this.attachContextPropertyToComponentInput(bindingDef);
       this.attachInput(bindingDef);
     }
   }
 
-  private attachInput(bindingDef: BindingDef) {
+  private attachInput(bindingDef: BindingDef<TComponent>) {
     const host = this.host;
     const hostAdapter = this.hostAdapter;
     const context: Partial<TComponent> = this.context;
@@ -165,48 +167,46 @@ export class NgxComponentOutletAdapterRef<TComponent> {
     this.attachedInputs.push(subscription);
   }
 
-  private attachContextPropertyToComponentInput(bindingDef: BindingDef): void {
+  private attachContextPropertyToComponentInput(bindingDef: BindingDef<TComponent>): void {
     const { insidePropName, outsidePropName, defaultDescriptor } = bindingDef;
-    const context: Partial<TComponent> = this.context;
-    const instance: TComponent = this.componentRef.instance;
-    Object.defineProperty(context, outsidePropName, {
+    Object.defineProperty(bindingDef.context, outsidePropName, {
       get: () => {
         if (defaultDescriptor && defaultDescriptor.get) {
-          return defaultDescriptor.get.call(context);
+          return defaultDescriptor.get.call(bindingDef.context);
         } else {
-          return instance[insidePropName];
+          return bindingDef.dynamicContext[insidePropName];
         }
       },
       set: (value: any) => {
-        if (instance[insidePropName] === value) {
+        if (bindingDef.dynamicContext[insidePropName] === value) {
           return void 0;
         }
 
-        let simpleChanges = instance[PRIVATE_PREFIX];
+        let simpleChanges = bindingDef.dynamicContext[PRIVATE_PREFIX];
 
         if (simpleChanges == null) {
-          simpleChanges = instance[PRIVATE_PREFIX] = {};
+          simpleChanges = bindingDef.dynamicContext[PRIVATE_PREFIX] = {};
         }
 
-        const isFirstChange = !instance[`${PRIVATE_PREFIX}_${outsidePropName}`];
-        instance[`${PRIVATE_PREFIX}_${outsidePropName}`] = true;
+        const isFirstChange = !bindingDef.dynamicContext[`${PRIVATE_PREFIX}_${outsidePropName}`];
+        bindingDef.dynamicContext[`${PRIVATE_PREFIX}_${outsidePropName}`] = true;
 
         simpleChanges[outsidePropName] = new SimpleChange(
-          instance[insidePropName],
+          bindingDef.dynamicContext[insidePropName],
           value,
           isFirstChange
         );
 
         if (defaultDescriptor && defaultDescriptor.set) {
-          defaultDescriptor.set.call(context, value);
+          defaultDescriptor.set.call(bindingDef.hostContext, value);
         }
 
         try {
-          instance[insidePropName] = value;
+          bindingDef.dynamicContext[insidePropName] = value;
         } catch (e) {
           // Todo: add more debug
           if (isDevMode()) {
-            const constructorName = (instance as any).constructor.name;
+            const constructorName = (bindingDef.dynamicContext as any).constructor.name;
             console.log(`You should use get and set descriptors both with dynamic components:
 ERROR: not found '${insidePropName}' input, it has getter only, please add setter!
 
@@ -268,7 +268,9 @@ ERROR: not found '${insidePropName}' input, it has getter only, please add sette
   }
 
   private attachOutputs(): void {
-    const propertyDefs = this.componentFactory.outputs.map(toPropertyDef);
+    const propertyDefs = this.componentFactory.outputs.map(
+      toPropertyDef(this.context, this.componentRef.instance, this.host)
+    );
     for (const propertyDef of propertyDefs) {
       if (propertyDef.outsidePropName in this.host) {
         const subscription = this.componentRef.instance[propertyDef.insidePropName].subscribe(
