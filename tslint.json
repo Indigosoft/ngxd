@@ -7,6 +7,9 @@
     "tslint-plugin-prettier"
   ],
   "rules": {
+    "deprecation": {
+      "severity": "warning"
+    },
     "max-line-length": [
       true,
       120
