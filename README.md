@@ -36,7 +36,7 @@ npm install --save @ngxd/core
 yarn add @ngxd/core
 ```
 
-> Note: If you whant to use @ngxd/core with specific angular version, please install @ngxd/core which version you need:
+> Note: If you want to use @ngxd/core with specific angular version, please install @ngxd/core which version you need:
 > *  @angular/core@7  => npm install @ngxd/core@7
 > *  @angular/core@8  => npm install @ngxd/core@8
 > *  @angular/core@9  => npm install @ngxd/core@9
