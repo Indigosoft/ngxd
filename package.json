@@ -33,7 +33,7 @@
     "@angular/core": "10.0.4",
     "@angular/flex-layout": "7.0.0-beta.19",
     "@angular/forms": "10.0.4",
-    "@angular/material": "9.0.0",
+    "@angular/material": "10.0.2",
     "@angular/platform-browser": "10.0.4",
     "@angular/platform-browser-dynamic": "10.0.4",
     "@angular/router": "10.0.4",
