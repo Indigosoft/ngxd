@@ -75,7 +75,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "3.9.7",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "webpack-bundle-analyzer": ">=3.3.2"
   },
   "config": {
     "commitizen": {
