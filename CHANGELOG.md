@@ -1,3 +1,23 @@
+
+# [10.0.0](https://github.com/IndigoSoft/ngxd/compare/v9.0.0...v10.0.0) (2020-07-17)
+
+
+### Features
+
+* bump v10.0.0 and dropped @angular/core@9 and earlier ([81147f4](https://github.com/IndigoSoft/ngxd/commit/81147f4))
+
+### BREAKING CHANGES
+
+DROPPED @angular/core@9 AND EARLIER
+
+If you whant to use @ngxd/core with specific angular version, please install @ngxd/core which version you need:
+*  @angular/core@7  => npm install @ngxd/core@7
+*  @angular/core@8  => npm install @ngxd/core@8
+*  @angular/core@9  => npm install @ngxd/core@9
+*  @angular/core@10 => npm install @ngxd/core@10
+
+
+
 ## [9.0.4](https://github.com/IndigoSoft/ngxd/compare/v9.0.3...v9.0.4) (2020-02-20)
 
 
