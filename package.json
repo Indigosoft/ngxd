@@ -1,6 +1,6 @@
 {
   "name": "ngx-component-outlet-app",
-  "version": "9.0.4",
+  "version": "10.0.0",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -53,6 +53,7 @@
     "@types/node": "12.12.27",
     "codelyzer": "^6.0.0",
     "commitizen": "^3.0.7",
+    "conventional-changelog-cli": "^2.0.34",
     "cz-customizable": "^5.2.0",
     "hammerjs": "^2.0.8",
     "husky": "^1.3.1",

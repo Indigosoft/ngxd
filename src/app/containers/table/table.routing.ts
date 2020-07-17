@@ -5,4 +5,4 @@ import { TablePageComponent } from './table.component';
 
 const routes: Route[] = [{ path: '', component: TablePageComponent }];
 
-export const TableRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const TableRouting: ModuleWithProviders<RouterModule> = RouterModule.forChild(routes);

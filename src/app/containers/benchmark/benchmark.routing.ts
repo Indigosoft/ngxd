@@ -5,4 +5,4 @@ import { BenchmarkPageComponent } from './benchmark.component';
 
 const routes: Route[] = [{ path: '', component: BenchmarkPageComponent }];
 
-export const BenchmarkRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const BenchmarkRouting: ModuleWithProviders<RouterModule> = RouterModule.forChild(routes);

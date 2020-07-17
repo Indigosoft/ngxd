@@ -5,4 +5,4 @@ import { LazyPageComponent } from './lazy.component';
 
 const routes: Route[] = [{ path: '', component: LazyPageComponent }];
 
-export const LazyRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const LazyRouting: ModuleWithProviders<RouterModule> = RouterModule.forChild(routes);

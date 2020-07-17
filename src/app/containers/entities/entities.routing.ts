@@ -5,4 +5,4 @@ import { EntitiesPageComponent } from './entities.component';
 
 const routes: Route[] = [{ path: '', component: EntitiesPageComponent }];
 
-export const EntitiesRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const EntitiesRouting: ModuleWithProviders<RouterModule> = RouterModule.forChild(routes);

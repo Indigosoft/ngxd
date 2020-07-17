@@ -7,6 +7,12 @@ import {
 } from '../test-case.interfaces';
 import { LIFECYCLE_REPORTS } from '../reports/index';
 
+interface TestComponent {
+  component: object;
+  name: string;
+  label: string;
+}
+
 export class Operation extends Executable {
   private reports: LifecycleReport[] = LIFECYCLE_REPORTS;
 
@@ -14,20 +20,20 @@ export class Operation extends Executable {
     super();
   }
 
-  execute<TComponent>(fixture: ComponentFixture<TComponent>) {
+  execute<TComponent extends TestComponent>(fixture: ComponentFixture<TComponent>) {
     this.operations.forEach(operation => operation.execute(fixture));
     fixture.detectChanges();
     this.expect(fixture);
   }
 
-  report<TComponent>(oldState: TestCaseState): TestCaseState {
+  report<TComponent extends TestComponent>(oldState: TestCaseState): TestCaseState {
     const newState = this.operations.reduce((acc, operation) => operation.report(acc), oldState);
     const report = this.makeReport(oldState, newState);
 
     return { ...newState, lifecycle: [...oldState.lifecycle, ...report] };
   }
 
-  private expect<TComponent extends any>(fixture: ComponentFixture<TComponent>) {
+  private expect<TComponent extends TestComponent>(fixture: ComponentFixture<TComponent>) {
     const content: string = fixture.nativeElement.innerHTML;
     const component: TComponent = fixture.componentInstance;
 
