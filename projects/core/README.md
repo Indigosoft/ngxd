@@ -1,4 +1,4 @@
-# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9+
+# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11+
 
 <p align="center">
   <img src="https://github.com/IndigoSoft/ngxd/raw/master/images/ngxd-5-minutes.png" width="882px" alt="preview">
@@ -25,63 +25,151 @@ Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
 
 Here is a [demo example](https://stackblitz.com/edit/angular-simple-dynamic) showing NGX Dynamic and Angular in action.
 
-## Dynamic Components In 5 minutes
+* [Getting started](#getting-started)
+* [Use cases](#use-cases)
+    * [1. Binding inputs and outputs](#1-binding-inputs-and-outputs)
+    * [2. Switching the component](#2-switching-the-component)
+    * [3. Lazy loading the dynamic component](#3-lazy-loading-the-dynamic-component)
+    * [4. Content projection](#4-content-projection)
+
+
+# Getting started
+
+## Step 1: Install ```@ngxd/core```:
+
+```bash
+npm install --save @ngxd/core
+# or
+yarn add @ngxd/core
+```
+
+> Note: If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
+> *  @angular/core@7  => npm install @ngxd/core@7
+> *  @angular/core@8  => npm install @ngxd/core@8
+> *  @angular/core@9  => npm install @ngxd/core@9
+> *  @angular/core@10 => npm install @ngxd/core@10
+> *  @angular/core@11 => npm install @ngxd/core@11
+
+## Step 2: Import the NgxdModule:
+
+```typescript
+import { NgxdModule } from '@ngxd/core';
+
+@NgModule({
+  declarations: [ AppComponent ],
+  // have import NgxdModule here 👇
+  imports: [ BrowserModule, NgxdModule ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+```
+
+## Step 3: Use NgxComponentOutlet directly:
+
+```typescript
+@Component({
+  template: `
+    <ng-container *ngxComponentOutlet="component"></ng-container>`
+    // using @ngxd/core 👆
+})
+class MyComponent {  
+  // your dynamic component 👇
+  component = DynamicComponent;
+
+  // 🥳 inputs and outputs will binding automatically
+  @Input() entity;
+  @Output() action;
+}
+```
+
+
+# Use cases
 
 There are several modes of operation of the directive.
 
-### Through The Parent Component
+## 1. Binding inputs and outputs
 A simple variant of binding through the parent component.
 ```typescript
 @Component({
   template: `
-    <ng-container
-      *ngxComponentOutlet="component"></ng-container>`
-      // using @ngxd/core 👆
+    <ng-container *ngxComponentOutlet="component"></ng-container>`
+    // using @ngxd/core 👆
 })
-class MyComponent {
+class MyComponent {  
+  // your dynamic component 👇
+  component = DynamicComponent;
+
   // 🥳 inputs and outputs will binding automatically
   @Input() entity;
   @Output() action;
-  
-  // your dynamic component 👇
-  component = DynamicComponent;
 }
 ```
 
-### Through The Context (please, use auto-binding like above)
-Additionally there is autobinding through the context. This is useful when you need to display something through *ngFor. Context has a higher priority than the inputs in the component.
+### Binding inputs through the context
+> Note: You not permitted to passing the outputs using the context.
+> The context will be passing inputs only.
+
+In the example below, you can see the binding through the context. This is useful when you need to display something through *ngFor. Note that the context has a higher priority than the inputs in the component.
 ```html
-<ng-container *ngFor=“let color of colors”
-  <ng-container
-    *ngxComponentOutlet="
-      component;
-      context: { color: color }"></ng-container>
+<ng-container *ngFor="let color of colors"
+  <ng-container *ngxComponentOutlet="
+      component; context: { color: color }
+  "></ng-container>
 </ng-container>
 ```
 
-### Pipe For Selecting The Component
-For ease of selecting the required component, there is ResolvePipe, which expects NgxdResolver to enter, and returns the required component.
-```html
-<ng-container
-  *ngxComponentOutlet="
-    resolver | resolve: entity"></ng-container>
+## 2. Switching the component
+To switch a component, you just need to overwrite it with another one.
+```typescript
+class AppComponent {
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('type' in changes) {
+      switch (this.type) {
+        case 'number':
+          this.component = NumberComponent;
+          break;
+        case 'text':
+          this.component = TextComponent;
+          break;
+        default:
+          this.component = DefaultComponent;
+      }
+    }
+  }
+}
 ```
 
-### Through The Host Component (deprecated, please, use auto-binding like above)
-Through the host component, when the inputs and outputs are initialized explicitly. This option is difficult to use and deprecated.
+### Switching the component using pipe and resolver
+If you have a bunch of components, then you go to switch between them. To do this, you can use NgxdResolvePipe and NgxdResolver to help you isolate dynamic component selection.
 ```html
-<!-- host component -->
-<app-dynamic
-    <!-- dynamic component -->
-    [ngxComponentOutlet]="component"
-    <!-- regular input -->
-    [entity]="entity"
-    <!-- regular output -->
-    (action)="onAction($event)">
-</app-dynamic>
+<ng-container *ngxComponentOutlet="
+    resolver | resolve : type
+"></ng-container>
 ```
 
-## Comparison
+## 3. Lazy loading the dynamic component
+If you need to load and display a dynamic component lazily, then you can use lazy import `import('./my-lazy-component').then(m => m.MyLazyComponent)` and pass it to the async pipe.
+```html
+<ng-container *ngxComponentOutlet="
+    component | async
+"></ng-container>
+```
+
+### Lazy loading bunch of dynamic components
+You can also load bunch of components lazily and render them.
+```html
+<ng-container *ngxComponentOutlet="
+    resolver | async | resolve : type
+"></ng-container>
+```
+
+## 4. Content projection
+If you want to use the <ng-content> and pass the content to your dynamic component, you have to check the example below.
+
+[Click to here](https://github.com/IndigoSoft/ngxd/issues/30#issuecomment-627472367)
+
+
+# Comparison
 
 | Feature                | NgxComponentOutlet | ComponentFactoryResolver | NgComponentOutlet |
 | ---------------------- | ------------------ | ------------------------ | ----------------- |
@@ -99,51 +187,8 @@ Through the host component, when the inputs and outputs are initialized explicit
 | Activate Event         |  ✅                | ⭕️ manually              | ❌                |
 | Deactivate Event       |  ✅                | ⭕️ manually              | ❌                |
 
-## Getting started
 
-### Step 1: Install ```@ngxd/core```:
-
-```bash
-npm install --save @ngxd/core
-# or
-yarn add @ngxd/core
-```
-
-### Step 2: Import the NgxdModule:
-
-```typescript
-import { NgxdModule } from '@ngxd/core';
-
-@NgModule({
-  declarations: [ AppComponent ],
-  // have import NgxdModule here 👇
-  imports: [ BrowserModule, NgxdModule ],
-  bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
-
-### Step 3: Use NgxComponentOutlet directly:
-
-```typescript
-@Component({
-  template: `
-    <ng-container
-      *ngxComponentOutlet="component"></ng-container>`
-      // using @ngxd/core 👆
-})
-class MyComponent {
-  // 🥳 inputs and outputs will binding automatically
-  @Input() entity;
-  @Output() action;
-  
-  // your dynamic component 👇
-  component = DynamicComponent;
-}
-```
-
-
-## API
+# API
 
 | Input                                     | Type                       | Default | Required | Description |
 | ----------------------------------------- | -------------------------- | ------- | -------- | ----------- |
