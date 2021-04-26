@@ -63,7 +63,7 @@ export class NgxComponentOutletDirective implements OnChanges, OnDestroy {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.ngxComponentOutlet) {
+    if (changes.ngxComponentOutlet || changes.ngxComponentOutletInjector) {
       if (changes.ngxComponentOutletNgModuleFactory) {
         this.destroyNgModuleRef();
         this.createNgModuleRef();
