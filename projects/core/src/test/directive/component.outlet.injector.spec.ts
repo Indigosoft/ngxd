@@ -26,13 +26,13 @@ describe('NgxComponentOutlet check custom injector', () => {
   }));
 });
 
-@Component({ selector: 'app-comp-dynamic', template: 'Dynamic Component' })
+@Component({ selector: 'ngx-comp-dynamic', template: 'Dynamic Component' })
 class DynamicComponent {
   constructor(public injector: Injector) {}
 }
 
 @Component({
-  selector: 'app-test-comp',
+  selector: 'ngx-test-comp',
   template: `
     <ng-container
       [ngxComponentOutlet]="component"
