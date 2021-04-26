@@ -24,6 +24,29 @@ describe('NgxComponentOutlet check custom injector', () => {
 
     expect(component.activatedComponent.injector.get(mock)).toBe(mock);
   }));
+
+  it('should create a new component when injector changes', fakeAsync(() => {
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+
+    const mock = {};
+    component.injector = Injector.create({
+      providers: [{ provide: mock, useValue: mock }],
+      parent: fixture.componentRef.injector,
+    });
+
+    fixture.detectChanges();
+
+    const newMock = {};
+    component.injector = Injector.create({
+      providers: [{ provide: mock, useValue: newMock }],
+      parent: fixture.componentRef.injector,
+    });
+
+    fixture.detectChanges();
+
+    expect(component.activatedComponent.injector.get(mock)).toBe(newMock);
+  }));
 });
 
 @Component({ selector: 'ngx-comp-dynamic', template: 'Dynamic Component' })
