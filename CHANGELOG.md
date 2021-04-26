@@ -1,3 +1,10 @@
+## <small>11.0.1 (2021-04-26)</small>
+
+* Create a new component when injector changes (#37) ([0ef187d](https://github.com/IndigoSoft/ngxd/commit/0ef187d)), closes [#37](https://github.com/IndigoSoft/ngxd/issues/37)
+* docs: update changelog ([d5ad3ff](https://github.com/IndigoSoft/ngxd/commit/d5ad3ff))
+
+
+
 ## 11.0.0 (2021-03-23)
 
 * feat(core): bump v11.0.0 and dropped @angular/core@10 and earlier ([f86056e](https://github.com/IndigoSoft/ngxd/commit/f86056e))
