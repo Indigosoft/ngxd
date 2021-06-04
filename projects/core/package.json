@@ -1,6 +1,6 @@
 {
     "name": "@ngxd/core",
-    "version": "11.0.1",
+    "version": "12.0.0",
     "description": "NGXD is a dynamic pattern + library for Angular",
     "keywords": [
         "angular",
@@ -28,8 +28,8 @@
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
     "peerDependencies": {
-        "@angular/common": "^11.0.0",
-        "@angular/core": "^11.0.0",
+        "@angular/common": "^12.0.0",
+        "@angular/core": "^12.0.0",
         "rxjs": ">=6.0.0"
     },
   "dependencies": {
