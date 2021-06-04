@@ -1,4 +1,4 @@
-# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11+
+# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11, 12+
 
 <p align="center">
   <img src="https://github.com/IndigoSoft/ngxd/raw/master/images/ngxd-5-minutes.png" width="882px" alt="preview">
@@ -17,7 +17,7 @@
 [![GitHub Issue](https://img.shields.io/github/issues/IndigoSoft/ngxd.svg?style=flat-square&maxAge=300)](https://github.com/IndigoSoft/ngxd/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/IndigoSoft/ngxd.svg?style=flat-square&label=GitHub%20Stars&maxAge=300)](https://github.com/IndigoSoft/ngxd)
 
-Use like ```NgComponentOutlet``` but with ```@Input/@Output``` auto bindings:
+Use like ```NgComponentOutlet``` but with ```@Input``` and ```@Output``` auto bindings:
 
 ```html
 <ng-container *ngxComponentOutlet="component"></ng-container>
@@ -43,12 +43,15 @@ npm install --save @ngxd/core
 yarn add @ngxd/core
 ```
 
+> Note: @ngxd/core@12 only supports angular with Ivy is enabled
+
 > Note: If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
 > *  @angular/core@7  => npm install @ngxd/core@7
 > *  @angular/core@8  => npm install @ngxd/core@8
 > *  @angular/core@9  => npm install @ngxd/core@9
 > *  @angular/core@10 => npm install @ngxd/core@10
 > *  @angular/core@11 => npm install @ngxd/core@11
+> *  @angular/core@12 => npm install @ngxd/core@12
 
 ## Step 2: Import the NgxdModule:
 
@@ -148,7 +151,13 @@ If you have a bunch of components, then you go to switch between them. To do thi
 ```
 
 ## 3. Lazy loading the dynamic component
-If you need to load and display a dynamic component lazily, then you can use lazy import `import('./my-lazy-component').then(m => m.MyLazyComponent)` and pass it to the async pipe.
+If you need to load and display a dynamic component lazily, then you can use lazy import and pass it to the async pipe.
+
+```typescript
+component = import('./my-lazy-component')
+  .then(m => m.MyLazyComponent);
+```
+
 ```html
 <ng-container *ngxComponentOutlet="
     component | async
@@ -156,7 +165,13 @@ If you need to load and display a dynamic component lazily, then you can use laz
 ```
 
 ### Lazy loading bunch of dynamic components
-You can also load bunch of components lazily and render them.
+You can also load a bunch of components lazily and render them.
+
+```typescript
+resolver = import('./my-lazy-resolver')
+  .then(m => m.myLazyResolver);
+```
+
 ```html
 <ng-container *ngxComponentOutlet="
     resolver | async | resolve : type
@@ -164,7 +179,7 @@ You can also load bunch of components lazily and render them.
 ```
 
 ## 4. Content projection
-If you want to use the <ng-content> and pass the content to your dynamic component, you have to check the example below.
+If you want to use the ```<ng-content>``` and pass the content to your dynamic component, you have to check the example below.
 
 [Click to here](https://github.com/IndigoSoft/ngxd/issues/30#issuecomment-627472367)
 
