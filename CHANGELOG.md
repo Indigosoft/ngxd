@@ -1,9 +1,18 @@
-# [12.0.0](https://github.com/IndigoSoft/ngxd/compare/v11.0.1...v12.0.0) (2021-06-04)
+# [12.0.0](https://github.com/IndigoSoft/ngxd/compare/v12.0.1...v12.0.0) (2021-09-28)
+
+
+
+## [12.0.1](https://github.com/IndigoSoft/ngxd/compare/v11.0.1...v12.0.1) (2021-09-28)
+
+
+### Bug Fixes
+
+* adding null to possible types to support async pipe ([4a88e1c](https://github.com/IndigoSoft/ngxd/commit/4a88e1c4fd4eed1b80972730c3a9370d7f9051b4))
 
 
 ### Features
 
-* **core:** bump v12.0.0 and dropped @angular/core@11 and earlier ([78a044a](https://github.com/IndigoSoft/ngxd/commit/78a044ae302f49d7f058c2a912af7ebc795ee0cd))
+* **core:** bump v12.0.0 and dropped @angular/core@11 and earlier ([eccb2c2](https://github.com/IndigoSoft/ngxd/commit/eccb2c2447aea7aac6fe99137cf7e7fead4eb723))
 
 
 ### BREAKING CHANGES
