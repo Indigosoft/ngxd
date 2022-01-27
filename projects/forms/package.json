@@ -1,6 +1,6 @@
 {
     "name": "@ngxd/forms",
-    "version": "0.1.12000",
+    "version": "0.1.13000",
     "description": "NGXD is a dynamic pattern + library for Angular",
     "keywords": [
         "angular",
@@ -28,9 +28,9 @@
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
     "peerDependencies": {
-        "@angular/common": "^12.0.0",
-        "@angular/core": "^12.0.0",
-        "@angular/forms": "^12.0.0"
+        "@angular/common": "^13.0.0",
+        "@angular/core": "^13.0.0",
+        "@angular/forms": "^13.0.0"
     },
   "dependencies": {
     "tslib": "^2.0.0"
