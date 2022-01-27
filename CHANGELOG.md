@@ -1,4 +1,26 @@
-# [12.0.0](https://github.com/IndigoSoft/ngxd/compare/v12.0.1...v12.0.0) (2021-09-28)
+# [13.0.0](https://github.com/IndigoSoft/ngxd/compare/v12.0.1...v13.0.0) (2022-01-27)
+
+
+### Features
+
+* **core:** bump v13.0.0 and dropped @angular/core@12 and earlier ([b647da7](https://github.com/IndigoSoft/ngxd/commit/b647da762b30cd2c3bd001ef295ef43a6c401637))
+
+
+### BREAKING CHANGES
+
+* **core:** DROPPED ViewEngine
+
+DROPPED @angular/core@12 AND EARLIER
+
+    If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
+
+      @angular/core@7  => npm install @ngxd/core@7
+      @angular/core@8  => npm install @ngxd/core@8
+      @angular/core@9  => npm install @ngxd/core@9
+      @angular/core@10 => npm install @ngxd/core@10
+      @angular/core@11 => npm install @ngxd/core@11
+      @angular/core@12 => npm install @ngxd/core@12
+      @angular/core@13 => npm install @ngxd/core@13
 
 
 
