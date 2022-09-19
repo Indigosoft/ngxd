@@ -164,6 +164,10 @@ export class DynamicComponentRef<T> implements ComponentRef<T> {
   onDestroy(callback: Function): void {
     this._onDestroy = callback;
   }
+
+  setInput(name: string, value: unknown): void {
+    this.componentRef.setInput(name, value);
+  }
 }
 
 /**

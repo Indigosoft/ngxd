@@ -53,6 +53,7 @@ yarn add @ngxd/core
 > *  @angular/core@11 => npm install @ngxd/core@11
 > *  @angular/core@12 => npm install @ngxd/core@12
 > *  @angular/core@13 => npm install @ngxd/core@13
+> *  @angular/core@14 => npm install @ngxd/core@14
 
 ## Step 2: Import the NgxdModule:
 
