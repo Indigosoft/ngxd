@@ -1,4 +1,4 @@
-# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11, 12, 13+
+# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11, 12, 13, 14+
 
 <p align="center">
   <img src="https://github.com/IndigoSoft/ngxd/raw/master/images/ngxd-5-minutes.png" width="882px" alt="preview">
