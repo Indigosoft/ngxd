@@ -1,4 +1,4 @@
-# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11, 12, 13, 14+
+# ✨🦊 NGX Dynamic for Angular Ivy and Angular 7, 8, 9, 10, 11, 12, 13, 14, 15+
 
 <p align="center">
   <img src="https://github.com/IndigoSoft/ngxd/raw/master/images/ngxd-5-minutes.png" width="882px" alt="preview">
@@ -54,6 +54,7 @@ yarn add @ngxd/core
 > *  @angular/core@12 => npm install @ngxd/core@12
 > *  @angular/core@13 => npm install @ngxd/core@13
 > *  @angular/core@14 => npm install @ngxd/core@14
+> *  @angular/core@15 => npm install @ngxd/core@15
 
 ## Step 2: Import the NgxdModule:
 
