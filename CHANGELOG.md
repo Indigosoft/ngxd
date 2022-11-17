@@ -1,3 +1,31 @@
+# [15.0.0](https://github.com/IndigoSoft/ngxd/compare/v14.0.0...v15.0.0) (2022-11-17)
+
+
+### Features
+
+* **core:** bump v15.0.0 and dropped @angular/core@14 and earlier ([ec0523e](https://github.com/IndigoSoft/ngxd/commit/ec0523e0c304c56370b041e04ab255e312a4a82f))
+
+
+### BREAKING CHANGES
+
+* **core:** DROPPED ViewEngine
+
+DROPPED @angular/core@14 AND EARLIER
+
+If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
+
+   @angular/core@7  => npm install @ngxd/core@7
+   @angular/core@8  => npm install @ngxd/core@8
+   @angular/core@9  => npm install @ngxd/core@9
+   @angular/core@10 => npm install @ngxd/core@10
+   @angular/core@11 => npm install @ngxd/core@11
+   @angular/core@12 => npm install @ngxd/core@12
+   @angular/core@13 => npm install @ngxd/core@13
+   @angular/core@14 => npm install @ngxd/core@14
+   @angular/core@15 => npm install @ngxd/core@15
+
+
+
 # [14.0.0](https://github.com/IndigoSoft/ngxd/compare/v13.0.0...v14.0.0) (2022-09-19)
 
 
@@ -10,16 +38,16 @@
 
 * **core:** DROPPED @angular/core@13 AND EARLIER
 
-      If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
+    If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
 
-        @angular/core@7  => npm install @ngxd/core@7
-        @angular/core@8  => npm install @ngxd/core@8
-        @angular/core@9  => npm install @ngxd/core@9
-        @angular/core@10 => npm install @ngxd/core@10
-        @angular/core@11 => npm install @ngxd/core@11
-        @angular/core@12 => npm install @ngxd/core@12
-        @angular/core@13 => npm install @ngxd/core@13
-        @angular/core@14 => npm install @ngxd/core@14
+      @angular/core@7  => npm install @ngxd/core@7
+      @angular/core@8  => npm install @ngxd/core@8
+      @angular/core@9  => npm install @ngxd/core@9
+      @angular/core@10 => npm install @ngxd/core@10
+      @angular/core@11 => npm install @ngxd/core@11
+      @angular/core@12 => npm install @ngxd/core@12
+      @angular/core@13 => npm install @ngxd/core@13
+      @angular/core@14 => npm install @ngxd/core@14
 
 
 
