@@ -50,7 +50,7 @@
     "@types/jasminewd2": "2.0.9",
     "@types/node": "12.12.27",
     "codelyzer": "6.0.2",
-    "commitizen": "4.2.4",
+    "commitizen": "4.3.0",
     "conventional-changelog-cli": "2.1.1",
     "cz-customizable": "6.3.0",
     "hammerjs": "2.0.8",
