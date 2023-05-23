@@ -1,3 +1,30 @@
+# [16.0.0](https://github.com/IndigoSoft/ngxd/compare/v15.0.0...v16.0.0) (2023-05-23)
+
+
+### Features
+
+* **core:** bump v16.0.0 and dropped @angular/core@15 and earlier, removing legacy code for view engine ([d2fcdda](https://github.com/IndigoSoft/ngxd/commit/d2fcddac9af739bad05dfddf1112fe7cddf54ec5))
+
+
+### BREAKING CHANGES
+
+* **core:** DROPPED @angular/core@15 AND EARLIER
+
+If you want to use @ngxd/core with a specific angular version, you have to install @ngxd/core which version you need:
+
+   @angular/core@7  => npm install @ngxd/core@7
+   @angular/core@8  => npm install @ngxd/core@8
+   @angular/core@9  => npm install @ngxd/core@9
+   @angular/core@10 => npm install @ngxd/core@10
+   @angular/core@11 => npm install @ngxd/core@11
+   @angular/core@12 => npm install @ngxd/core@12
+   @angular/core@13 => npm install @ngxd/core@13
+   @angular/core@14 => npm install @ngxd/core@14
+   @angular/core@15 => npm install @ngxd/core@15
+   @angular/core@16 => npm install @ngxd/core@16
+
+
+
 # [15.0.0](https://github.com/IndigoSoft/ngxd/compare/v14.0.0...v15.0.0) (2022-11-17)
 
 
