@@ -1,4 +1,4 @@
-import { hasProperty } from '../../../lib/utils/index';
+import { hasProperty } from '../../../lib/property-def';
 import { ContextState, LifecycleReport, LifecycleState } from '../test-case.interfaces';
 
 export class SimpleLifecycleReport extends LifecycleReport {

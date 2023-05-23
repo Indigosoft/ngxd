@@ -1,26 +1,25 @@
 import {
-  ChangeDetectorRef,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  ComponentRef,
-  isDevMode,
-  SimpleChange,
+  ChangeDetectorRef, ComponentMirror,
+  ComponentRef, createComponent, createEnvironmentInjector, EnvironmentInjector, Injector,
+  isDevMode, reflectComponentType,
+  SimpleChange, SimpleChanges,
   Type,
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { BindingDef, Disposable, PRIVATE_PREFIX, PropertyDef, toPropertyDef } from '../utils';
-import { HostAdapter } from './host.adapter';
-import { attachLifecycle } from './lifecycle.strategies';
+import { BindingDef, Disposable, PropertyDef, toPropertyDef } from './property-def';
+import { HostManager } from './host-manager';
+import {DoCheckHook} from './hooks/do-check-hook';
+import {SimpleChangesWeakMap, WasChangesBeforeWeakMap} from "./hooks/on-changes-hook";
 
-export interface NgxComponentOutletAdapterRefConfig<TComponent> {
-  componentFactory: ComponentFactory<TComponent>;
+export interface NgxComponentOutletRefConfig<TComponent> {
+  componentMirror: ComponentMirror<TComponent>;
   componentRef: ComponentRef<TComponent>;
   host: TComponent;
 }
 
-export class NgxComponentOutletAdapterRef<TComponent> {
-  componentFactory: ComponentFactory<TComponent>;
+export class NgxComponentOutletRef<TComponent> {
+  componentMirror: ComponentMirror<TComponent>;
   componentRef: ComponentRef<TComponent>;
   host: TComponent;
   context: TComponent = {} as TComponent;
@@ -31,22 +30,50 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   private propertyDefs: PropertyDef<TComponent>[] = [];
   private bindingDefs: BindingDef<TComponent>[] = [];
 
-  private hostAdapter: HostAdapter<TComponent>;
+  private hostManager: HostManager<TComponent>;
   private detachLifecycle?: Disposable;
 
-  constructor(
-    config: NgxComponentOutletAdapterRefConfig<TComponent>,
+  public static create<TComponent>(
+    componentType: Type<TComponent>,
+    viewContainerRef: ViewContainerRef,
+    injector: Injector,
+    projectableNodes: any[][],
+    host: TComponent,
+  ): NgxComponentOutletRef<TComponent> {
+    const componentMirror: ComponentMirror<TComponent> = reflectComponentType(componentType);
+
+    const environmentInjector = createEnvironmentInjector([], injector as EnvironmentInjector);
+    const componentRef: ComponentRef<TComponent> = createComponent(componentType, {
+      environmentInjector: environmentInjector,
+      projectableNodes
+    });
+
+    const ngxComponentOutletRef = new NgxComponentOutletRef(
+      {
+        componentMirror: componentMirror,
+        componentRef,
+        host,
+      },
+      viewContainerRef,
+    );
+
+    viewContainerRef.insert(componentRef.hostView, viewContainerRef.length);
+
+    return ngxComponentOutletRef;
+  }
+
+  private constructor(
+    config: NgxComponentOutletRefConfig<TComponent>,
     private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    this.componentFactory = config.componentFactory;
+    this.componentMirror = config.componentMirror;
     this.componentRef = config.componentRef;
     this.host = config.host;
     this.changeDetectorRef = this.componentRef.injector.get<ChangeDetectorRef>(
       ChangeDetectorRef as Type<ChangeDetectorRef>,
       this.componentRef.changeDetectorRef
     );
-    this.propertyDefs = this.componentFactory.inputs.map(
+    this.propertyDefs = this.componentMirror.inputs.map(
       toPropertyDef(this.context, this.componentRef.instance, this.host)
     );
 
@@ -108,23 +135,23 @@ export class NgxComponentOutletAdapterRef<TComponent> {
   }
 
   private attachHost(): void {
-    this.hostAdapter = new HostAdapter<TComponent>(this.host);
-    this.hostAdapter.attach();
+    this.hostManager = new HostManager<TComponent>(this.host);
+    this.hostManager.attach();
   }
 
   private detachHost(): void {
-    this.hostAdapter.detach();
-    this.hostAdapter = null;
+    this.hostManager.detach();
+    this.hostManager = null;
   }
 
   private attachHostInput(propertyDef: PropertyDef<TComponent>): BindingDef<TComponent> {
-    const bindingDef: BindingDef<TComponent> = this.hostAdapter.attachInput(propertyDef);
+    const bindingDef: BindingDef<TComponent> = this.hostManager.attachInput(propertyDef);
     this.bindingDefs.push(bindingDef);
     return bindingDef;
   }
 
   private detachHostInput(bindingDef: BindingDef<TComponent>): void {
-    this.hostAdapter.detachInput(bindingDef);
+    this.hostManager.detachInput(bindingDef);
     this.bindingDefs = this.bindingDefs.filter(_ => _ !== bindingDef);
   }
 
@@ -139,7 +166,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
 
   private attachInput(bindingDef: BindingDef<TComponent>) {
     const host = this.host;
-    const hostAdapter = this.hostAdapter;
+    const hostManager = this.hostManager;
     const context: Partial<TComponent> = this.context;
     const defaultValue = host[bindingDef.outsidePropName];
 
@@ -147,7 +174,7 @@ export class NgxComponentOutletAdapterRef<TComponent> {
       context[bindingDef.outsidePropName] = defaultValue;
     }
 
-    const subscription = hostAdapter.getInputAdapter(bindingDef).changes.subscribe(value => {
+    const subscription = hostManager.getInputManager(bindingDef).changes.subscribe(value => {
       context[bindingDef.outsidePropName] = value;
     });
 
@@ -169,14 +196,18 @@ export class NgxComponentOutletAdapterRef<TComponent> {
           return void 0;
         }
 
-        let simpleChanges = bindingDef.dynamicContext[PRIVATE_PREFIX];
+        let simpleChanges: SimpleChanges = SimpleChangesWeakMap.get(bindingDef.dynamicContext);
 
         if (simpleChanges == null) {
-          simpleChanges = bindingDef.dynamicContext[PRIVATE_PREFIX] = {};
+          simpleChanges = {};
+          SimpleChangesWeakMap.set(bindingDef.dynamicContext, simpleChanges);
         }
 
-        const isFirstChange = !bindingDef.dynamicContext[`${PRIVATE_PREFIX}_${outsidePropName}`];
-        bindingDef.dynamicContext[`${PRIVATE_PREFIX}_${outsidePropName}`] = true;
+        if (!WasChangesBeforeWeakMap.has(bindingDef.dynamicContext)) {
+          WasChangesBeforeWeakMap.set(bindingDef.dynamicContext, new Map());
+        }
+        const isFirstChange = !WasChangesBeforeWeakMap.get(bindingDef.dynamicContext).get(outsidePropName);
+        WasChangesBeforeWeakMap.get(bindingDef.dynamicContext).set(outsidePropName, true);
 
         simpleChanges[outsidePropName] = new SimpleChange(
           bindingDef.dynamicContext[insidePropName],
@@ -191,7 +222,6 @@ export class NgxComponentOutletAdapterRef<TComponent> {
         try {
           bindingDef.dynamicContext[insidePropName] = value;
         } catch (e) {
-          // Todo: add more debug
           if (isDevMode()) {
             const constructorName = (bindingDef.dynamicContext as any).constructor.name;
             console.log(`You should use get and set descriptors both with dynamic components:
@@ -214,10 +244,9 @@ ERROR: not found '${insidePropName}' input, it has getter only, please add sette
   }
 
   private attachLifecycle(): void {
-    this.detachLifecycle = attachLifecycle(
+    this.detachLifecycle = DoCheckHook.attach(
       this.componentRef,
       this.viewContainerRef,
-      this.componentFactoryResolver
     );
   }
 
@@ -234,7 +263,7 @@ ERROR: not found '${insidePropName}' input, it has getter only, please add sette
   }
 
   private attachOutputs(): void {
-    const propertyDefs = this.componentFactory.outputs.map(
+    const propertyDefs = this.componentMirror.outputs.map(
       toPropertyDef(this.context, this.componentRef.instance, this.host)
     );
     for (const propertyDef of propertyDefs) {

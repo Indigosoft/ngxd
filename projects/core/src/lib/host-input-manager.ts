@@ -1,10 +1,10 @@
 import { isDevMode } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getPropertyDescriptor, PRIVATE_CONTEXT_PREFIX } from '../utils';
+import { getPropertyDescriptor } from './property-def';
 
-export const PRIVATE_HOST_INPUT_ADAPTER = PRIVATE_CONTEXT_PREFIX + 'HOST_INPUT_ADAPTER';
+export class HostInputManager<TComponent> {
+  static hostInputManagerMap = new WeakMap<any, Map<string, HostInputManager<any>>>();
 
-export class HostInputAdapter<TComponent> {
   changes: Subject<any>;
   defaultDescriptor: PropertyDescriptor;
   value: any;
@@ -12,11 +12,17 @@ export class HostInputAdapter<TComponent> {
   disposed = false;
 
   constructor(private host: TComponent, private name: string) {
-    if (PRIVATE_HOST_INPUT_ADAPTER + name in (host as object)) {
-      return host[PRIVATE_HOST_INPUT_ADAPTER + name];
+    if (HostInputManager.hostInputManagerMap.has(host)) {
+      const inputs = HostInputManager.hostInputManagerMap.get(host);
+      if (inputs.has(name)) {
+        return inputs.get(name);
+      }
     }
 
-    host[PRIVATE_HOST_INPUT_ADAPTER + name] = this;
+    if (!HostInputManager.hostInputManagerMap.has(host)) {
+      HostInputManager.hostInputManagerMap.set(host, new Map<string, HostInputManager<any>>());
+    }
+    HostInputManager.hostInputManagerMap.get(host).set(name, this);
 
     this.changes = new Subject<any>();
     this.defaultDescriptor = getPropertyDescriptor(host, name);
@@ -81,7 +87,7 @@ ERROR: not found '${name}' input, it has setter only, please add getter!
 
     this.disposed = true;
     this.changes.complete();
-    delete this.host[PRIVATE_HOST_INPUT_ADAPTER + this.name];
+    HostInputManager.hostInputManagerMap.get(this.host).delete(this.name);
 
     if (this.defaultDescriptor) {
       if (this.defaultDescriptor.writable) {

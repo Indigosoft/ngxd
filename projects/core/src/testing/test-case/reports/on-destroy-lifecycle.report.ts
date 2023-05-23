@@ -1,4 +1,4 @@
-import { hasProperty } from '../../../lib/utils/index';
+import { hasProperty } from '../../../lib/property-def';
 import { ContextState, LifecycleState } from '../test-case.interfaces';
 import { SimpleLifecycleReport } from './simple-lifecycle.report';
 

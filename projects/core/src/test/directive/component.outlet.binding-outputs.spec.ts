@@ -7,12 +7,10 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  TemplateRef,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { NgxdModule } from '../../../index';
+import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import {NgxdModule} from '../../../index';
 
 describe('NgxComponentOutlet check binding outputs', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -20,19 +18,54 @@ describe('NgxComponentOutlet check binding outputs', () => {
   let content: string;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [TestModule] });
+    TestBed.configureTestingModule({imports: [TestModule]});
   });
 
   it('should bind outputs', fakeAsync(() => {
-    pending();
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    expect(component.activatedComponent).toBeDefined();
+
+    component.activatedComponent.action.emit('action');
+
+    expect(component.receivedAction).toBe('action');
   }));
 
   it('should save previous output binding when component re-rendered', fakeAsync(() => {
-    pending();
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    expect(component.activatedComponent).toBeDefined();
+
+    component.activatedComponent.action.emit('action');
+
+    expect(component.receivedAction).toBe('action');
+
+    component.component = null;
+
+    fixture.detectChanges();
+
+    expect(component.activatedComponent).toBeNull();
+
+    component.component = DynamicComponent;
+
+    fixture.detectChanges();
+
+    expect(component.activatedComponent).toBeDefined();
+
+    component.activatedComponent.action.emit('action2');
+
+    expect(component.receivedAction).toBe('action2');
   }));
 });
 
-class BaseHostComponent {}
+class BaseHostComponent {
+}
 
 @Component({
   selector: 'app-comp-dynamic',
@@ -49,12 +82,12 @@ class DynamicComponent implements OnInit, OnChanges {
   inputsOnInit: any;
 
   ngOnChanges(changes: SimpleChanges) {
-    this.inputsOnChanges = { name: this.name, label: this.label };
+    this.inputsOnChanges = {name: this.name, label: this.label};
     this.simpleChanges = changes;
   }
 
   ngOnInit() {
-    this.inputsOnInit = { name: this.name, label: this.label };
+    this.inputsOnInit = {name: this.name, label: this.label};
   }
 }
 
@@ -125,12 +158,13 @@ class WithGetterAndSetterDynamicComponent {
   selector: 'app-comp-a',
   template: 'Dynamic Empty Component',
 })
-class EmptyDynamicComponent {}
+class EmptyDynamicComponent {
+}
 
 @Component({
   selector: 'app-test-host',
   template: '',
-  providers: [{ provide: BaseHostComponent, useExisting: TestHostComponent }],
+  providers: [{provide: BaseHostComponent, useExisting: TestHostComponent}],
 })
 class TestHostComponent extends BaseHostComponent {
   @Input() name: string;
@@ -142,7 +176,7 @@ class TestHostComponent extends BaseHostComponent {
 @Component({
   selector: 'app-test-host-with-getter',
   template: '',
-  providers: [{ provide: BaseHostComponent, useExisting: WithGetterTestHostComponent }],
+  providers: [{provide: BaseHostComponent, useExisting: WithGetterTestHostComponent}],
 })
 class WithGetterTestHostComponent extends BaseHostComponent {
   getterCalled: boolean;
@@ -156,7 +190,7 @@ class WithGetterTestHostComponent extends BaseHostComponent {
 @Component({
   selector: 'app-test-host-with-setter',
   template: '',
-  providers: [{ provide: BaseHostComponent, useExisting: WithSetterTestHostComponent }],
+  providers: [{provide: BaseHostComponent, useExisting: WithSetterTestHostComponent}],
 })
 class WithSetterTestHostComponent extends BaseHostComponent {
   setterCalled: boolean;
@@ -171,7 +205,7 @@ class WithSetterTestHostComponent extends BaseHostComponent {
 @Component({
   selector: 'app-test-host-with-getter-and-setter',
   template: '',
-  providers: [{ provide: BaseHostComponent, useExisting: WithGetterAndSetterTestHostComponent }],
+  providers: [{provide: BaseHostComponent, useExisting: WithGetterAndSetterTestHostComponent}],
 })
 class WithGetterAndSetterTestHostComponent extends BaseHostComponent {
   getterCalled: boolean;
@@ -193,41 +227,28 @@ class WithGetterAndSetterTestHostComponent extends BaseHostComponent {
 @Component({
   selector: 'app-test-comp',
   template: `
-    <app-test-host
-      [name]="name"
-      [label]="label"
-      (action)="action = $event"
-      (submit)="submit = $event"
-      [ngxComponentOutlet]="component"
-      [ngxComponentOutletContent]="projectableNodes"
-      (ngxComponentOutletActivate)="activatedComponent = $event"
-      (ngxComponentOutletDeactivate)="deactivatedComponent = $event"
-    ></app-test-host>
-    <ng-template>
-      <ng-content></ng-content>
-    </ng-template>
-  `,
+    <ng-container [ngxComponentOutlet]="component"
+                  (ngxComponentOutletActivate)="activatedComponent = $event"
+                  (ngxComponentOutletDeactivate)="activatedComponent = null"
+    >
+      <ng-container>
+  `
 })
 class TestComponent {
-  @Input() name = 'Angular';
-  label = 'Framework';
   component: any = DynamicComponent;
   activatedComponent: any;
-  deactivatedComponent: any;
-  action: any;
-  submit: any;
 
-  projectableNodes: any[][];
+  receivedAction: any;
 
-  @ViewChild(BaseHostComponent, /* TODO: add static flag */ {}) hostComponent: any;
+  @Output() action: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(TemplateRef, /* TODO: add static flag */ {}) set templateRef(templateRef: TemplateRef<any>) {
-    if (this.viewContainerRef && templateRef) {
-      this.projectableNodes = [this.viewContainerRef.createEmbeddedView(templateRef).rootNodes];
-    }
+  @ViewChild(BaseHostComponent) hostComponent: any;
+
+  constructor() {
+    this.action.subscribe((event: any) => {
+      this.receivedAction = event;
+    });
   }
-
-  constructor(private viewContainerRef: ViewContainerRef) {}
 }
 
 @Component({
@@ -238,7 +259,8 @@ class TestComponent {
     </app-test-comp>
   `,
 })
-class AppComponent {}
+class AppComponent {
+}
 
 @NgModule({
   imports: [NgxdModule],
@@ -266,4 +288,5 @@ class AppComponent {}
     WithGetterAndSetterTestHostComponent,
   ],
 })
-class TestModule {}
+class TestModule {
+}

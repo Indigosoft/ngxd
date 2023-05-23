@@ -214,7 +214,6 @@ If you want to use the ```<ng-content>``` and pass the content to your dynamic c
 | ```[ngxComponentOutletContext]```         | ```any```                  | n/a     | no       |             |
 | ```[ngxComponentOutletInjector]```        | ```Injector```             | n/a     | no       |             |
 | ```[ngxComponentOutletContent]```         | ```any[][]```              | n/a     | no       |             |
-| ```[ngxComponentOutletNgModuleFactory]``` | ```NgModuleFactory<any>``` | n/a     | no       |             |
 
 
 | Output                                    | Type                       | Description |
