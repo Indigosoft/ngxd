@@ -92,6 +92,5 @@ class AppComponent {}
   imports: [NgxdModule],
   declarations: [AppComponent, DynamicComponent, TestComponent, TestHostComponent],
   exports: [AppComponent, TestComponent, TestHostComponent],
-  entryComponents: [DynamicComponent],
 })
 class TestModule {}

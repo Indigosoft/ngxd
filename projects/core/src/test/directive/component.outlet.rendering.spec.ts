@@ -159,6 +159,5 @@ class TestComponent {
   imports: [NgxdModule],
   declarations: [DynamicComponent, AnotherDynamicComponent, TestComponent, TestHostComponent],
   exports: [TestComponent, TestHostComponent],
-  entryComponents: [DynamicComponent, AnotherDynamicComponent],
 })
 class TestModule {}

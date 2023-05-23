@@ -9,7 +9,7 @@ export class HostAdapter<TComponent> {
   refCount: number;
 
   constructor(private host: TComponent) {
-    if (PRIVATE_HOST_ADAPTER in host) {
+    if (PRIVATE_HOST_ADAPTER in (host as object)) {
       return host[PRIVATE_HOST_ADAPTER];
     }
 

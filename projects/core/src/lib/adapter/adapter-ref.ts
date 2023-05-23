@@ -238,7 +238,7 @@ ERROR: not found '${insidePropName}' input, it has getter only, please add sette
       toPropertyDef(this.context, this.componentRef.instance, this.host)
     );
     for (const propertyDef of propertyDefs) {
-      if (propertyDef.outsidePropName in this.host) {
+      if (propertyDef.outsidePropName in (this.host as object)) {
         const subscription = this.componentRef.instance[propertyDef.insidePropName].subscribe(
           this.host[propertyDef.outsidePropName]
         );

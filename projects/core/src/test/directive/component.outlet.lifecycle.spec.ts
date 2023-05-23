@@ -303,7 +303,6 @@ const STRATEGIES = [ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnP
     TestHostComponent,
   ],
   exports: [TEST_COMPONENTS],
-  entryComponents: [DYNAMIC_COMPONENTS, CHILDREN_DYNAMIC_COMPONENTS],
   providers: [HookLogger, TestCaseBuilder],
 })
 class TestModule {}

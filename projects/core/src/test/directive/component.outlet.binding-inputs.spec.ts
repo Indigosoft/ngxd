@@ -773,14 +773,5 @@ class TestComponent {
     WithGetterAndSetterTestHostComponent,
     WithMethodCallInSetterTestHostComponent,
   ],
-  entryComponents: [
-    DynamicComponent,
-    AnotherDynamicComponent,
-    DifferentPropertiesDynamicComponent,
-    EmptyDynamicComponent,
-    WithGetterDynamicComponent,
-    WithSetterDynamicComponent,
-    WithGetterAndSetterDynamicComponent,
-  ],
 })
 class TestModule {}

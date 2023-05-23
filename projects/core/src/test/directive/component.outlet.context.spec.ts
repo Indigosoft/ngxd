@@ -556,14 +556,5 @@ class TestComponent {
     TestHostComponent,
   ],
   exports: [TestComponent, TestHostComponent],
-  entryComponents: [
-    DynamicComponent,
-    AnotherDynamicComponent,
-    DifferentPropertiesDynamicComponent,
-    EmptyDynamicComponent,
-    WithGetterDynamicComponent,
-    WithSetterDynamicComponent,
-    WithGetterAndSetterDynamicComponent,
-  ],
 })
 class TestModule {}

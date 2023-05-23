@@ -12,7 +12,7 @@ export class HostInputAdapter<TComponent> {
   disposed = false;
 
   constructor(private host: TComponent, private name: string) {
-    if (PRIVATE_HOST_INPUT_ADAPTER + name in host) {
+    if (PRIVATE_HOST_INPUT_ADAPTER + name in (host as object)) {
       return host[PRIVATE_HOST_INPUT_ADAPTER + name];
     }
 

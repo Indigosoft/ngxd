@@ -265,14 +265,5 @@ class AppComponent {}
     WithSetterTestHostComponent,
     WithGetterAndSetterTestHostComponent,
   ],
-  entryComponents: [
-    DynamicComponent,
-    AnotherDynamicComponent,
-    DifferentPropertiesDynamicComponent,
-    EmptyDynamicComponent,
-    WithGetterDynamicComponent,
-    WithSetterDynamicComponent,
-    WithGetterAndSetterDynamicComponent,
-  ],
 })
 class TestModule {}

@@ -17,7 +17,6 @@ import { NgxComponentOutletResolvePipe } from './helpers/resolve.pipe';
     DoCheckOnlyComponent,
     OnInitAndDoCheckComponent,
   ],
-  entryComponents: [OnInitOnlyComponent, DoCheckOnlyComponent, OnInitAndDoCheckComponent],
   exports: [NgxComponentOutletDirective, NgxComponentOutletResolvePipe],
   providers: [NgxComponentOutletAdapterBuilder],
 })
