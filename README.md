@@ -182,6 +182,50 @@ resolver = import('./my-lazy-resolver')
 "></ng-container>
 ```
 
+### Lazy loading by condition with component bindings
+
+Lazy component:
+```typescript
+@Component({
+  selector: 'app-admin-btn',
+  templateUrl: './admin-btn.component.html',
+  styleUrls: ['./admin-btn.component.scss'],
+  standalone: true,
+})
+export class AdminBtnComponent {
+  @Input() readonly adminBtnText = '';
+  @Output() readonly adminBtnClick = new EventEmitter<Event>();
+}
+```
+Host component:
+```typescript
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  public readonly adminBtnComponent = defer(() =>
+    import('./admin/admin-btn/admin-btn.component').then(
+      (c) => c.AdminBtnComponent,
+    ),
+  );
+  @Input() readonly adminBtnText = 'Click me, admin!';
+  @Output() readonly adminBtnClick = new EventEmitter<Event>();
+
+  constructor(public authService: AuthService) {
+    this.adminBtnClick
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => console.log('Admin clicked the button');
+  }
+}
+```
+```html
+<ng-container *ngIf="authService.isLogged()">
+  <ng-container *ngxComponentOutlet="adminBtnComponent | async"></ng-container>
+</ng-container>
+```
+
 ## 4. Content projection
 If you want to use the ```<ng-content>``` and pass the content to your dynamic component, you have to check the example below.
 
