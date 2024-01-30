@@ -62,11 +62,7 @@ export class Operation extends Executable {
     newState: TestCaseState
   ): LifecycleState[] {
     return this.reports
-      .filter(reportMaker => {
-        return reportMaker.canReport(oldState.context, newState.context);
-      })
-      .map(reportMaker => {
-        return reportMaker.report(oldState.context, newState.context);
-      });
+      .filter(reportMaker => reportMaker.canReport(oldState.context, newState.context))
+      .map(reportMaker => reportMaker.report(oldState.context, newState.context));
   }
 }
