@@ -28,9 +28,9 @@
     },
     "homepage": "https://github.com/IndigoSoft/ngxd",
     "peerDependencies": {
-        "@angular/common": "^16.0.0",
-        "@angular/core": "^16.0.0",
-        "@angular/forms": "^16.0.0"
+        "@angular/common": "^17.0.0",
+        "@angular/core": "^17.0.0",
+        "@angular/forms": "^17.0.0"
     },
   "dependencies": {
     "tslib": "^2.0.0"
