@@ -8,12 +8,14 @@ import {
   OnChanges,
   OnDestroy,
   Output,
+  SimpleChange,
   SimpleChanges,
   Type,
   ViewContainerRef,
 } from '@angular/core';
 
 import {NgxComponentOutletRef} from './ngx-component-outlet-ref';
+import { runOnChangesHook } from './hooks/on-changes-hook';
 
 @Directive({selector: '[ngxComponentOutlet]'})
 export class NgxComponentOutletDirective implements OnChanges, OnDestroy {
@@ -57,6 +59,12 @@ export class NgxComponentOutletDirective implements OnChanges, OnDestroy {
 
     if (changes.ngxComponentOutletContext) {
       this.updateContext();
+    }
+  }
+
+  ngDoCheck() {
+    if (this.ngxComponentOutletRef?.componentRef) {
+      runOnChangesHook(this.ngxComponentOutletRef.componentRef.instance);
     }
   }
 

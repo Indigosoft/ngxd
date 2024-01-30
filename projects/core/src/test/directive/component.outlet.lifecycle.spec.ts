@@ -308,8 +308,8 @@ const STRATEGIES = [ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnP
 class TestModule {}
 
 function makeTestWithComponent(componentType: Type<any>, component: Type<any>) {
-  const builder: TestCaseBuilder = TestBed.get(TestCaseBuilder);
-  const logger: HookLogger = TestBed.get(HookLogger);
+  const builder: TestCaseBuilder = TestBed.inject(TestCaseBuilder);
+  const logger: HookLogger = TestBed.inject(HookLogger);
   const fixture: ComponentFixture<TestComponent> = TestBed.createComponent(component);
 
   const report = builder
